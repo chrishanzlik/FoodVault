@@ -12,13 +12,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\FoodVault.Application\FoodVault.Storage.Application.csproj" />
-    <ProjectReference Include="..\FoodVault.Domain\FoodVault.Storage.Domain.csproj" />
-    <ProjectReference Include="..\FoodVault.Infrastructure\FoodVault.Storage.Infrastructure.csproj" />
+    <Folder Include="Controllers\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
+    <ProjectReference Include="..\FoodVault.Storage.Application\FoodVault.Storage.Application.csproj" />
+    <ProjectReference Include="..\FoodVault.Storage.Domain\FoodVault.Storage.Domain.csproj" />
+    <ProjectReference Include="..\FoodVault.Storage.Infrastructure\FoodVault.Storage.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
