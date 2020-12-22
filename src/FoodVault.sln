@@ -3,15 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30717.126
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{3A7F10D4-3492-4B8F-AB1B-8D84F3FF4002}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FoodVault.Storage.Domain", "FoodVault.Storage.Domain\FoodVault.Storage.Domain.csproj", "{61FD1E22-7FFD-4407-9FC3-4976545F090A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FoodVault.Domain", "src\FoodVault.Domain\FoodVault.Domain.csproj", "{61FD1E22-7FFD-4407-9FC3-4976545F090A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FoodVault.Storage.Infrastructure", "FoodVault.Storage.Infrastructure\FoodVault.Storage.Infrastructure.csproj", "{3CA57851-F3F5-4579-9239-B785F5E3F150}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FoodVault.Infrastructure", "src\FoodVault.Infrastructure\FoodVault.Infrastructure.csproj", "{3CA57851-F3F5-4579-9239-B785F5E3F150}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FoodVault.Storage.Application", "FoodVault.Storage.Application\FoodVault.Storage.Application.csproj", "{99DF98AF-AFDE-4A91-B59F-BB015984505F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FoodVault.Application", "src\FoodVault.Application\FoodVault.Application.csproj", "{99DF98AF-AFDE-4A91-B59F-BB015984505F}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FoodVault.Api", "src\FoodVault.Api\FoodVault.Api.csproj", "{D3407985-9C4D-4EAA-B071-D8519F1FD348}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FoodVault.Storage.Api", "FoodVault.Storage.Api\FoodVault.Storage.Api.csproj", "{D3407985-9C4D-4EAA-B071-D8519F1FD348}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{5094F806-C98F-43D3-9814-0BB615CA1C4B}"
 	ProjectSection(SolutionItems) = preProject
@@ -19,6 +17,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		LICENSE = LICENSE
 		README.md = README.md
 	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Storage", "Storage", "{1FEBBD36-31A3-4FB8-B752-4E3DDE31EC9A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,10 +47,10 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{61FD1E22-7FFD-4407-9FC3-4976545F090A} = {3A7F10D4-3492-4B8F-AB1B-8D84F3FF4002}
-		{3CA57851-F3F5-4579-9239-B785F5E3F150} = {3A7F10D4-3492-4B8F-AB1B-8D84F3FF4002}
-		{99DF98AF-AFDE-4A91-B59F-BB015984505F} = {3A7F10D4-3492-4B8F-AB1B-8D84F3FF4002}
-		{D3407985-9C4D-4EAA-B071-D8519F1FD348} = {3A7F10D4-3492-4B8F-AB1B-8D84F3FF4002}
+		{61FD1E22-7FFD-4407-9FC3-4976545F090A} = {1FEBBD36-31A3-4FB8-B752-4E3DDE31EC9A}
+		{3CA57851-F3F5-4579-9239-B785F5E3F150} = {1FEBBD36-31A3-4FB8-B752-4E3DDE31EC9A}
+		{99DF98AF-AFDE-4A91-B59F-BB015984505F} = {1FEBBD36-31A3-4FB8-B752-4E3DDE31EC9A}
+		{D3407985-9C4D-4EAA-B071-D8519F1FD348} = {1FEBBD36-31A3-4FB8-B752-4E3DDE31EC9A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F1DA681E-3677-45B7-8130-3B8CCC5E2BB4}

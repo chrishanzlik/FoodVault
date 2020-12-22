@@ -12,7 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace FoodVault.Api
+namespace FoodVault.Storage.Api
 {
     public class Startup
     {
@@ -35,7 +35,7 @@ namespace FoodVault.Api
             });
             services.AddSwaggerGen(config =>
             {
-                config.SwaggerDoc("v1", new OpenApiInfo { Title = "FoodVault.Api", Version = "v1" });
+                config.SwaggerDoc("v1", new OpenApiInfo { Title = "foodvault storage", Version = "v1" });
             });
         }
 
@@ -45,7 +45,7 @@ namespace FoodVault.Api
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "FoodVault.Api v1"));
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "foodvault storage v1"));
             }
 
             app.UseHttpsRedirection();

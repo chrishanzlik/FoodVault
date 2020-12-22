@@ -12,9 +12,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\FoodVault.Application\FoodVault.Application.csproj" />
-    <ProjectReference Include="..\FoodVault.Domain\FoodVault.Domain.csproj" />
-    <ProjectReference Include="..\FoodVault.Infrastructure\FoodVault.Infrastructure.csproj" />
+    <ProjectReference Include="..\FoodVault.Application\FoodVault.Storage.Application.csproj" />
+    <ProjectReference Include="..\FoodVault.Domain\FoodVault.Storage.Domain.csproj" />
+    <ProjectReference Include="..\FoodVault.Infrastructure\FoodVault.Storage.Infrastructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>
