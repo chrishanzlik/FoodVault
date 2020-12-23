@@ -1,8 +1,15 @@
 ﻿namespace FoodVault.Domain
 {
+    /// <summary>
+    /// Exception which can occur at domain rule validation.
+    /// </summary>
     public class DomainRuleValidationException : DomainException
     {
-        public DomainRuleValidationException(IDomainRule domainRule)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DomainRuleValidationException" /> class.
+        /// </summary>
+        /// <param name="domainRule">The failed rule.</param>
+        public DomainRuleValidationException(IDomainRule domainRule) : base(domainRule.Message)
         {
 
         }
