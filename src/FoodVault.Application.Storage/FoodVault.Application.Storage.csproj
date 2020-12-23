@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\FoodVault.Storage.Domain\FoodVault.Storage.Domain.csproj" />
+    <ProjectReference Include="..\FoodVault.Domain.Storage\FoodVault.Domain.Storage.csproj" />
   </ItemGroup>
 
 </Project>
