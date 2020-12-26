@@ -13,8 +13,8 @@ namespace FoodVault.Application.Storage.FoodStorages.CreateStorage
         /// <summary>
         /// Initializes a new instance of the <see cref="CreateStorageCommand" /> class.
         /// </summary>
-        /// <param name="storageName"></param>
-        /// <param name="description"></param>
+        /// <param name="storageName">Storage name.</param>
+        /// <param name="description">Storage description.</param>
         public CreateStorageCommand(string storageName, string description)
         {
             StorageName = storageName;
