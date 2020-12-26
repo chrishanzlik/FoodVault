@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FoodVault.Domain.Storage\FoodVault.Domain.Storage.csproj" />
+    <ProjectReference Include="..\FoodVault.Infrastructure.Storage\FoodVault.Infrastructure.Storage.csproj" />
+  </ItemGroup>
+  
+</Project>

@@ -5,11 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\FoodVault.Domain.Storage\FoodVault.Domain.Storage.csproj" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="5.0.1" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.1" />
+    <ProjectReference Include="..\..\FoodVault.Domain\FoodVault.Domain.csproj" />
   </ItemGroup>
-
+  
 </Project>
