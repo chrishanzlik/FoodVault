@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace FoodVault.Domain.Storage.Product
+namespace FoodVault.Domain.Storage.Products
 {
     /// <summary>
     /// Identifier for a <see cref="Product"/> object.

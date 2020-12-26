@@ -1,29 +1,29 @@
-﻿using FoodVault.Domain.Storage.Product;
+﻿using FoodVault.Domain.Storage.Products;
 
-namespace FoodVault.Domain.Storage.FoodStore.Events
+namespace FoodVault.Domain.Storage.FoodStorages.Events
 {
     /// <summary>
-    /// Domain event which signals that a product has been removed to a store.
+    /// Domain event which signals that a product has been removed from a storage.
     /// </summary>
     public class ProductRemovedEvent : DomainEvent
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ProductRemovedEvent" /> class.
         /// </summary>
-        /// <param name="storeId">Id of the <see cref="FoodStore"/>.</param>
-        /// <param name="productId">Id of the <see cref="Product.Product"/>.</param>
+        /// <param name="storageId">Id of the <see cref="FoodStorage"/>.</param>
+        /// <param name="productId">Id of the <see cref="Products.Product"/>.</param>
         /// <param name="quantity">Products quantity.</param>
-        public ProductRemovedEvent(FoodStoreId storeId, ProductId productId, int quantity)
+        public ProductRemovedEvent(FoodStorageId storageId, ProductId productId, int quantity)
         {
-            FoodStoreId = storeId;
+            FoodStorageId = storageId;
             ProductId = productId;
             Quantity = quantity;
         }
 
         /// <summary>
-        /// Gets the id of the <see cref="FoodStore"/> where the product was removed.
+        /// Gets the id of the <see cref="FoodStorage"/> where the product was removed.
         /// </summary>
-        public FoodStoreId FoodStoreId { get; }
+        public FoodStorageId FoodStorageId { get; }
 
         /// <summary>
         /// Gets the id of the removed product.

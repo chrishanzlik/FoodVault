@@ -1,4 +1,4 @@
-﻿namespace FoodVault.Domain.Storage.FoodStore.Rules
+﻿namespace FoodVault.Domain.Storage.FoodStorages.Rules
 {
     /// <summary>
     /// Rule for checking that a product operation has a valid quantity.

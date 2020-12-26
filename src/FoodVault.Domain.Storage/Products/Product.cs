@@ -1,12 +1,13 @@
 ﻿using System;
 
-namespace FoodVault.Domain.Storage.Product
+namespace FoodVault.Domain.Storage.Products
 {
     /// <summary>
     /// Product entity.
     /// </summary>
     public class Product : Entity, IAggregateRoot
     {
+
         /// <summary>
         /// Required by Entity Framework.
         /// </summary>
@@ -16,14 +17,18 @@ namespace FoodVault.Domain.Storage.Product
 
         public Product(string productName)
         {
-            //TODO: Guard clauses
-
             Id = new ProductId(Guid.NewGuid());
+            Name = productName;
         }
 
         /// <summary>
-        /// Gets the identifier of this object.
+        /// Gets the product id.
         /// </summary>
         public ProductId Id { get; }
+
+        /// <summary>
+        /// Gets the name of the product.
+        /// </summary>
+        public string Name { get; private set; }
     }
 }

@@ -1,34 +1,34 @@
-﻿using FoodVault.Domain.Storage.FoodStore.Events;
-using FoodVault.Domain.Storage.FoodStore.Rules;
-using FoodVault.Domain.Storage.Product;
+﻿using FoodVault.Domain.Storage.FoodStorages.Events;
+using FoodVault.Domain.Storage.FoodStorages.Rules;
+using FoodVault.Domain.Storage.Products;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace FoodVault.Domain.Storage.FoodStore
+namespace FoodVault.Domain.Storage.FoodStorages
 {
     /// <summary>
     /// Food storage entity.
     /// </summary>
-    public class FoodStore : Entity, IAggregateRoot
+    public class FoodStorage : Entity, IAggregateRoot
     {
         private readonly List<StoredProduct> _storedProducts = new List<StoredProduct>();
 
         /// <summary>
         /// Required by Entity Framework.
         /// </summary>
-        private FoodStore()
+        private FoodStorage()
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="FoodStore" /> class.
+        /// Initializes a new instance of the <see cref="FoodStorage" /> class.
         /// </summary>
         /// <param name="storageName">Storage name.</param>
         /// <param name="description">Storage description.</param>
-        public FoodStore(string storageName, string description)
+        public FoodStorage(string storageName, string description)
         {
-            Id = new FoodStoreId(Guid.NewGuid());
+            Id = new FoodStorageId(Guid.NewGuid());
             Name = storageName;
             Description = description;
 
@@ -36,9 +36,9 @@ namespace FoodVault.Domain.Storage.FoodStore
         }
 
         /// <summary>
-        /// Gets the stores identifier.
+        /// Gets the id of the food storage.
         /// </summary>
-        public FoodStoreId Id { get; }
+        public FoodStorageId Id { get; }
 
         /// <summary>
         /// Gets the storage name.
@@ -51,13 +51,13 @@ namespace FoodVault.Domain.Storage.FoodStore
         public string Description { get; private set; }
 
         /// <summary>
-        /// Gets a list of all stored products within this store.
+        /// Gets a list of all stored products within this storage.
         /// </summary>
         public IReadOnlyCollection<StoredProduct> StoredProducts => _storedProducts.AsReadOnly();
 
 
         /// <summary>
-        /// Removes a product from the store.
+        /// Removes a product from the storage.
         /// </summary>
         /// <param name="productId">Products identifier.</param>
         /// <param name="quantity">Quantity of items to remove.</param>
@@ -67,22 +67,20 @@ namespace FoodVault.Domain.Storage.FoodStore
 
             var storedProduct = StoredProducts.Single(x => x.ProductId == productId);
 
-            this.CheckDomainRule(new ProductHasEnaughQuantityToRemove(storedProduct.Quantity, quantity));
-
             if (storedProduct.Quantity - quantity <= 0)
             {
                 this._storedProducts.Remove(storedProduct);
             }
             else
             {
-                storedProduct.Quantity -= quantity;
+                storedProduct.DecreaseQuantity(quantity);
             }
 
             this.AddDomainEvent(new ProductRemovedEvent(this.Id, productId, quantity));
         }
 
         /// <summary>
-        /// Adds a product to the store.
+        /// Adds a product to the storage.
         /// </summary>
         /// <param name="productId">Products identifier.</param>
         /// <param name="quantity">Quantity of items to add.</param>
@@ -90,22 +88,22 @@ namespace FoodVault.Domain.Storage.FoodStore
         {
             this.CheckDomainRule(new ProductOperationHasValidQuantityRule(quantity));
 
-            var existingEntry = StoredProducts.SingleOrDefault(x => x.ProductId == productId);
+            var storedProduct = StoredProducts.SingleOrDefault(x => x.ProductId == productId);
 
-            if (existingEntry != null)
+            if (storedProduct != null)
             {
-                existingEntry.Quantity += quantity;
+                storedProduct.IncreaseQuantity(quantity);
             }
             else
             {
-                this._storedProducts.Add(new StoredProduct(this.Id, productId, quantity));
+                this._storedProducts.Add(new StoredProduct(productId, quantity));
             }
 
             this.AddDomainEvent(new ProductStoredEvent(this.Id, productId, quantity));
         }
 
         /// <summary>
-        /// Renames the store and sets the description.
+        /// Renames the storage and sets the description.
         /// </summary>
         public void Rename(string name, string description)
         {
