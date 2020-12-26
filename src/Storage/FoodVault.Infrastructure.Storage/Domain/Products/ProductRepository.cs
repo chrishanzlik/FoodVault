@@ -1,34 +1,48 @@
 ﻿using FoodVault.Domain.Storage.Products;
 using FoodVault.Infrastructure.Storage.Database;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 
 namespace FoodVault.Infrastructure.Storage.Domain.Products
 {
+    /// <summary>
+    /// Repository for interacting with <see cref="Product"/>s.
+    /// </summary>
     public class ProductRepository : IProductRepository
     {
         private readonly StorageContext _storageContext;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ProductRepository" /> class.
+        /// </summary>
+        /// <param name="storageContext">Database connection.</param>
         public ProductRepository(StorageContext storageContext)
         {
             _storageContext = storageContext;
         }
 
-        public Task AddAsync(Product product)
+        /// <inheritdoc />
+        public async Task AddAsync(Product product)
         {
-            throw new NotImplementedException();
+            await _storageContext.Products.AddAsync(product);
         }
 
-        public Task<Product> GetByIdAsync(ProductId id)
+        /// <inheritdoc />
+        public async Task<Product> GetByIdAsync(ProductId id)
         {
-            throw new NotImplementedException();
+            return await _storageContext.Products
+                .SingleOrDefaultAsync(x => x.Id == id);
         }
 
-        public Task RemoveAsync(ProductId id)
+        /// <inheritdoc />
+        public async Task RemoveAsync(ProductId id)
         {
-            throw new NotImplementedException();
+            var product = await GetByIdAsync(id);
+
+            if (product != null)
+            {
+                _storageContext.Products.Remove(product);
+            }
         }
     }
 }
