@@ -31,8 +31,7 @@ namespace FoodVault.Application.Storage.FoodStorages.RemoveStorage
 
             await _foodStorageRepository.RemoveAsync(id);
 
-            //TODO:
-            return new CommandResult();
+            return CommandResult.Ok();
         }
     }
 }

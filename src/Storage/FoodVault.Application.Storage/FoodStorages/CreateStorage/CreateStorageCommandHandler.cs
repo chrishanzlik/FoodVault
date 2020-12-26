@@ -29,8 +29,7 @@ namespace FoodVault.Application.Storage.FoodStorages.CreateStorage
 
             await _foodStorageRepository.AddAsync(storage);
 
-            //TODO:
-            return new CommandResult();
+            return CommandResult.EntityCreated(storage.Id);
         }
     }
 }
