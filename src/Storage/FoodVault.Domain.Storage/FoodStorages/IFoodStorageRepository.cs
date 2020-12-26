@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 namespace FoodVault.Domain.Storage.FoodStorages
 {
     /// <summary>
     /// Interface of a repository for interacting with <see cref="FoodStorage"/>s.
     /// </summary>
-    public interface IFoodStoreRepository
+    public interface IFoodStorageRepository
     {
         /// <summary>
         /// Searches for a <see cref="FoodStorage"/> by its id.

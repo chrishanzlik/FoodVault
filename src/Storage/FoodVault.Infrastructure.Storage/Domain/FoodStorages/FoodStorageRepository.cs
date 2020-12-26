@@ -8,7 +8,7 @@ namespace FoodVault.Infrastructure.Storage.Domain.FoodStorages
     /// <summary>
     /// Repository for interacting with <see cref="FoodStorage"/>s.
     /// </summary>
-    public class FoodStorageRepository : IFoodStoreRepository
+    public class FoodStorageRepository : IFoodStorageRepository
     {
         private readonly StorageContext _storageContext;
 

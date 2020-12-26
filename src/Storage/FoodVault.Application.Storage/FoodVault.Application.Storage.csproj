@@ -5,8 +5,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\FoodVault.Core\FoodVault.Core.csproj" />
     <ProjectReference Include="..\FoodVault.Domain.Storage\FoodVault.Domain.Storage.csproj" />
     <ProjectReference Include="..\FoodVault.Infrastructure.Storage\FoodVault.Infrastructure.Storage.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Products\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FluentValidation" Version="9.3.0" />
   </ItemGroup>
   
 </Project>

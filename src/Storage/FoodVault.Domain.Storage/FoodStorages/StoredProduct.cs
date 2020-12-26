@@ -36,11 +36,19 @@ namespace FoodVault.Domain.Storage.FoodStorages
         /// </summary>
         public int Quantity { get; private set; }
 
+        /// <summary>
+        /// Increases the quantity for a given amount.
+        /// </summary>
+        /// <param name="amount">Value to add.</param>
         internal void IncreaseQuantity(int amount)
         {
             Quantity += amount;
         }
 
+        /// <summary>
+        /// Decreases the quantit for a given amount.
+        /// </summary>
+        /// <param name="amount">Value to subtract.</param>
         internal void DecreaseQuantity(int amount)
         {
             this.CheckDomainRule(new ProductHasEnaughQuantityToRemove(this.Quantity, amount));
