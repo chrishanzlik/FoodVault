@@ -4,7 +4,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 
-namespace FoodVault.Infrastructure.Storage.Database
+namespace FoodVault.Infrastructure.Database
 {
     /// <summary>
     /// Entity Framework converter selector for <see cref="EntityId"/>s.

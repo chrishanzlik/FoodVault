@@ -1,9 +1,9 @@
-﻿using FoodVault.Application.Storage.Common.Data;
+﻿using FoodVault.Application;
 using System;
 using System.Data;
 using System.Data.SqlClient;
 
-namespace FoodVault.Infrastructure.Storage.Database
+namespace FoodVault.Infrastructure.Database
 {
     /// <summary>
     /// Factory for creating SQL <see cref="IDbConnection"/>s.
