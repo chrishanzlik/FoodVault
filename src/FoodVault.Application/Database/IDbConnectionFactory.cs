@@ -1,6 +1,6 @@
 ﻿using System.Data;
 
-namespace FoodVault.Application
+namespace FoodVault.Application.Database
 {
     /// <summary>
     /// Interface of a factory for creating <see cref="IDbConnection"/>s.

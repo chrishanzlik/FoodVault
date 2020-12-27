@@ -1,4 +1,4 @@
-﻿using FoodVault.Application;
+﻿using FoodVault.Application.Database;
 using System;
 using System.Data;
 using System.Data.SqlClient;

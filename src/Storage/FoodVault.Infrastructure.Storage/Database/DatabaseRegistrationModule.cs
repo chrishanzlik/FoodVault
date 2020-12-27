@@ -1,5 +1,5 @@
 ﻿using Autofac;
-using FoodVault.Application;
+using FoodVault.Application.Database;
 using FoodVault.Domain;
 using FoodVault.Domain.Storage.FoodStorages;
 using FoodVault.Domain.Storage.Products;
