@@ -26,6 +26,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FoodVault.Core", "FoodVault
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{FDECADB0-E1ED-4269-983E-FE96FEB00957}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FoodVault.Storage.UnitTests", "Storage\Tests\FoodVault.Storage.UnitTests\FoodVault.Storage.UnitTests.csproj", "{7BAF47ED-560E-4831-844C-170776D45D52}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FoodVault.Storage.IntegrationTests", "Storage\Tests\FoodVault.Storage.IntegrationTests\FoodVault.Storage.IntegrationTests.csproj", "{5FD8157A-6154-45A8-8E6D-70A0E22E2BAB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -56,6 +60,14 @@ Global
 		{544C014D-5DAC-496F-8EEC-6B21DADE3CA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{544C014D-5DAC-496F-8EEC-6B21DADE3CA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{544C014D-5DAC-496F-8EEC-6B21DADE3CA9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7BAF47ED-560E-4831-844C-170776D45D52}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7BAF47ED-560E-4831-844C-170776D45D52}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7BAF47ED-560E-4831-844C-170776D45D52}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7BAF47ED-560E-4831-844C-170776D45D52}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5FD8157A-6154-45A8-8E6D-70A0E22E2BAB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5FD8157A-6154-45A8-8E6D-70A0E22E2BAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5FD8157A-6154-45A8-8E6D-70A0E22E2BAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5FD8157A-6154-45A8-8E6D-70A0E22E2BAB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -66,6 +78,8 @@ Global
 		{99DF98AF-AFDE-4A91-B59F-BB015984505F} = {1FEBBD36-31A3-4FB8-B752-4E3DDE31EC9A}
 		{D3407985-9C4D-4EAA-B071-D8519F1FD348} = {1FEBBD36-31A3-4FB8-B752-4E3DDE31EC9A}
 		{FDECADB0-E1ED-4269-983E-FE96FEB00957} = {1FEBBD36-31A3-4FB8-B752-4E3DDE31EC9A}
+		{7BAF47ED-560E-4831-844C-170776D45D52} = {FDECADB0-E1ED-4269-983E-FE96FEB00957}
+		{5FD8157A-6154-45A8-8E6D-70A0E22E2BAB} = {FDECADB0-E1ED-4269-983E-FE96FEB00957}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F1DA681E-3677-45B7-8130-3B8CCC5E2BB4}
