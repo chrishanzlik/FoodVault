@@ -12,7 +12,7 @@ namespace FoodVault.Application.Storage.FoodStorages.CreateStorage
         /// </summary>
         public CreateStorageCommandValidator()
         {
-            RuleFor(x => x.StorageName).NotEmpty();
+            RuleFor(x => x.StorageName).NotEmpty().MinimumLength(4);
         }
     }
 }
