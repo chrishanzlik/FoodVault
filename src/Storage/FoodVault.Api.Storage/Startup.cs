@@ -1,3 +1,8 @@
+using Autofac;
+using FoodVault.Infrastructure.Storage;
+using FoodVault.Infrastructure.Storage.Database;
+using FoodVault.Infrastructure.Storage.Domain;
+using FoodVault.Infrastructure.Storage.Work;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -25,18 +30,26 @@ namespace FoodVault.Storage.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddControllers();
+
             services.AddApiVersioning(config =>
             {
                 config.DefaultApiVersion = new ApiVersion(1, 0);
                 config.AssumeDefaultVersionWhenUnspecified = true;
                 config.ReportApiVersions = true;
             });
+
             services.AddSwaggerGen(config =>
             {
                 config.SwaggerDoc("v1", new OpenApiInfo { Title = "foodvault storage", Version = "v1" });
             });
+        }
+
+        public void ConfigureContainer(ContainerBuilder builder)
+        {
+            builder.RegisterModule(new WorkRegistrationModule());
+            builder.RegisterModule(new DomainRegistrationModule());
+            builder.RegisterModule(new DatabaseRegistrationModule(Configuration["ConnectionString"]));
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
