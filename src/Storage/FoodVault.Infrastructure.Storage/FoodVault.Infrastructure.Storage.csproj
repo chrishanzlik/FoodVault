@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\FoodVault.Application\FoodVault.Application.csproj" />
     <ProjectReference Include="..\..\FoodVault.Infrastructure\FoodVault.Infrastructure.csproj" />
     <ProjectReference Include="..\FoodVault.Application.Storage\FoodVault.Application.Storage.csproj" />
     <ProjectReference Include="..\FoodVault.Domain.Storage\FoodVault.Domain.Storage.csproj" />

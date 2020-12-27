@@ -25,8 +25,14 @@ namespace FoodVault.Api.Storage.FoodStorages
 
             var result = await _mediator.Send(command);
 
-            //TODO: 
-            return Created(string.Empty, new { Id = Guid.Empty });
+            if (result.Success)
+            {
+                return Created(string.Empty, new { Id = Guid.Empty });
+            }
+            else
+            {
+                return BadRequest(result.Errors);
+            }
         }
 
         [HttpDelete("{foodStorageId}")]

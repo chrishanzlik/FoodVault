@@ -1,7 +1,7 @@
 ﻿using Autofac;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using FoodVault.Core.Mediator;
+using FoodVault.Infrastructure.Storage.Work.Decorators;
+using FoodVault.Infrastructure.Work;
 
 namespace FoodVault.Infrastructure.Storage.Work
 {
@@ -13,7 +13,20 @@ namespace FoodVault.Infrastructure.Storage.Work
         /// <inheritdoc />
         protected override void Load(ContainerBuilder builder)
         {
-            
+            builder.RegisterType<DomainEventDispatcher>()
+                .As<IDomainEventDispatcher>()
+                .InstancePerLifetimeScope();
+
+            //builder.RegisterAssemblyTypes(typeof(SomeNotification).GetTypeInfo().Assembly)
+            //    .AsClosedTypesOf(typeof(IDomainEventNotification<>)).InstancePerDependency();
+
+            builder.RegisterGenericDecorator(
+                typeof(DomainEventDispatcherNotificationHandlerDecorator<>),
+                typeof(INotificationHandler<>));
+
+            builder.RegisterGenericDecorator(
+                typeof(TransactionCommandHandlerDecorator<>),
+                typeof(ICommandHandler<>));
         }
     }
 }

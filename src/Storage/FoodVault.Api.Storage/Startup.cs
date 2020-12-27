@@ -48,6 +48,7 @@ namespace FoodVault.Storage.Api
         public void ConfigureContainer(ContainerBuilder builder)
         {
             builder.RegisterModule(new WorkRegistrationModule());
+            builder.RegisterModule(new MediatorRegistrationModule());
             builder.RegisterModule(new DomainRegistrationModule());
             builder.RegisterModule(new DatabaseRegistrationModule(Configuration["ConnectionString"]));
         }
