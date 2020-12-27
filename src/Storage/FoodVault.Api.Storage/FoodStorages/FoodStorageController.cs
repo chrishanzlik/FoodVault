@@ -4,6 +4,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
+using FoodVault.Api.Storage.Common;
 
 namespace FoodVault.Api.Storage.FoodStorages
 {
@@ -25,14 +26,7 @@ namespace FoodVault.Api.Storage.FoodStorages
 
             var result = await _mediator.Send(command);
 
-            if (result.Success)
-            {
-                return Created(string.Empty, new { Id = Guid.Empty });
-            }
-            else
-            {
-                return BadRequest(result.Errors);
-            }
+            return result.ToActionResult();
         }
 
         [HttpDelete("{foodStorageId}")]
@@ -42,8 +36,7 @@ namespace FoodVault.Api.Storage.FoodStorages
 
             var result = await _mediator.Send(command);
 
-            //TODO:
-            return Ok();
+            return result.ToActionResult();
         }
     }
 }

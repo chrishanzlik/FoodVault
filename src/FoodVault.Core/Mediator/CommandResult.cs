@@ -8,11 +8,12 @@ namespace FoodVault.Core.Mediator
     /// </summary>
     public class CommandResult : ICommandResult
     {
-        private CommandResult(bool success, Guid? entityId, IEnumerable<string> errors)
+        private CommandResult(bool success, Guid? entityId, IEnumerable<string> errors, CommandResultState state)
         {
             Success = success;
             Errors = errors;
             EntityId = entityId;
+            State = state;
         }
 
         /// <inheritdoc />
@@ -24,15 +25,18 @@ namespace FoodVault.Core.Mediator
         /// <inheritdoc />
         public Guid? EntityId { get; }
 
+        /// <inheritdoc />
+        public CommandResultState State { get; }
+
 
         /// <summary>
         /// Create a new error result.
         /// </summary>
         /// <param name="errors">List of errors.</param>
         /// <returns>Commands execution result.</returns>
-        public static CommandResult Failed(IEnumerable<string> errors)
+        public static CommandResult Error(IEnumerable<string> errors)
         {
-            return new CommandResult(false, null, errors);
+            return new CommandResult(false, null, errors, CommandResultState.Error);
         }
 
         /// <summary>
@@ -42,7 +46,7 @@ namespace FoodVault.Core.Mediator
         /// <returns>Commands execution result.</returns>
         public static CommandResult EntityCreated(Guid entityId)
         {
-            return new CommandResult(true, entityId, null);
+            return new CommandResult(true, entityId, null, CommandResultState.Created);
         }
 
         /// <summary>
@@ -51,7 +55,17 @@ namespace FoodVault.Core.Mediator
         /// <returns>Commands execution result.</returns>
         public static CommandResult Ok()
         {
-            return new CommandResult(true, null, null);
+            return new CommandResult(true, null, null, CommandResultState.Processed);
+        }
+
+        /// <summary>
+        /// Create a new bad parameters result.
+        /// </summary>
+        /// <param name="errors">List of errors.</param>
+        /// <returns>Commands execution result.</returns>
+        public static CommandResult BadParameters(IEnumerable<string> errors)
+        {
+            return new CommandResult(false, null, errors, CommandResultState.BadParameters);
         }
     }
 }

@@ -22,5 +22,10 @@ namespace FoodVault.Core.Mediator
         /// Gets the entity id, if the commands purpose was to create a new entity.
         /// </summary>
         Guid? EntityId { get; }
+
+        /// <summary>
+        /// Gets the commands state.
+        /// </summary>
+        CommandResultState State { get; }
     }
 }

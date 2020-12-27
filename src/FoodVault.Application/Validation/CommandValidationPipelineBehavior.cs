@@ -37,7 +37,7 @@ namespace FoodVault.Application.Validation
 
             if (errors.Any())
             {
-                return CommandResult.Failed(errors);
+                return CommandResult.BadParameters(errors);
             }
 
             return (await next());
