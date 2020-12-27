@@ -8,7 +8,7 @@ namespace FoodVault.Infrastructure.Database
     /// <summary>
     /// Factory for creating SQL <see cref="IDbConnection"/>s.
     /// </summary>
-    internal class SqlConnectionFactory : IDbConnectionFactory, IDisposable
+    public class SqlConnectionFactory : IDbConnectionFactory, IDisposable
     {
         private readonly string _connectionString;
 
