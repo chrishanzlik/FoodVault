@@ -7,7 +7,7 @@ namespace FoodVault.Infrastructure.Storage.Domain.FoodStorages
 {
     internal sealed class FoodStorageEntityTypeConfig : IEntityTypeConfiguration<FoodStorage>
     {
-        internal const string StoredProducts = "_storedProducts";
+        internal const string StoredProducts = "StoredProducts";
 
         public void Configure(EntityTypeBuilder<FoodStorage> builder)
         {

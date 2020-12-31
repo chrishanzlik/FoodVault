@@ -1,5 +1,6 @@
 ﻿using FoodVault.Domain.Storage.FoodStorages;
 using FoodVault.Domain.Storage.Products;
+using FoodVault.Infrastructure.Outbox;
 using Microsoft.EntityFrameworkCore;
 
 namespace FoodVault.Infrastructure.Storage.Database
@@ -19,11 +20,13 @@ namespace FoodVault.Infrastructure.Storage.Database
 
         public DbSet<FoodStorage> FoodStorages { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<OutboxMessage> OutboxMessages { get; set; }
 
         /// <inheritdoc />
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(StorageContext).Assembly);
+            modelBuilder.ApplyConfiguration(new OutboxMessageEntityTypeConfig());
         }
     }
 }

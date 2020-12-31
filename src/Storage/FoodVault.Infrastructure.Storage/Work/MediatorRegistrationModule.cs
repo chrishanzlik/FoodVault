@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using Autofac.Core;
+using Autofac.Core.Activators.Reflection;
 using Autofac.Features.Variance;
 using FluentValidation;
 using FoodVault.Application.Storage.FoodStorages.CreateStorage;
@@ -7,10 +8,10 @@ using FoodVault.Application.Validation;
 using MediatR;
 using MediatR.Pipeline;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 
 namespace FoodVault.Infrastructure.Storage.Work
 {
@@ -38,7 +39,7 @@ namespace FoodVault.Infrastructure.Storage.Work
                 builder
                     .RegisterAssemblyTypes(typeof(CreateStorageCommand).Assembly)
                     .AsClosedTypesOf(mediatrOpenType)
-                    //.FindConstructorsWith(new AllConstructorFinder())
+                    .FindConstructorsWith(new AllConstructorFinder())
                     .AsImplementedInterfaces();
             }
 
@@ -83,6 +84,21 @@ namespace FoodVault.Infrastructure.Storage.Work
             }
 
             public bool IsAdapterForIndividualComponents => _source.IsAdapterForIndividualComponents;
+        }
+
+        internal class AllConstructorFinder : IConstructorFinder
+        {
+            private static readonly ConcurrentDictionary<Type, ConstructorInfo[]> Cache =
+                new ConcurrentDictionary<Type, ConstructorInfo[]>();
+
+
+            public ConstructorInfo[] FindConstructors(Type targetType)
+            {
+                var result = Cache.GetOrAdd(targetType,
+                    t => t.GetTypeInfo().DeclaredConstructors.ToArray());
+
+                return result.Length > 0 ? result : throw new NoConstructorsFoundException(targetType);
+            }
         }
     }
 }

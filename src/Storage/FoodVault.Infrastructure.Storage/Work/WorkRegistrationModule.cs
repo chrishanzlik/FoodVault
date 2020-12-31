@@ -1,7 +1,7 @@
 ﻿using Autofac;
-using FoodVault.Core.Mediator;
 using FoodVault.Infrastructure.Storage.Work.Decorators;
 using FoodVault.Infrastructure.Work;
+using MediatR;
 
 namespace FoodVault.Infrastructure.Storage.Work
 {
@@ -24,9 +24,10 @@ namespace FoodVault.Infrastructure.Storage.Work
                 typeof(DomainEventDispatcherNotificationHandlerDecorator<>),
                 typeof(INotificationHandler<>));
 
+            //TODO: use mediatr pipelines instead?
             builder.RegisterGenericDecorator(
                 typeof(TransactionCommandHandlerDecorator<>),
-                typeof(ICommandHandler<>));
+                typeof(IRequestHandler<,>));
         }
     }
 }
