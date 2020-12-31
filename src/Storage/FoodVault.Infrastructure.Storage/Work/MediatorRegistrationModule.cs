@@ -5,6 +5,7 @@ using Autofac.Features.Variance;
 using FluentValidation;
 using FoodVault.Application.Storage.FoodStorages.CreateStorage;
 using FoodVault.Application.Validation;
+using FoodVault.Infrastructure.Outbox;
 using MediatR;
 using MediatR.Pipeline;
 using System;
@@ -15,44 +16,48 @@ using System.Reflection;
 
 namespace FoodVault.Infrastructure.Storage.Work
 {
+    /// <summary>
+    /// Registrations for 'Mediator' module.
+    /// </summary>
     public class MediatorRegistrationModule : Autofac.Module
     {
+        private static readonly Type[] mediatrOpenTypes = new[]
+        {
+            typeof(IRequestHandler<,>),
+            typeof(INotificationHandler<>),
+            typeof(IValidator<>),
+        };
+
+        /// <inheritdoc />
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterSource(new ScopedContravariantRegistrationSource(
-               typeof(IRequestHandler<,>),
-               typeof(INotificationHandler<>),
-               typeof(IValidator<>)
-           ));
+            builder.RegisterSource(new ScopedContravariantRegistrationSource(mediatrOpenTypes));
 
             builder.RegisterAssemblyTypes(typeof(IMediator).GetTypeInfo().Assembly).AsImplementedInterfaces();
-
-            var mediatrOpenTypes = new[]
-            {
-                typeof(IRequestHandler<,>),
-                typeof(INotificationHandler<>),
-                typeof(IValidator<>),
-            };
 
             foreach (var mediatrOpenType in mediatrOpenTypes)
             {
                 builder
-                    .RegisterAssemblyTypes(typeof(CreateStorageCommand).Assembly)
+                    .RegisterAssemblyTypes(Assemblies.Application)
                     .AsClosedTypesOf(mediatrOpenType)
                     .FindConstructorsWith(new AllConstructorFinder())
                     .AsImplementedInterfaces();
             }
 
+            builder.RegisterType<ProcessOutboxCommandHandler>()
+                .AsImplementedInterfaces()
+                .WithParameter("commandsAssembly", Assemblies.Application)
+                .InstancePerLifetimeScope();
+
             builder.RegisterGeneric(typeof(RequestPostProcessorBehavior<,>)).As(typeof(IPipelineBehavior<,>));
             builder.RegisterGeneric(typeof(RequestPreProcessorBehavior<,>)).As(typeof(IPipelineBehavior<,>));
+            builder.RegisterGeneric(typeof(CommandValidationPipelineBehavior<>)).As(typeof(IPipelineBehavior<,>));
 
             builder.Register<ServiceFactory>(ctx =>
             {
                 var c = ctx.Resolve<IComponentContext>();
                 return t => c.Resolve(t);
             });
-
-            builder.RegisterGeneric(typeof(CommandValidationPipelineBehavior<>)).As(typeof(IPipelineBehavior<,>));
         }
 
         private class ScopedContravariantRegistrationSource : IRegistrationSource
@@ -86,11 +91,10 @@ namespace FoodVault.Infrastructure.Storage.Work
             public bool IsAdapterForIndividualComponents => _source.IsAdapterForIndividualComponents;
         }
 
-        internal class AllConstructorFinder : IConstructorFinder
+        private class AllConstructorFinder : IConstructorFinder
         {
             private static readonly ConcurrentDictionary<Type, ConstructorInfo[]> Cache =
                 new ConcurrentDictionary<Type, ConstructorInfo[]>();
-
 
             public ConstructorInfo[] FindConstructors(Type targetType)
             {

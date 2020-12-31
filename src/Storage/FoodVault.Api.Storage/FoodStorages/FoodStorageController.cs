@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
 using FoodVault.Api.Storage.Common;
+using FoodVault.Infrastructure.Outbox;
 
 namespace FoodVault.Api.Storage.FoodStorages
 {
@@ -24,7 +25,7 @@ namespace FoodVault.Api.Storage.FoodStorages
         {
             var command = new CreateStorageCommand(request.StorageName, request.Description);
 
-            var result = await _mediator.Send(command);
+            var result = await _mediator.Send(new ProcessOutboxCommand());
 
             return result.ToActionResult();
         }

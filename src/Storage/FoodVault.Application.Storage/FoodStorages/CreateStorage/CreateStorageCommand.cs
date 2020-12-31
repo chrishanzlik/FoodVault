@@ -1,4 +1,4 @@
-﻿using FoodVault.Core.Mediator;
+﻿using FoodVault.Application.Mediator;
 using System;
 using System.Collections.Generic;
 using System.Text;

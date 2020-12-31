@@ -1,4 +1,4 @@
-﻿using FoodVault.Core.Mediator;
+﻿using FoodVault.Application.Mediator;
 using FoodVault.Domain;
 using System.Threading;
 using System.Threading.Tasks;

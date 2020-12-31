@@ -1,7 +1,7 @@
 ﻿using Dapper;
 using FoodVault.Application.Database;
 using FoodVault.Application.Events;
-using FoodVault.Core.Mediator;
+using FoodVault.Application.Mediator;
 using MediatR;
 using Newtonsoft.Json;
 using System;
@@ -17,22 +17,22 @@ namespace FoodVault.Infrastructure.Outbox
     /// </summary>
     public class ProcessOutboxCommandHandler : ICommandHandler<ProcessOutboxCommand>
     {
-        private readonly Assembly _commandAssembly;
+        private readonly Assembly _commandsAssembly;
         private readonly IDbConnectionFactory _dbConnectionFactory;
         private readonly IMediator _mediator;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ProcessOutboxCommandHandler" /> class.
         /// </summary>
-        /// <param name="commandAssembly">Assembly containing application commands.</param>
+        /// <param name="commandsAssembly">Assembly containing application commands.</param>
         /// <param name="dbConnectionFactory">Database connection factory.</param>
         /// <param name="mediator">Application mediator.</param>
         public ProcessOutboxCommandHandler(
-            Assembly commandAssembly,
+            Assembly commandsAssembly,
             IDbConnectionFactory dbConnectionFactory,
             IMediator mediator)
         {
-            _commandAssembly = commandAssembly;
+            _commandsAssembly = commandsAssembly;
             _dbConnectionFactory = dbConnectionFactory;
             _mediator = mediator;
         }
@@ -60,7 +60,7 @@ namespace FoodVault.Infrastructure.Outbox
             {
                 foreach(var msg in pendingMessages)
                 {
-                    var t = _commandAssembly.GetType(msg.EventType);
+                    var t = _commandsAssembly.GetType(msg.EventType);
                     var ev = JsonConvert.DeserializeObject(msg.Payload, t) as IDomainEventNotification;
 
                     await _mediator.Publish(ev, cancellationToken);

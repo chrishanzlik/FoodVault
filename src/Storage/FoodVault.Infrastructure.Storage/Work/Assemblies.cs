@@ -1,4 +1,4 @@
-﻿using FoodVault.Domain.Storage.FoodStorages;
+﻿using FoodVault.Application.Storage.FoodStorages.CreateStorage;
 using System.Reflection;
 
 namespace FoodVault.Infrastructure.Storage.Work
@@ -8,6 +8,6 @@ namespace FoodVault.Infrastructure.Storage.Work
     /// </summary>
     internal static class Assemblies
     {
-        public static readonly Assembly Application = typeof(FoodStorage).Assembly;
+        public static readonly Assembly Application = typeof(CreateStorageCommand).Assembly;
     }
 }
