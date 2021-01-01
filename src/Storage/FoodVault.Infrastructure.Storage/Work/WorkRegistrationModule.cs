@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using FoodVault.Application.Events;
 using FoodVault.Infrastructure.Storage.Work.Decorators;
 using FoodVault.Infrastructure.Work;
 using MediatR;
@@ -17,8 +18,9 @@ namespace FoodVault.Infrastructure.Storage.Work
                 .As<IDomainEventDispatcher>()
                 .InstancePerLifetimeScope();
 
-            //builder.RegisterAssemblyTypes(typeof(SomeNotification).GetTypeInfo().Assembly)
-            //    .AsClosedTypesOf(typeof(IDomainEventNotification<>)).InstancePerDependency();
+            builder.RegisterAssemblyTypes(Assemblies.Application)
+                .AsClosedTypesOf(typeof(IDomainEventNotification<>))
+                .InstancePerDependency();
 
             builder.RegisterType<IsolatedCommandExecutor>()
                 .As<ICommandExecutor>()

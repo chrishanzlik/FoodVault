@@ -1,5 +1,8 @@
 ﻿using FoodVault.Application.Mediator;
 using FoodVault.Domain;
+using FoodVault.Infrastructure.Storage.Database;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -16,6 +19,8 @@ namespace FoodVault.Infrastructure.Storage.Work.Decorators
 
         private readonly IUnitOfWork _unitOfWork;
 
+        private readonly StorageContext _storageContext;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="TransactionCommandHandlerDecorator" /> class.
         /// </summary>
@@ -23,16 +28,28 @@ namespace FoodVault.Infrastructure.Storage.Work.Decorators
         /// <param name="unitOfWork">Unit of work transaction scope.</param>
         public TransactionCommandHandlerDecorator(
             ICommandHandler<TCommand> decorated,
-            IUnitOfWork unitOfWork)
+            IUnitOfWork unitOfWork,
+            StorageContext storageContext)
         {
             _decorated = decorated;
             _unitOfWork = unitOfWork;
+            _storageContext = storageContext;
         }
 
         /// <inheritdoc />
-        public async Task<ICommandResult> Handle(TCommand request, CancellationToken cancellationToken)
+        public async Task<ICommandResult> Handle(TCommand command, CancellationToken cancellationToken)
         {
-            var result = await _decorated.Handle(request, cancellationToken);
+            var result = await _decorated.Handle(command, cancellationToken);
+
+            if (command is InternalCommandBase ic)
+            {
+                var internalCommand = await _storageContext.InternalCommands.FirstOrDefaultAsync(x => x.Id == ic.Id, cancellationToken);
+
+                if (internalCommand != null)
+                {
+                    internalCommand.ProcessedDate = DateTime.UtcNow;
+                }
+            }
 
             await _unitOfWork.CommitAsync(cancellationToken);
 
