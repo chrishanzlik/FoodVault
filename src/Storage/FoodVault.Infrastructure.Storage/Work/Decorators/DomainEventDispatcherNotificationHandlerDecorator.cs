@@ -1,5 +1,5 @@
-﻿using FoodVault.Application.Mediator;
-using FoodVault.Infrastructure.Work;
+﻿using FoodVault.Infrastructure.Work;
+using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
 

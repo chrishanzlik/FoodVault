@@ -1,4 +1,4 @@
-﻿using FoodVault.Application.Mediator;
+﻿using MediatR;
 using System;
 
 namespace FoodVault.Application.Events

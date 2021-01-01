@@ -67,7 +67,7 @@ namespace FoodVault.Infrastructure.Storage.Work
                     domainEventNotifications.Add(domainNotification as IDomainEventNotification<IDomainEvent>);
                 }
             }
-
+            
             entities.ForEach(entity => entity.Entity.ClearDomainEvents());
 
             var tasks = events.Select(x => _mediator.Publish(x));

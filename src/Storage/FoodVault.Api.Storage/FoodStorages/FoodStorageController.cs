@@ -25,7 +25,7 @@ namespace FoodVault.Api.Storage.FoodStorages
         {
             var command = new CreateStorageCommand(request.StorageName, request.Description);
 
-            var result = await _mediator.Send(new ProcessOutboxCommand());
+            var result = await _mediator.Send(command);
 
             return result.ToActionResult();
         }

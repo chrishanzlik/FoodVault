@@ -1,11 +1,12 @@
-﻿using System;
+﻿using MediatR;
+using System;
 
 namespace FoodVault.Domain
 {
     /// <summary>
     /// Interface for most basic domain events.
     /// </summary>
-    public interface IDomainEvent
+    public interface IDomainEvent : INotification
     {
         /// <summary>
         /// Gets the date and time when the event occured at.
