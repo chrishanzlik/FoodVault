@@ -3,13 +3,13 @@
     /// <summary>
     /// Domain event which signals that a storage was created.
     /// </summary>
-    public class FoodStoreCreatedEvent : DomainEvent
+    public class FoodStorageCreatedEvent : DomainEvent
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="FoodStoreCreatedEvent" /> class.
+        /// Initializes a new instance of the <see cref="FoodStorageCreatedEvent" /> class.
         /// </summary>
-        /// <param name="storageId">Id of the created store.</param>
-        public FoodStoreCreatedEvent(FoodStorageId storageId)
+        /// <param name="storageId">Id of the created storage.</param>
+        public FoodStorageCreatedEvent(FoodStorageId storageId)
         {
             FoodStorageId = storageId;
         }

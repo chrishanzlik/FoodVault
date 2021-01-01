@@ -32,7 +32,7 @@ namespace FoodVault.Domain.Storage.FoodStorages
             Name = storageName;
             Description = description;
 
-            this.AddDomainEvent(new FoodStoreCreatedEvent(Id));
+            this.AddDomainEvent(new FoodStorageCreatedEvent(Id));
         }
 
         /// <summary>

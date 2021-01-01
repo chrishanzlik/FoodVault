@@ -5,6 +5,7 @@ using Autofac.Features.Variance;
 using FluentValidation;
 using FoodVault.Application.Storage.FoodStorages.CreateStorage;
 using FoodVault.Application.Validation;
+using FoodVault.Infrastructure.InternalCommands;
 using FoodVault.Infrastructure.Outbox;
 using MediatR;
 using MediatR.Pipeline;
@@ -45,6 +46,11 @@ namespace FoodVault.Infrastructure.Storage.Work
             }
 
             builder.RegisterType<ProcessOutboxCommandHandler>()
+                .AsImplementedInterfaces()
+                .WithParameter("commandsAssembly", Assemblies.Application)
+                .InstancePerLifetimeScope();
+
+            builder.RegisterType<ProcessInternalCommandsCommandHandler>()
                 .AsImplementedInterfaces()
                 .WithParameter("commandsAssembly", Assemblies.Application)
                 .InstancePerLifetimeScope();

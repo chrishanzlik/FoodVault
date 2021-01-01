@@ -20,6 +20,14 @@ namespace FoodVault.Infrastructure.Storage.Work
             //builder.RegisterAssemblyTypes(typeof(SomeNotification).GetTypeInfo().Assembly)
             //    .AsClosedTypesOf(typeof(IDomainEventNotification<>)).InstancePerDependency();
 
+            builder.RegisterType<IsolatedCommandExecutor>()
+                .As<ICommandExecutor>()
+                .InstancePerLifetimeScope();
+
+            builder.RegisterType<CommandDispatcher>()
+                .As<ICommandDispatcher>()
+                .InstancePerLifetimeScope();
+
             builder.RegisterGenericDecorator(
                 typeof(DomainEventDispatcherNotificationHandlerDecorator<>),
                 typeof(INotificationHandler<>));
