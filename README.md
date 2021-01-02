@@ -1,3 +1,7 @@
+![.NET](https://github.com/chrishanzlik/FoodVault/workflows/.NET/badge.svg)
+
+--------
+
 TBA
 
 --------
