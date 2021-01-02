@@ -1,12 +1,12 @@
-﻿using FoodVault.Application.Storage.FoodStorages.CreateStorage;
+﻿using FoodVault.Api.Storage.Common;
+using FoodVault.Application.Mediator;
+using FoodVault.Application.Storage.FoodStorages.CreateStorage;
+using FoodVault.Application.Storage.FoodStorages.GetStorageOverview;
 using FoodVault.Application.Storage.FoodStorages.RemoveStorage;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
-using FoodVault.Api.Storage.Common;
-using FoodVault.Infrastructure.Outbox;
-using FoodVault.Application.Mediator;
 
 namespace FoodVault.Api.Storage.FoodStorages
 {
@@ -19,6 +19,16 @@ namespace FoodVault.Api.Storage.FoodStorages
         public FoodStorageController(IMediator mediator)
         {
             _mediator = mediator;
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetStorageOverviewAsync()
+        {
+            var query = new GetStorageOverviewQuery();
+
+            var result = await _mediator.Send(query);
+
+            return Json(result);
         }
 
         [HttpPost]
