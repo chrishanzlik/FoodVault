@@ -46,7 +46,7 @@ namespace FoodVault.Infrastructure.Outbox
                 "[OutboxMessage].[EventType], " +
                 "[OutboxMessage].[Payload] " +
                 "FROM [dbo].[OutboxMessages] AS [OutboxMessage] " +
-                "WHERE [OutboxMessage].[RaisingTime] IS NULL";
+                "WHERE [OutboxMessage].[ProcessedDate] IS NULL";
 
             const string processSql =
                 "UPDATE [dbo].[OutboxMessages] " +

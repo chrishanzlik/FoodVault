@@ -12,7 +12,7 @@ namespace FoodVault.Application.Storage.FoodStorages.CreateStorage
             // Doing some stuff outside of transaction, e.g. sending emails
             // Invoke new INTERNALcommands by ICommandScheduler for persisting changes like EmailSent = true
 
-            throw new NotImplementedException();
+            return Task.CompletedTask;
         }
     }
 }

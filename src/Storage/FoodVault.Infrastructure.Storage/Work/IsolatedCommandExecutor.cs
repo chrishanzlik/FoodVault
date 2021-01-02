@@ -7,16 +7,16 @@ namespace FoodVault.Infrastructure.Storage.Work
 {
     internal class IsolatedCommandExecutor : ICommandExecutor
     {
-        private readonly IContainer _container;
+        private readonly ILifetimeScope _lifetimeScope;
 
-        public IsolatedCommandExecutor(IContainer container)
+        public IsolatedCommandExecutor(ILifetimeScope lifetimeScope)
         {
-            _container = container;
+            _lifetimeScope = lifetimeScope;
         }
 
         public async Task<ICommandResult> Execute(ICommand command)
         {
-            using var scope = _container.BeginLifetimeScope();
+            using var scope = _lifetimeScope.BeginLifetimeScope();
 
             var mediator = scope.Resolve<IMediator>();
 

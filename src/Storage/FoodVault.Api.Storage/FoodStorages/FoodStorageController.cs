@@ -6,6 +6,7 @@ using System;
 using System.Threading.Tasks;
 using FoodVault.Api.Storage.Common;
 using FoodVault.Infrastructure.Outbox;
+using FoodVault.Application.Mediator;
 
 namespace FoodVault.Api.Storage.FoodStorages
 {
@@ -25,7 +26,7 @@ namespace FoodVault.Api.Storage.FoodStorages
         {
             var command = new CreateStorageCommand(request.StorageName, request.Description);
 
-            var result = await _mediator.Send(command);
+            ICommandResult result = await _mediator.Send(command);
 
             return result.ToActionResult();
         }
@@ -35,7 +36,7 @@ namespace FoodVault.Api.Storage.FoodStorages
         {
             var command = new RemoveStorageCommand(foodStorageId);
 
-            var result = await _mediator.Send(command);
+            ICommandResult result = await _mediator.Send(command);
 
             return result.ToActionResult();
         }

@@ -6,7 +6,7 @@ namespace FoodVault.Domain
     {
         public DomainEvent()
         {
-            RaisedAt = DateTime.Now;
+            RaisedAt = DateTime.UtcNow;
         }
 
         public DateTime RaisedAt { get; }

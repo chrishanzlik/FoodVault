@@ -37,7 +37,6 @@ namespace FoodVault.Storage.Api
             {
                 var context = services.GetRequiredService<StorageContext>();
 
-                context.Database.EnsureCreated();
                 context.Database.Migrate();
 
                 //TODO: StorageSeed.Apply(context);

@@ -42,7 +42,7 @@ namespace FoodVault.Infrastructure.InternalCommands
             const string sql = "SELECT " +
                                "[Command].[CommandType], " +
                                "[Command].[Payload] " +
-                               "FROM [app].[InternalCommands] AS [Command] " +
+                               "FROM [dbo].[InternalCommands] AS [Command] " +
                                "WHERE [Command].[ProcessedDate] IS NULL";
 
             var pendingCommands = (await connection.QueryAsync<InternalCommandDto>(sql)).ToList();

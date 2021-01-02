@@ -1,4 +1,5 @@
 using Autofac;
+using FoodVault.Api.Storage.Common;
 using FoodVault.Infrastructure.Storage;
 using FoodVault.Infrastructure.Storage.Database;
 using FoodVault.Infrastructure.Storage.Domain;
@@ -43,6 +44,9 @@ namespace FoodVault.Storage.Api
             {
                 config.SwaggerDoc("v1", new OpenApiInfo { Title = "foodvault storage", Version = "v1" });
             });
+
+            services.AddHostedService<OutboxProcessingBackgroundService>();
+            services.AddHostedService<InternalCommandsProcessingBackgroundService>();
         }
 
         public void ConfigureContainer(ContainerBuilder builder)
