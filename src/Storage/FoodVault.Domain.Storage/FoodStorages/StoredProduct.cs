@@ -1,5 +1,6 @@
 ﻿using FoodVault.Domain.Storage.FoodStorages.Rules;
 using FoodVault.Domain.Storage.Products;
+using System;
 
 namespace FoodVault.Domain.Storage.FoodStorages
 {
@@ -20,10 +21,12 @@ namespace FoodVault.Domain.Storage.FoodStorages
         /// </summary>
         /// <param name="productId">Id of the <see cref="Products.Product"/> to add.</param>
         /// <param name="quantity">Amount of items to add.</param>
-        public StoredProduct(ProductId productId, int quantity)
+        /// <param name="expirationDate">Products expiration date.</param>
+        public StoredProduct(ProductId productId, int quantity, DateTime? expirationDate)
         {
             ProductId = productId;
             Quantity = quantity;
+            ExpirationDate = expirationDate;
         }
 
         /// <summary>
@@ -35,6 +38,11 @@ namespace FoodVault.Domain.Storage.FoodStorages
         /// Gets the stored quantity.
         /// </summary>
         public int Quantity { get; private set; }
+
+        /// <summary>
+        /// Gets the expiration date.
+        /// </summary>
+        public DateTime? ExpirationDate { get; }
 
         /// <summary>
         /// Increases the quantity for a given amount.

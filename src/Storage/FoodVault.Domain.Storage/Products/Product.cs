@@ -30,5 +30,15 @@ namespace FoodVault.Domain.Storage.Products
         /// Gets the name of the product.
         /// </summary>
         public string Name { get; private set; }
+
+        /// <summary>
+        /// Gets the barcode of the product.
+        /// </summary>
+        public string Barcode { get; private set; }
+
+        /// <summary>
+        /// Gets the manufacturer of the product.
+        /// </summary>
+        public string Manufacturer { get; private set; }
     }
 }

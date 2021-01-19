@@ -61,11 +61,12 @@ namespace FoodVault.Domain.Storage.FoodStorages
         /// </summary>
         /// <param name="productId">Products identifier.</param>
         /// <param name="quantity">Quantity of items to remove.</param>
-        public void RemoveProduct(ProductId productId, int quantity)
+        /// /// <param name="expirationDate">Products expiration date.</param>
+        public void RemoveProduct(ProductId productId, int quantity, DateTime? expirationDate)
         {
             this.CheckDomainRule(new ProductOperationHasValidQuantityRule(quantity));
 
-            var storedProduct = StoredProducts.Single(x => x.ProductId == productId);
+            var storedProduct = StoredProducts.Single(x => x.ProductId == productId && x.ExpirationDate == expirationDate);
 
             if (storedProduct.Quantity - quantity <= 0)
             {
@@ -84,11 +85,12 @@ namespace FoodVault.Domain.Storage.FoodStorages
         /// </summary>
         /// <param name="productId">Products identifier.</param>
         /// <param name="quantity">Quantity of items to add.</param>
-        public void StoreProduct(ProductId productId, int quantity)
+        /// <param name="expirationDate">Products expiration date.</param>
+        public void StoreProduct(ProductId productId, int quantity, DateTime? expirationDate)
         {
             this.CheckDomainRule(new ProductOperationHasValidQuantityRule(quantity));
 
-            var storedProduct = StoredProducts.SingleOrDefault(x => x.ProductId == productId);
+            var storedProduct = StoredProducts.SingleOrDefault(x => x.ProductId == productId && x.ExpirationDate == expirationDate);
 
             if (storedProduct != null)
             {
@@ -96,7 +98,7 @@ namespace FoodVault.Domain.Storage.FoodStorages
             }
             else
             {
-                this._storedProducts.Add(new StoredProduct(productId, quantity));
+                this._storedProducts.Add(new StoredProduct(productId, quantity, expirationDate));
             }
 
             this.AddDomainEvent(new ProductStoredEvent(this.Id, productId, quantity));
