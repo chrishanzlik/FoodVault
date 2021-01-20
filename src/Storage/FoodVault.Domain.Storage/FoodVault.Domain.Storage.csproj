@@ -11,5 +11,9 @@
   <ItemGroup>
     <ProjectReference Include="..\..\FoodVault.Domain\FoodVault.Domain.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Products\Rules\" />
+  </ItemGroup>
   
 </Project>

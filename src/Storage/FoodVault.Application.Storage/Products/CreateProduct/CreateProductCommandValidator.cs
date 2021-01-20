@@ -3,7 +3,7 @@
 namespace FoodVault.Application.Storage.Products.CreateProduct
 {
     /// <summary>
-    /// Validator for the <see cref="CreateStorageCommand"/>.
+    /// Validator for the <see cref="CreateProductCommand"/>.
     /// </summary>
     public class CreateProductCommandValidator : AbstractValidator<CreateProductCommand>
     {
@@ -12,6 +12,7 @@ namespace FoodVault.Application.Storage.Products.CreateProduct
         /// </summary>
         public CreateProductCommandValidator()
         {
+            RuleFor(x => x.ProductName).NotEmpty();
         }
     }
 }

@@ -1,7 +1,6 @@
 ﻿using FoodVault.Application.Mediator;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using FoodVault.Domain.Storage.Products;
+using FoodVault.Domain.Storage.Shared;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -12,9 +11,27 @@ namespace FoodVault.Application.Storage.Products.CreateProduct
     /// </summary>
     public class CreateProductCommandHandler : ICommandHandler<CreateProductCommand>
     {
-        public Task<ICommandResult> Handle(CreateProductCommand request, CancellationToken cancellationToken)
+        private readonly IProductRepository _productRepository;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CreateProductCommandHandler" /> class.
+        /// </summary>
+        /// <param name="productRepository">Product repository.</param>
+        public CreateProductCommandHandler(IProductRepository productRepository)
         {
-            throw new NotImplementedException();
+            _productRepository = productRepository;
+        }
+
+        /// <inheritdoc />
+        public async Task<ICommandResult> Handle(CreateProductCommand request, CancellationToken cancellationToken)
+        {
+            FileUploadId imageId = request.ImageUploadId.HasValue ? new FileUploadId(request.ImageUploadId.Value) : null;
+
+            var product = new Product(request.ProductName, request.Brand, request.Barcode, imageId);
+
+            await _productRepository.AddAsync(product);
+
+            return CommandResult.EntityCreated(product.Id);
         }
     }
 }

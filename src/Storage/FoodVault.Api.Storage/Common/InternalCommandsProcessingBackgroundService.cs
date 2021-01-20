@@ -25,7 +25,7 @@ namespace FoodVault.Api.Storage.Common
         {
             while (!stoppingToken.IsCancellationRequested)
             {
-                await Task.Delay(TimeSpan.FromSeconds(20));
+                await Task.Delay(TimeSpan.FromSeconds(20), stoppingToken);
 
                 try
                 {

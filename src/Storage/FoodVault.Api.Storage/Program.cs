@@ -39,7 +39,7 @@ namespace FoodVault.Storage.Api
 
                 context.Database.Migrate();
 
-                //TODO: StorageSeed.Apply(context);
+                Seed.Apply(context);
             }
             catch (Exception ex)
             {

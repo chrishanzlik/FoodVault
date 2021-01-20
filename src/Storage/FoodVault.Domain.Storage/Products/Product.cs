@@ -1,4 +1,6 @@
-﻿using System;
+﻿using FoodVault.Domain.Storage.Products.Events;
+using FoodVault.Domain.Storage.Shared;
+using System;
 
 namespace FoodVault.Domain.Storage.Products
 {
@@ -15,16 +17,37 @@ namespace FoodVault.Domain.Storage.Products
         {
         }
 
-        public Product(string productName)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Product" /> class.
+        /// </summary>
+        /// <param name="productName">Products name.</param>
+        /// <param name="brand">Brand of the product.</param>
+        /// <param name="barcode">Products barcode.</param>
+        /// <param name="imageId">Products image id.</param>
+        public Product(
+            string productName,
+            string brand = null,
+            string barcode = null,
+            FileUploadId imageId = null)
         {
             Id = new ProductId(Guid.NewGuid());
             Name = productName;
+            Brand = brand;
+            Barcode = barcode;
+            ImageId = imageId;
+
+            this.AddDomainEvent(new ProductCreatedEvent(Id));
         }
 
         /// <summary>
         /// Gets the product id.
         /// </summary>
         public ProductId Id { get; }
+
+        /// <summary>
+        /// Gets the associated product image id.
+        /// </summary>
+        public FileUploadId ImageId { get; private set; }
 
         /// <summary>
         /// Gets the name of the product.
@@ -37,8 +60,37 @@ namespace FoodVault.Domain.Storage.Products
         public string Barcode { get; private set; }
 
         /// <summary>
-        /// Gets the manufacturer of the product.
+        /// Gets the brand of the product.
         /// </summary>
-        public string Manufacturer { get; private set; }
+        public string Brand { get; private set; }
+
+
+        /// <summary>
+        /// Adds or replaces the associated image to a product. The old image will be deleted.
+        /// </summary>
+        /// <param name="imageId">New image id to connect.</param>
+        public void SetProductImage(FileUploadId imageId)
+        {
+            RemoveProductImage();
+
+            this.AddDomainEvent(new ProductImageAddedEvent(Id, imageId));
+
+            ImageId = imageId;
+        }
+
+        /// <summary>
+        /// Removes the actual connected image from the product.
+        /// </summary>
+        public void RemoveProductImage()
+        {
+            if (ImageId == null)
+            {
+                return;
+            }
+
+            this.AddDomainEvent(new ProductImageRemovedEvent(Id, ImageId));
+
+            ImageId = null;
+        }
     }
 }

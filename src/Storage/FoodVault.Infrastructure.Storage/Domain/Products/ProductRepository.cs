@@ -33,16 +33,5 @@ namespace FoodVault.Infrastructure.Storage.Domain.Products
             return await _storageContext.Products
                 .SingleOrDefaultAsync(x => x.Id == id);
         }
-
-        /// <inheritdoc />
-        public async Task RemoveAsync(ProductId id)
-        {
-            var product = await GetByIdAsync(id);
-
-            if (product != null)
-            {
-                _storageContext.Products.Remove(product);
-            }
-        }
     }
 }

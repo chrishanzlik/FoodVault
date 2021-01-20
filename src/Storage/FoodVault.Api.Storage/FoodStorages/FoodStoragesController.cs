@@ -12,11 +12,11 @@ namespace FoodVault.Api.Storage.FoodStorages
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class FoodStorageController : Controller
+    public class FoodStoragesController : Controller
     {
         private readonly IMediator _mediator;
 
-        public FoodStorageController(IMediator mediator)
+        public FoodStoragesController(IMediator mediator)
         {
             _mediator = mediator;
         }
