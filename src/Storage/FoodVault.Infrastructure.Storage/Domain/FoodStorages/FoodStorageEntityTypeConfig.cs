@@ -2,6 +2,7 @@
 using FoodVault.Domain.Storage.Products;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System;
 
 namespace FoodVault.Infrastructure.Storage.Domain.FoodStorages
 {
@@ -22,8 +23,13 @@ namespace FoodVault.Infrastructure.Storage.Domain.FoodStorages
                 x.ToTable("StoredProducts");
 
                 x.Property<ProductId>("ProductId");
+
                 x.Property<FoodStorageId>("FoodStorageId");
+
                 x.HasKey("FoodStorageId", "ProductId");
+
+                x.Property<DateTime?>("ExpirationDate")
+                    .HasConversion(x => x, x => x.HasValue ? DateTime.SpecifyKind(x.Value, DateTimeKind.Utc) : (DateTime?)null);
             });
         }
     }

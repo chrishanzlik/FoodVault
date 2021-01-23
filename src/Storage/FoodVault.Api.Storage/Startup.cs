@@ -1,5 +1,7 @@
 using Autofac;
+using Dapper;
 using FoodVault.Api.Storage.Common;
+using FoodVault.Infrastructure.Database;
 using FoodVault.Infrastructure.Storage;
 using FoodVault.Infrastructure.Storage.Database;
 using FoodVault.Infrastructure.Storage.Domain;
@@ -31,6 +33,8 @@ namespace FoodVault.Storage.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
+            ConfigureDapperTypeHandlers();
+
             services.AddControllers();
 
             services.AddApiVersioning(config =>
@@ -76,6 +80,12 @@ namespace FoodVault.Storage.Api
             {
                 endpoints.MapControllers();
             });
+        }
+
+        public void ConfigureDapperTypeHandlers()
+        {
+            SqlMapper.AddTypeHandler(new NullableDateTimeUtcDapperHandler());
+            SqlMapper.AddTypeHandler(new DateTimeUtcDapperHandler());
         }
     }
 }

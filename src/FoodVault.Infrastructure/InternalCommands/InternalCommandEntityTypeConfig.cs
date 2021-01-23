@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System;
 
 namespace FoodVault.Infrastructure.InternalCommands
 {
@@ -12,8 +13,13 @@ namespace FoodVault.Infrastructure.InternalCommands
         public void Configure(EntityTypeBuilder<InternalCommand> builder)
         {
             builder.ToTable("InternalCommands");
-            builder.HasKey(b => b.Id);
-            builder.Property(b => b.Id).ValueGeneratedNever();
+            
+            builder.HasKey(x => x.Id);
+            
+            builder.Property(x => x.Id).ValueGeneratedNever();
+            
+            builder.Property(x => x.ProcessedDate)
+                .HasConversion(x => x, x => x.HasValue ? DateTime.SpecifyKind(x.Value, DateTimeKind.Utc) : (DateTime?)null);
         }
     }
 }
