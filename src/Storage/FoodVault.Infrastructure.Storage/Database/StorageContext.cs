@@ -1,5 +1,7 @@
-﻿using FoodVault.Domain.Storage.FoodStorages;
+﻿using FoodVault.Application.FileUploads;
+using FoodVault.Domain.Storage.FoodStorages;
 using FoodVault.Domain.Storage.Products;
+using FoodVault.Infrastructure.FileUploads;
 using FoodVault.Infrastructure.InternalCommands;
 using FoodVault.Infrastructure.Outbox;
 using Microsoft.EntityFrameworkCore;
@@ -23,6 +25,7 @@ namespace FoodVault.Infrastructure.Storage.Database
         public DbSet<Product> Products { get; set; }
         public DbSet<OutboxMessage> OutboxMessages { get; set; }
         public DbSet<InternalCommand> InternalCommands { get; set; }
+        public DbSet<FileUpload> FileUploads { get; set; }
 
         /// <inheritdoc />
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -30,6 +33,7 @@ namespace FoodVault.Infrastructure.Storage.Database
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(StorageContext).Assembly);
             modelBuilder.ApplyConfiguration(new OutboxMessageEntityTypeConfig());
             modelBuilder.ApplyConfiguration(new InternalCommandEntityTypeConfig());
+            modelBuilder.ApplyConfiguration(new FileUploadEntityTypeConfig());
         }
     }
 }

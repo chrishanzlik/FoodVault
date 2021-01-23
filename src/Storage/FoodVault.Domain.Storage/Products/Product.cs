@@ -1,5 +1,4 @@
 ﻿using FoodVault.Domain.Storage.Products.Events;
-using FoodVault.Domain.Storage.Shared;
 using System;
 
 namespace FoodVault.Domain.Storage.Products

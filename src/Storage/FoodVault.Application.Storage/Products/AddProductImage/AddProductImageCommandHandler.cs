@@ -1,6 +1,6 @@
 ﻿using FoodVault.Application.Mediator;
+using FoodVault.Domain;
 using FoodVault.Domain.Storage.Products;
-using FoodVault.Domain.Storage.Shared;
 using System.Threading;
 using System.Threading.Tasks;
 

@@ -7,27 +7,27 @@ using Newtonsoft.Json;
 namespace FoodVault.Application.Storage.Products.AddProductImage
 {
     /// <summary>
-    /// Notification about a <see cref="ProductImageRemovedEvent"/>. Executes outside of the transaction.
+    /// Notification about a <see cref="ProductImageAddedEvent"/>. Executes outside of the transaction.
     /// </summary>
-    public class ProductImageRemovedNotification : DomainEventNotification<ProductImageRemovedEvent>
+    public class ProductImageAddedNotification : DomainEventNotification<ProductImageAddedEvent>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ProductImageRemovedNotification" /> class.
+        /// Initializes a new instance of the <see cref="ProductImageAddedNotification" /> class.
         /// </summary>
         /// <param name="domainEvent">Occured domain event.</param>
-        public ProductImageRemovedNotification(ProductImageRemovedEvent domainEvent) : base(domainEvent)
+        public ProductImageAddedNotification(ProductImageAddedEvent domainEvent) : base(domainEvent)
         {
             ProductId = domainEvent.ProductId;
             ImageId = domainEvent.ImageId;
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ProductImageRemovedNotification" /> class.
+        /// Initializes a new instance of the <see cref="ProductImageAddedNotification" /> class.
         /// </summary>
         /// <param name="productId">Product id.</param>
         /// <param name="imageId">Image id.</param>
         [JsonConstructor]
-        public ProductImageRemovedNotification(ProductId productId, FileUploadId imageId) : base(null)
+        public ProductImageAddedNotification(ProductId productId, FileUploadId imageId) : base(null)
         {
             ProductId = productId;
             ImageId = imageId;

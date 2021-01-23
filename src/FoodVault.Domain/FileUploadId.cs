@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace FoodVault.Domain.Storage.Shared
+namespace FoodVault.Domain
 {
     /// <summary>
     /// Identifier for a file upload.

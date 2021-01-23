@@ -1,5 +1,5 @@
-﻿using MediatR;
-using System;
+﻿using FoodVault.Application.FileUploads;
+using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -10,11 +10,17 @@ namespace FoodVault.Application.Storage.Products.AddProductImage
     /// </summary>
     public class ProductImageRemovedNotificationHandler : INotificationHandler<ProductImageRemovedNotification>
     {
-        public Task Handle(ProductImageRemovedNotification notification, CancellationToken cancellationToken)
-        {
-            //TODO: Remove image from disk
+        private readonly IFileStorage _fileStorage;
 
-            throw new NotImplementedException();
+        public ProductImageRemovedNotificationHandler(IFileStorage fileStorage)
+        {
+            _fileStorage = fileStorage;
+        }
+
+        /// <inheritdoc />
+        public async Task Handle(ProductImageRemovedNotification notification, CancellationToken cancellationToken)
+        {
+            await _fileStorage.DeleteFileAsync(notification.ImageId);
         }
     }
 }

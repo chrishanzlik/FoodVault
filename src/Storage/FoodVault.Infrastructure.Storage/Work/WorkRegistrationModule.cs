@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using FoodVault.Application.Events;
+using FoodVault.Application.FileUploads;
 using FoodVault.Infrastructure.Storage.Work.Decorators;
 using FoodVault.Infrastructure.Work;
 using MediatR;
@@ -14,6 +15,10 @@ namespace FoodVault.Infrastructure.Storage.Work
         /// <inheritdoc />
         protected override void Load(ContainerBuilder builder)
         {
+            builder.RegisterType<DashFileNameSanitizer>()
+                .As<IFileNameSanitizer>()
+                .InstancePerLifetimeScope();
+
             builder.RegisterType<DomainEventDispatcher>()
                 .As<IDomainEventDispatcher>()
                 .InstancePerLifetimeScope();

@@ -1,10 +1,12 @@
 ﻿using Autofac;
 using FoodVault.Application.Database;
+using FoodVault.Application.FileUploads;
 using FoodVault.Domain;
 using FoodVault.Domain.Storage.FoodStorages;
 using FoodVault.Domain.Storage.Products;
 using FoodVault.Infrastructure.Database;
 using FoodVault.Infrastructure.Domain;
+using FoodVault.Infrastructure.FileUploads;
 using FoodVault.Infrastructure.Storage.Domain.FoodStorages;
 using FoodVault.Infrastructure.Storage.Domain.Products;
 using Microsoft.EntityFrameworkCore;
@@ -48,8 +50,16 @@ namespace FoodVault.Infrastructure.Storage.Database
                 .As<IProductRepository>()
                 .InstancePerLifetimeScope();
 
+            builder.RegisterType<FileUploadSqlRepository>()
+                .As<IFileUploadRepository>()
+                .InstancePerLifetimeScope();
+
             builder.RegisterType<EntityIdValueConverterSelector>()
                 .As<IValueConverterSelector>()
+                .InstancePerLifetimeScope();
+
+            builder.RegisterType<LocalDiskFileStorage>()
+                .As<IFileStorage>()
                 .InstancePerLifetimeScope();
 
             builder

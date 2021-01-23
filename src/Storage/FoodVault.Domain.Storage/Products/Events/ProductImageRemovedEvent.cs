@@ -1,6 +1,4 @@
-﻿using FoodVault.Domain.Storage.Shared;
-
-namespace FoodVault.Domain.Storage.Products.Events
+﻿namespace FoodVault.Domain.Storage.Products.Events
 {
     /// <summary>
     /// Domain event which signals that a product image was removed.
