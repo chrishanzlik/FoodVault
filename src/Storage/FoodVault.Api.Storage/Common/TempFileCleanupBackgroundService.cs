@@ -1,4 +1,5 @@
 ﻿using FoodVault.Application.FileUploads;
+using FoodVault.Infrastructure;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System;
@@ -10,14 +11,14 @@ namespace FoodVault.Api.Storage.Common
     public class TempFileCleanupBackgroundService : BackgroundService
     {
         private readonly ILogger<TempFileCleanupBackgroundService> _logger;
-        private readonly IFileStorage _fileStorage;
+        private readonly ICommandExecutor _isolatedCommandExecutor;
 
         public TempFileCleanupBackgroundService(
             ILogger<TempFileCleanupBackgroundService> logger,
-            IFileStorage fileStorage)
+            ICommandExecutor commandExecutor)
         {
             _logger = logger;
-            _fileStorage = fileStorage;
+            _isolatedCommandExecutor = commandExecutor;
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -30,7 +31,7 @@ namespace FoodVault.Api.Storage.Common
                 {
                     _logger.LogInformation("Start executing...");
 
-                    await _fileStorage.DeleteExpiredFilesAsync();
+                    await _isolatedCommandExecutor.Execute(new RemoveExpiredFilesCommand());
 
                     _logger.LogInformation("Done.");
                 }
