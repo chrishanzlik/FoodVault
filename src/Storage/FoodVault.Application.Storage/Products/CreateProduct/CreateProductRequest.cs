@@ -1,4 +1,6 @@
-﻿namespace FoodVault.Application.Storage.Products.CreateProduct
+﻿using System;
+
+namespace FoodVault.Application.Storage.Products.CreateProduct
 {
     /// <summary>
     /// Request for creating a product.
@@ -19,5 +21,10 @@
         /// Gets or sets the products barcode.
         /// </summary>
         public string Barcode { get; set; }
+
+        /// <summary>
+        /// Gets or setes the image id.
+        /// </summary>
+        public Guid? ImageId { get; set; }
     }
 }

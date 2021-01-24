@@ -1,6 +1,7 @@
 using Autofac;
 using Dapper;
 using FoodVault.Api.Storage.Common;
+using FoodVault.Application.FileUploads;
 using FoodVault.Infrastructure.Database;
 using FoodVault.Infrastructure.Storage;
 using FoodVault.Infrastructure.Storage.Database;
@@ -14,6 +15,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
@@ -37,6 +39,9 @@ namespace FoodVault.Storage.Api
 
             services.AddControllers();
 
+            services.Configure<FileUploadSettings>(Configuration.GetSection(nameof(FileUploadSettings)));
+            services.AddSingleton<IFileUploadSettings>(x => x.GetService<IOptions<FileUploadSettings>>().Value);
+
             services.AddApiVersioning(config =>
             {
                 config.DefaultApiVersion = new ApiVersion(1, 0);
@@ -51,6 +56,7 @@ namespace FoodVault.Storage.Api
 
             services.AddHostedService<OutboxProcessingBackgroundService>();
             services.AddHostedService<InternalCommandsProcessingBackgroundService>();
+            services.AddHostedService<TempFileCleanupBackgroundService>();
         }
 
         public void ConfigureContainer(ContainerBuilder builder)

@@ -25,9 +25,12 @@ namespace FoodVault.Application.Storage.Products.CreateProduct
         /// <inheritdoc />
         public async Task<ICommandResult> Handle(CreateProductCommand request, CancellationToken cancellationToken)
         {
-            FileUploadId imageId = request.ImageUploadId.HasValue ? new FileUploadId(request.ImageUploadId.Value) : null;
+            var product = new Product(request.ProductName, request.Brand, request.Barcode);
 
-            var product = new Product(request.ProductName, request.Brand, request.Barcode, imageId);
+            if (request.ImageUploadId.HasValue)
+            {
+                product.SetProductImage(new FileUploadId(request.ImageUploadId.Value));
+            }
 
             await _productRepository.AddAsync(product);
 

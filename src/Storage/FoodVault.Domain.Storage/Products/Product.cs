@@ -22,18 +22,15 @@ namespace FoodVault.Domain.Storage.Products
         /// <param name="productName">Products name.</param>
         /// <param name="brand">Brand of the product.</param>
         /// <param name="barcode">Products barcode.</param>
-        /// <param name="imageId">Products image id.</param>
         public Product(
             string productName,
             string brand = null,
-            string barcode = null,
-            FileUploadId imageId = null)
+            string barcode = null)
         {
             Id = new ProductId(Guid.NewGuid());
             Name = productName;
             Brand = brand;
             Barcode = barcode;
-            ImageId = imageId;
 
             this.AddDomainEvent(new ProductCreatedEvent(Id));
         }

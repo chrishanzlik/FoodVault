@@ -28,9 +28,7 @@ namespace FoodVault.Api.Storage.Products
         [HttpPost]
         public async Task<IActionResult> CreateProductAsync(CreateProductRequest request)
         {
-            //TODO: Image handling
-
-            var command = new CreateProductCommand(request.ProductName, request.Brand, request.Barcode, null);
+            var command = new CreateProductCommand(request.ProductName, request.Brand, request.Barcode, request.ImageId);
 
             ICommandResult result = await _mediator.Send(command);
 

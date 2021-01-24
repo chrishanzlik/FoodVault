@@ -1,4 +1,6 @@
-﻿namespace FoodVault.Application.FileUploads
+﻿using System.Collections.Generic;
+
+namespace FoodVault.Application.FileUploads
 {
     /// <summary>
     /// Settings interface for <see cref="FileUpload"/> handling.
@@ -6,8 +8,18 @@
     public interface IFileUploadSettings
     {
         /// <summary>
-        /// Gets or sets the root folder of all uploads.
+        /// Gets the root folder of all uploads.
         /// </summary>
-        public string RootFolder { get; set; }
+        public string RootFolder { get; }
+
+        /// <summary>
+        /// Gets a collection of allowed file extensions.
+        /// </summary>
+        public IEnumerable<string> AllowedExtensions { get; }
+
+        /// <summary>
+        /// Gets the maximum allowed upload file size in MegaByte.
+        /// </summary>
+        public double MaximumFileSize { get; }
     }
 }

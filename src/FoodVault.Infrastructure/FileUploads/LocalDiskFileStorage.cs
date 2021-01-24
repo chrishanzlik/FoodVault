@@ -1,6 +1,7 @@
 ﻿using FoodVault.Application.FileUploads;
 using System;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace FoodVault.Infrastructure.FileUploads
@@ -103,6 +104,8 @@ namespace FoodVault.Infrastructure.FileUploads
             var relativeFolder = Path.Combine($"{utcNow.Year}_{utcNow.Month}");
             var absoluteFolder = Path.Combine(_fileUploadSettings.RootFolder, relativeFolder);
 
+            ValidateUpload(fileStream, extension);
+
             await WriteUploadStreamAsync(absoluteFolder, fileId, fileStream);
 
             var upload = new FileUpload(fileId, Path.Combine(relativeFolder, fileId.ToString()), extension, contentType, fileStream.Length, utcNow.Add(expirationTime));
@@ -110,6 +113,24 @@ namespace FoodVault.Infrastructure.FileUploads
             await _fileUploadRepository.AddAsync(upload);
 
             return upload.Id;
+        }
+
+        private void ValidateUpload(Stream stream, string extension)
+        {
+            var validExtensions = _fileUploadSettings.AllowedExtensions.Select(x => x.ToLower());
+            var ext = extension.ToLower();
+
+            if (!validExtensions.Contains(ext))
+            {
+                throw new UploadFileException($"Files with the extension '{ext}' are not supported.");
+            }
+
+            var sizeInMb = stream.Length / 1024 / 1024;
+
+            if (sizeInMb > _fileUploadSettings.MaximumFileSize)
+            {
+                throw new UploadFileException($"The file is too large. The maximum upload size is {_fileUploadSettings.MaximumFileSize} MB.");
+            }
         }
 
         private async Task WriteUploadStreamAsync(string folder, Guid id, Stream stream)

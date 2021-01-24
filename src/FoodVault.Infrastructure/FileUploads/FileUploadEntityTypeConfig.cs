@@ -24,6 +24,14 @@ namespace FoodVault.Infrastructure.FileUploads
             
             builder.Property(x => x.ExpirationTime)
                 .HasConversion(x => x, x => x.HasValue ? DateTime.SpecifyKind(x.Value, DateTimeKind.Utc) : (DateTime?)null);
+
+            builder.Property(x => x.ContentType);
+
+            builder.Property(x => x.Extension);
+
+            builder.Property(x => x.RelativeFileLocation);
+
+            builder.Property(x => x.Size);
         }
     }
 }
