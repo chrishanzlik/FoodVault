@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace FoodVault.Application.Mediator
+namespace FoodVault.Application.Commands
 {
     /// <summary>
     /// Represents the state of a executed command.

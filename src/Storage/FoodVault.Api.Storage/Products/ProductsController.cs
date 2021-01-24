@@ -1,6 +1,6 @@
 ﻿using FoodVault.Api.Storage.Common;
 using FoodVault.Application.FileUploads;
-using FoodVault.Application.Mediator;
+using FoodVault.Application.Commands;
 using FoodVault.Application.Storage.Products.AddProductImage;
 using FoodVault.Application.Storage.Products.CreateProduct;
 using FoodVault.Application.Storage.Products.GetProductImage;

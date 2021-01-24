@@ -1,4 +1,4 @@
-﻿using FoodVault.Application.Mediator;
+﻿using FoodVault.Application.Queries;
 using System.Collections.Generic;
 
 namespace FoodVault.Application.Storage.FoodStorages.GetStorageOverview

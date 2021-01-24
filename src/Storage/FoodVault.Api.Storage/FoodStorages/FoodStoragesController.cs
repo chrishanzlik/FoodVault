@@ -1,5 +1,5 @@
 ﻿using FoodVault.Api.Storage.Common;
-using FoodVault.Application.Mediator;
+using FoodVault.Application.Commands;
 using FoodVault.Application.Storage.FoodStorages.CreateStorage;
 using FoodVault.Application.Storage.FoodStorages.GetStorageOverview;
 using FoodVault.Application.Storage.FoodStorages.RemoveStorage;

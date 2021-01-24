@@ -1,5 +1,5 @@
 ﻿using Autofac;
-using FoodVault.Application.Mediator;
+using FoodVault.Application.Commands;
 using MediatR;
 using System.Threading.Tasks;
 

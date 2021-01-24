@@ -1,4 +1,4 @@
-﻿using FoodVault.Application.Mediator;
+﻿using FoodVault.Application.Commands;
 using FoodVault.Infrastructure.Storage.Database;
 using MediatR;
 using Microsoft.EntityFrameworkCore;

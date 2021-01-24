@@ -1,5 +1,5 @@
 ﻿using FoodVault.Application.FileUploads;
-using FoodVault.Application.Mediator;
+using FoodVault.Application.Queries;
 using System;
 
 namespace FoodVault.Application.Storage.Products.GetProductImage

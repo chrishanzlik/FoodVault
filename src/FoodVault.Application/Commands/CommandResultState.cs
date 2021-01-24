@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace FoodVault.Application.Mediator
+namespace FoodVault.Application.Commands
 {
     /// <summary>
     /// In which state the command is.

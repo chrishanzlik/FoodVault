@@ -1,4 +1,4 @@
-﻿using FoodVault.Application.Mediator;
+﻿using FoodVault.Application.Commands;
 
 namespace FoodVault.Infrastructure.InternalCommands
 {

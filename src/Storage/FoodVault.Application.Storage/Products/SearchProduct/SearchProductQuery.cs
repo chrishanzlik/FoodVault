@@ -1,5 +1,4 @@
-﻿using FoodVault.Application.Mediator;
-using System.Collections.Generic;
+﻿using FoodVault.Application.Queries;
 
 namespace FoodVault.Application.Storage.Products.SearchProduct
 {

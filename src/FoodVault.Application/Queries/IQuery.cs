@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace FoodVault.Application.Mediator
+namespace FoodVault.Application.Queries
 {
     public interface IQuery<TResult> : IRequest<TResult>
     {

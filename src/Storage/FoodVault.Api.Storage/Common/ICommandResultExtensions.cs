@@ -1,4 +1,4 @@
-﻿using FoodVault.Application.Mediator;
+﻿using FoodVault.Application.Commands;
 using Microsoft.AspNetCore.Mvc;
 using System;
 

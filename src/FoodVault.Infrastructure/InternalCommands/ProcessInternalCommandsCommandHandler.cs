@@ -1,6 +1,6 @@
 ﻿using Dapper;
 using FoodVault.Application.Database;
-using FoodVault.Application.Mediator;
+using FoodVault.Application.Commands;
 using Newtonsoft.Json;
 using System.Linq;
 using System.Reflection;

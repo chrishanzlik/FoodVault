@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace FoodVault.Application.Mediator
+namespace FoodVault.Application.Commands
 {
     /// <summary>
     /// Internal application command for integration handling.

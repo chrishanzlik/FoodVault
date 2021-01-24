@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using FoodVault.Application.Mediator;
+using FoodVault.Application.Commands;
 using MediatR;
 using System.Collections.Generic;
 using System.Linq;

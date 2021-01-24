@@ -1,7 +1,7 @@
 ﻿using Dapper;
 using FoodVault.Application.Database;
 using FoodVault.Application.FileUploads;
-using FoodVault.Application.Mediator;
+using FoodVault.Application.Queries;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
