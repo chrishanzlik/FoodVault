@@ -86,9 +86,11 @@ namespace FoodVault.Domain.Storage.FoodStorages
         /// <param name="productId">Products identifier.</param>
         /// <param name="quantity">Quantity of items to add.</param>
         /// <param name="expirationDate">Products expiration date.</param>
-        public void StoreProduct(ProductId productId, int quantity, DateTime? expirationDate)
+        /// <param name="productExistsChecker">Domain service that checks if a product exists.</param>
+        public void StoreProduct(ProductId productId, int quantity, DateTime? expirationDate, IProductExistsChecker productExistsChecker)
         {
             this.CheckDomainRule(new ProductOperationHasValidQuantityRule(quantity));
+            this.CheckDomainRule(new ProductExistsRule(productId, productExistsChecker));
 
             var storedProduct = StoredProducts.SingleOrDefault(x => x.ProductId == productId && x.ExpirationDate == expirationDate);
 

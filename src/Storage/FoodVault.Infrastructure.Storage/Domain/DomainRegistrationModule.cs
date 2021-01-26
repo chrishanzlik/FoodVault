@@ -1,4 +1,6 @@
 ﻿using Autofac;
+using FoodVault.Application.Storage.FoodStorages.DomainServices;
+using FoodVault.Domain.Storage.FoodStorages;
 
 namespace FoodVault.Infrastructure.Storage.Domain
 {
@@ -10,7 +12,9 @@ namespace FoodVault.Infrastructure.Storage.Domain
         /// <inheritdoc />
         protected override void Load(ContainerBuilder builder)
         {
-            /* Register domain services */
+            builder.RegisterType<ProdcutExistsSqlChecker>()
+                .As<IProductExistsChecker>()
+                .InstancePerLifetimeScope();
         }
     }
 }
