@@ -64,9 +64,14 @@ namespace FoodVault.Domain.Storage.FoodStorages
         /// /// <param name="expirationDate">Products expiration date.</param>
         public void RemoveProduct(ProductId productId, int quantity, DateTime? expirationDate)
         {
-            this.CheckDomainRule(new ProductOperationHasValidQuantityRule(quantity));
+            var storedProduct = StoredProducts.FirstOrDefault(x => x.ProductId == productId && x.ExpirationDate == expirationDate);
+            if (storedProduct == null)
+            {
+                return;
+            }
 
-            var storedProduct = StoredProducts.Single(x => x.ProductId == productId && x.ExpirationDate == expirationDate);
+            this.CheckDomainRule(new ProductOperationHasValidQuantityRule(quantity));
+            this.CheckDomainRule(new HasEnaughProductQuantityToRemove(storedProduct.Quantity, quantity));
 
             if (storedProduct.Quantity - quantity <= 0)
             {

@@ -8,6 +8,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
+using FoodVault.Application.Storage.FoodStorages.RemoveProduct;
 
 namespace FoodVault.Api.Storage.FoodStorages
 {
@@ -70,14 +71,19 @@ namespace FoodVault.Api.Storage.FoodStorages
             return result.ToActionResult();
         }
 
-        //[HttpDelete("{foodStorageId}/products/{productId}")]
-        //public async Task<IActionResult> RemoveProductsFromStorageAsync(
-        //    [FromRoute] Guid foodStorageId,
-        //    [FromRoute] Guid productId,
-        //    [FromQuery] int quantity = 1)
-        //{
+        [HttpDelete("{foodStorageId}/products/{productId}")]
+        public async Task<IActionResult> RemoveProductsFromStorageAsync(
+            [FromRoute] Guid foodStorageId,
+            [FromRoute] Guid productId,
+            [FromQuery] int quantity = 1,
+            [FromQuery] DateTime? expiration = null)
+        {
+            var command = new RemoveProductCommand(foodStorageId, productId, quantity, expiration);
 
-        //}
+            ICommandResult result = await _mediator.Send(command);
+
+            return result.ToActionResult();
+        }
 
     }
 }
