@@ -36,7 +36,10 @@ namespace FoodVault.Infrastructure.FileUploads
             {
                 var path = Path.Combine(_fileUploadSettings.RootFolder, expiredFile.RelativeFileLocation);
 
-                File.Delete(path);
+                if (File.Exists(path))
+                {
+                    File.Delete(path);
+                }
 
                 await _fileUploadRepository.RemoveAsync(expiredFile.Id);
             }
@@ -51,7 +54,10 @@ namespace FoodVault.Infrastructure.FileUploads
             {
                 var path = Path.Combine(_fileUploadSettings.RootFolder, uploadInfo.RelativeFileLocation);
 
-                File.Delete(path);
+                if (File.Exists(path))
+                {
+                    File.Delete(path);
+                }
 
                 await _fileUploadRepository.RemoveAsync(id);
             }

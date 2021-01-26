@@ -59,7 +59,7 @@ namespace FoodVault.Domain.Storage.FoodStorages
         /// <param name="amount">Value to subtract.</param>
         internal void DecreaseQuantity(int amount)
         {
-            this.CheckDomainRule(new ProductHasEnaughQuantityToRemove(this.Quantity, amount));
+            this.CheckDomainRule(new ProductHasEnaughQuantityToRemoveRule(this.Quantity, amount));
 
             Quantity -= amount;
         }

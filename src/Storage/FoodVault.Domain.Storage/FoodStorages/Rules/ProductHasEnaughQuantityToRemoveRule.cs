@@ -3,17 +3,17 @@
     /// <summary>
     /// Rule for checking that a product has enaugh items to remove.
     /// </summary>
-    public class ProductHasEnaughQuantityToRemove : IDomainRule
+    public class ProductHasEnaughQuantityToRemoveRule : IDomainRule
     {
         private readonly int _actualQuantity;
         private readonly int _quantityToRemove;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ProductHasEnaughQuantityToRemove" /> class.
+        /// Initializes a new instance of the <see cref="ProductHasEnaughQuantityToRemoveRule" /> class.
         /// </summary>
         /// <param name="actualQuantity">Actual products quantity.</param>
         /// <param name="quantityToRemove">Quantity to manipulate.</param>
-        public ProductHasEnaughQuantityToRemove(int actualQuantity, int quantityToRemove)
+        public ProductHasEnaughQuantityToRemoveRule(int actualQuantity, int quantityToRemove)
         {
             _actualQuantity = actualQuantity;
             _quantityToRemove = quantityToRemove;

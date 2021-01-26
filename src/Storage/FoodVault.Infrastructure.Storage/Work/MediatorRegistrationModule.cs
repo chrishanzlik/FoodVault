@@ -3,6 +3,7 @@ using Autofac.Core;
 using Autofac.Core.Activators.Reflection;
 using Autofac.Features.Variance;
 using FluentValidation;
+using FoodVault.Application.FileUploads;
 using FoodVault.Application.Storage.FoodStorages.CreateStorage;
 using FoodVault.Application.Validation;
 using FoodVault.Infrastructure.InternalCommands;
@@ -53,6 +54,10 @@ namespace FoodVault.Infrastructure.Storage.Work
             builder.RegisterType<ProcessInternalCommandsCommandHandler>()
                 .AsImplementedInterfaces()
                 .WithParameter("commandsAssembly", Assemblies.Application)
+                .InstancePerLifetimeScope();
+
+            builder.RegisterType<RemoveExpiredFilesCommandHandler>()
+                .AsImplementedInterfaces()
                 .InstancePerLifetimeScope();
 
             builder.RegisterGeneric(typeof(RequestPostProcessorBehavior<,>)).As(typeof(IPipelineBehavior<,>));

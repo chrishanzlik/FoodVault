@@ -19,6 +19,5 @@ namespace FoodVault.Application.Storage.Products.SearchProduct
         /// Gets the barcode of the product to search.
         /// </summary>
         public string Barcode { get; }
-
     }
 }

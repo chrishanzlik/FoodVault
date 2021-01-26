@@ -26,7 +26,9 @@ namespace FoodVault.Infrastructure.Storage.Domain.FoodStorages
 
                 x.Property<FoodStorageId>("FoodStorageId");
 
-                x.HasKey("FoodStorageId", "ProductId");
+                x.Property<Guid>("Id").ValueGeneratedOnAdd();
+                
+                x.HasKey("Id");
 
                 x.Property<DateTime?>("ExpirationDate")
                     .HasConversion(x => x, x => x.HasValue ? DateTime.SpecifyKind(x.Value, DateTimeKind.Utc) : (DateTime?)null);

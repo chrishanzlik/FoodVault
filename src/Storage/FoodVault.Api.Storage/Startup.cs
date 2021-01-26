@@ -3,24 +3,17 @@ using Dapper;
 using FoodVault.Api.Storage.Common;
 using FoodVault.Application.FileUploads;
 using FoodVault.Infrastructure.Database;
-using FoodVault.Infrastructure.Storage;
 using FoodVault.Infrastructure.Storage.Database;
 using FoodVault.Infrastructure.Storage.Domain;
 using FoodVault.Infrastructure.Storage.Work;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace FoodVault.Storage.Api
 {
