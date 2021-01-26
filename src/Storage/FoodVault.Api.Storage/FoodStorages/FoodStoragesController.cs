@@ -2,7 +2,7 @@
 using FoodVault.Application.Commands;
 using FoodVault.Application.Storage.FoodStorages.CreateStorage;
 using FoodVault.Application.Storage.FoodStorages.GetStorageOverview;
-using FoodVault.Application.Storage.FoodStorages.RemoveStorage;
+using FoodVault.Application.Storage.FoodStorages.DeleteStorage;
 using FoodVault.Application.Storage.FoodStorages.StoreProduct;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -45,7 +45,7 @@ namespace FoodVault.Api.Storage.FoodStorages
         [HttpDelete("{foodStorageId}")]
         public async Task<IActionResult> RemoveStorageAsync(Guid foodStorageId)
         {
-            var command = new RemoveStorageCommand(foodStorageId);
+            var command = new DeleteStorageCommand(foodStorageId);
 
             ICommandResult result = await _mediator.Send(command);
 

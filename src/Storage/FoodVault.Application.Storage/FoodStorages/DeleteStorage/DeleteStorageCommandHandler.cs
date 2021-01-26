@@ -3,26 +3,26 @@ using FoodVault.Domain.Storage.FoodStorages;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace FoodVault.Application.Storage.FoodStorages.RemoveStorage
+namespace FoodVault.Application.Storage.FoodStorages.DeleteStorage
 {
     /// <summary>
-    /// Command handler for the <see cref="RemoveStorageCommand"/>.
+    /// Command handler for the <see cref="DeleteStorageCommand"/>.
     /// </summary>
-    public class RemoveStorageCommandHandler : ICommandHandler<RemoveStorageCommand>
+    public class DeleteStorageCommandHandler : ICommandHandler<DeleteStorageCommand>
     {
         private readonly IFoodStorageRepository _foodStorageRepository;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="CreateStorageCommandHandler" /> class.
+        /// Initializes a new instance of the <see cref="DeleteStorageCommandHandler" /> class.
         /// </summary>
         /// <param name="foodStorageRepository">FoodStorage repository.</param>
-        public RemoveStorageCommandHandler(IFoodStorageRepository foodStorageRepository)
+        public DeleteStorageCommandHandler(IFoodStorageRepository foodStorageRepository)
         {
             _foodStorageRepository = foodStorageRepository;
         }
 
         /// <inheritdoc />
-        public async Task<ICommandResult> Handle(RemoveStorageCommand request, CancellationToken cancellationToken)
+        public async Task<ICommandResult> Handle(DeleteStorageCommand request, CancellationToken cancellationToken)
         {
             FoodStorageId id = new FoodStorageId(request.FoodStorageId);
 
