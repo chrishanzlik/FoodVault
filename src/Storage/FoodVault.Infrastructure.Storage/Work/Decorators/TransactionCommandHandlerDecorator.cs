@@ -12,7 +12,7 @@ namespace FoodVault.Infrastructure.Storage.Work.Decorators
     /// Command handler decorator for commiting transactions and dispatching domain events.
     /// </summary>
     /// <typeparam name="TCommand">Command type.</typeparam>
-    public class TransactionCommandHandlerDecorator<TCommand> : ICommandHandler<TCommand>
+    internal class TransactionCommandHandlerDecorator<TCommand> : ICommandHandler<TCommand>
         where TCommand : ICommand
     {
         private readonly ICommandHandler<TCommand> _decorated;

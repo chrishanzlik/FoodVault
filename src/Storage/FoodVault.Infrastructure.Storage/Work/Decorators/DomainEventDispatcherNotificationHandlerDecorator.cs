@@ -9,7 +9,7 @@ namespace FoodVault.Infrastructure.Storage.Work.Decorators
     /// Notification handler decorator for dispatching domain events.
     /// </summary>
     /// <typeparam name="TNotification">Notification type.</typeparam>
-    public class DomainEventDispatcherNotificationHandlerDecorator<TNotification> : INotificationHandler<TNotification>
+    internal class DomainEventDispatcherNotificationHandlerDecorator<TNotification> : INotificationHandler<TNotification>
         where TNotification : INotification
     {
         private readonly INotificationHandler<TNotification> _decorated;

@@ -39,7 +39,6 @@ namespace FoodVault.Infrastructure.Storage.Work
                 typeof(DomainEventDispatcherNotificationHandlerDecorator<>),
                 typeof(INotificationHandler<>));
 
-            //TODO: use mediatr pipelines instead?
             builder.RegisterGenericDecorator(
                 typeof(TransactionCommandHandlerDecorator<>),
                 typeof(IRequestHandler<,>));

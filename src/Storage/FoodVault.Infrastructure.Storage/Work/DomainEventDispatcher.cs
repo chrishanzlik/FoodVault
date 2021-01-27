@@ -16,7 +16,7 @@ namespace FoodVault.Infrastructure.Storage.Work
     /// <summary>
     /// Dispatches all domain events within a transaction.
     /// </summary>
-    public class DomainEventDispatcher : IDomainEventDispatcher
+    internal class DomainEventDispatcher : IDomainEventDispatcher
     {
         private readonly StorageContext _storageContext;
         private readonly IMediator _mediator;

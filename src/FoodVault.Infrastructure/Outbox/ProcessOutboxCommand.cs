@@ -12,7 +12,6 @@ namespace FoodVault.Infrastructure.Outbox
         /// </summary>
         public ProcessOutboxCommand()
         {
-
         }
     }
 }

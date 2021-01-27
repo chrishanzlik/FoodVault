@@ -12,7 +12,6 @@ namespace FoodVault.Infrastructure.InternalCommands
         /// </summary>
         public ProcessInternalCommandsCommand()
         {
-
         }
     }
 }
