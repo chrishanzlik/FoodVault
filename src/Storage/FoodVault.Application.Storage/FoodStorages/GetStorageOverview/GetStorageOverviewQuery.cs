@@ -13,7 +13,6 @@ namespace FoodVault.Application.Storage.FoodStorages.GetStorageOverview
         /// </summary>
         public GetStorageOverviewQuery()
         {
-
         }
     }
 }
