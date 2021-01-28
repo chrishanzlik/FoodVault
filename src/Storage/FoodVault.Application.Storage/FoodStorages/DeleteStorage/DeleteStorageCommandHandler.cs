@@ -26,7 +26,9 @@ namespace FoodVault.Application.Storage.FoodStorages.DeleteStorage
         {
             FoodStorageId id = new FoodStorageId(request.FoodStorageId);
 
-            await _foodStorageRepository.RemoveAsync(id);
+            var storage = await _foodStorageRepository.GetByIdAsync(id);
+
+            storage?.Delete();
 
             return CommandResult.Ok();
         }

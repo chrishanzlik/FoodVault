@@ -14,6 +14,8 @@ namespace FoodVault.Domain.Storage.FoodStorages
     {
         private readonly List<StoredProduct> _storedProducts = new List<StoredProduct>();
 
+        private bool _isDeleted;
+
         /// <summary>
         /// Required by Entity Framework.
         /// </summary>
@@ -31,6 +33,8 @@ namespace FoodVault.Domain.Storage.FoodStorages
             Id = new FoodStorageId(Guid.NewGuid());
             Name = storageName;
             Description = description;
+
+            _isDeleted = false;
 
             this.AddDomainEvent(new FoodStorageCreatedEvent(Id));
         }
@@ -120,6 +124,16 @@ namespace FoodVault.Domain.Storage.FoodStorages
 
             this.Name = name;
             this.Description = description;
+        }
+
+        /// <summary>
+        /// Deletes the storage.
+        /// </summary>
+        public void Delete()
+        {
+            this._isDeleted = true;
+
+            this.AddDomainEvent(new FoodStorageDeletedEvent(this.Id));
         }
     }
 }

@@ -44,7 +44,7 @@ namespace FoodVault.Api.Storage.FoodStorages
         }
 
         [HttpDelete("{foodStorageId}")]
-        public async Task<IActionResult> RemoveStorageAsync(Guid foodStorageId)
+        public async Task<IActionResult> DeleteStorageAsync(Guid foodStorageId)
         {
             var command = new DeleteStorageCommand(foodStorageId);
 
@@ -52,6 +52,8 @@ namespace FoodVault.Api.Storage.FoodStorages
 
             return result.ToActionResult();
         }
+
+        #region StorageProducts
 
         [HttpPost("{foodStorageId}/products")]
         public async Task<IActionResult> AddProductsToStorageAsync(
@@ -85,5 +87,6 @@ namespace FoodVault.Api.Storage.FoodStorages
             return result.ToActionResult();
         }
 
+        #endregion
     }
 }

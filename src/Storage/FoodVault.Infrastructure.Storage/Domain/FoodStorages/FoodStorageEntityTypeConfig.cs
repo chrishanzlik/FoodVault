@@ -16,6 +16,8 @@ namespace FoodVault.Infrastructure.Storage.Domain.FoodStorages
 
             builder.HasKey(x => x.Id);
 
+            builder.Property<bool>("_isDeleted").HasColumnName("IsDeleted");
+
             builder.OwnsMany<StoredProduct>(StoredProducts, x =>
             {
                 x.WithOwner().HasForeignKey("FoodStorageId");
