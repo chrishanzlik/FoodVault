@@ -5,7 +5,7 @@ namespace FoodVault.Modules.Storage.Application.FoodStorages.StoreProduct
     /// <summary>
     /// Validator for the <see cref="StoreProductCommand"/>.
     /// </summary>
-    public class StoreProductCommandValidator : AbstractValidator<StoreProductCommand>
+    internal class StoreProductCommandValidator : AbstractValidator<StoreProductCommand>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="StoreProductCommandValidator" /> class.

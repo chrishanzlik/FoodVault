@@ -1,17 +1,19 @@
 using Autofac;
+using Autofac.Extensions.DependencyInjection;
 using Dapper;
-using FoodVault.Api.Common;
-using FoodVault.Modules.Storage.Infrastructure.Database;
-using FoodVault.Modules.Storage.Infrastructure.Domain;
-using FoodVault.Modules.Storage.Infrastructure.Work;
+using FoodVault.Api.Configuration.ExecutionContext;
 using FoodVault.Framework.Application.FileUploads;
 using FoodVault.Framework.Infrastructure.Database;
+using FoodVault.Modules.Storage.Infrastructure;
+using FoodVault.Modules.Storage.Infrastructure.Configuration;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 
@@ -35,6 +37,8 @@ namespace FoodVault.Api
             services.Configure<FileUploadSettings>(Configuration.GetSection(nameof(FileUploadSettings)));
             services.AddSingleton<IFileUploadSettings>(x => x.GetService<IOptions<FileUploadSettings>>().Value);
 
+            services.AddHttpContextAccessor();
+
             services.AddApiVersioning(config =>
             {
                 config.DefaultApiVersion = new ApiVersion(1, 0);
@@ -46,22 +50,14 @@ namespace FoodVault.Api
             {
                 config.SwaggerDoc("v1", new OpenApiInfo { Title = "foodvault storage", Version = "v1" });
             });
-
-            services.AddHostedService<OutboxProcessingBackgroundService>();
-            services.AddHostedService<InternalCommandsProcessingBackgroundService>();
-            services.AddHostedService<TempFileCleanupBackgroundService>();
-        }
-
-        public void ConfigureContainer(ContainerBuilder builder)
-        {
-            builder.RegisterModule(new WorkRegistrationModule());
-            builder.RegisterModule(new MediatorRegistrationModule());
-            builder.RegisterModule(new DomainRegistrationModule());
-            builder.RegisterModule(new DatabaseRegistrationModule(Configuration["ConnectionString"]));
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            var autofacContainer = app.ApplicationServices.GetAutofacRoot();
+
+            InitializeModules(autofacContainer);
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -81,8 +77,23 @@ namespace FoodVault.Api
             });
         }
 
+        private void InitializeModules(ILifetimeScope container)
+        {
+            var httpContextAccessor = container.Resolve<IHttpContextAccessor>();
+            var fileUploadSettings = container.Resolve<IFileUploadSettings>();
+            var executionContextAccessor = new ExecutionContextAccessor(httpContextAccessor);
+
+            StorageStartup.Initialize(
+                Configuration["ConnectionString"],
+                executionContextAccessor,
+                fileUploadSettings,
+                container.Resolve<ILogger<StorageModule>>(),
+                null);
+        }
+
         public void ConfigureDapperTypeHandlers()
         {
+            //TODO: Move to module
             SqlMapper.AddTypeHandler(new NullableDateTimeUtcDapperHandler());
             SqlMapper.AddTypeHandler(new DateTimeUtcDapperHandler());
         }

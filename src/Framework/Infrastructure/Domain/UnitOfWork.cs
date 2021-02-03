@@ -9,11 +9,9 @@ namespace FoodVault.Framework.Infrastructure.Domain
     /// <summary>
     /// Unit of work.
     /// </summary>
-    /// <typeparam name="TContext">Type of the db context.</typeparam>
-    public sealed class UnitOfWork<TContext> : IUnitOfWork
-        where TContext : DbContext
+    public sealed class UnitOfWork : IUnitOfWork
     {
-        private readonly TContext _context;
+        private readonly DbContext _context;
         private readonly IDomainEventDispatcher _domainEventDispatcher;
 
         /// <summary>
@@ -22,7 +20,7 @@ namespace FoodVault.Framework.Infrastructure.Domain
         /// <param name="context">Database context.</param>
         /// <param name="domainEventDispatcher">Domain event dispatcher.</param>
         public UnitOfWork(
-            TContext context,
+            DbContext context,
             IDomainEventDispatcher domainEventDispatcher)
         {
             _context = context;

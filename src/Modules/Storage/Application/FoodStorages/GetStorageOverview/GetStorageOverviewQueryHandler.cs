@@ -10,7 +10,7 @@ namespace FoodVault.Modules.Storage.Application.FoodStorages.GetStorageOverview
     /// <summary>
     /// Query handler for <see cref="GetStorageOverviewQuery"/>.
     /// </summary>
-    public class GetStorageOverviewQueryHandler : IQueryHandler<GetStorageOverviewQuery, IEnumerable<FoodStorageDto>>
+    internal class GetStorageOverviewQueryHandler : IQueryHandler<GetStorageOverviewQuery, IEnumerable<FoodStorageDto>>
     {
         private readonly IDbConnectionFactory _dbConnectionFactory;
 

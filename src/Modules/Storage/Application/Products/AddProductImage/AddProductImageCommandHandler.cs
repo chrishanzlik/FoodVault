@@ -9,7 +9,7 @@ namespace FoodVault.Modules.Storage.Application.Products.AddProductImage
     /// <summary>
     /// Command handler for <see cref="AddProductImageCommandHandler"/>.
     /// </summary>
-    public class AddProductImageCommandHandler : ICommandHandler<AddProductImageCommand>
+    internal class AddProductImageCommandHandler : ICommandHandler<AddProductImageCommand>
     {
         private readonly IProductRepository _productRepository;
 

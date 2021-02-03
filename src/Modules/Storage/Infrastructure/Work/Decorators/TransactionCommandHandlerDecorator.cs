@@ -1,10 +1,11 @@
-﻿using FoodVault.Modules.Storage.Infrastructure.Database;
+﻿using FoodVault.Modules.Storage.Infrastructure.Configuration.Database;
 using FoodVault.Framework.Application.Commands;
 using FoodVault.Framework.Domain;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using FoodVault.Framework.Infrastructure;
 
 namespace FoodVault.Modules.Storage.Infrastructure.Work.Decorators
 {

@@ -8,7 +8,7 @@ namespace FoodVault.Modules.Storage.Application.Products.RemoveProductImage
     /// <summary>
     /// Notification handler for <see cref="ProductImageRemovedNotification"/>.
     /// </summary>
-    public class ProductImageRemovedNotificationHandler : INotificationHandler<ProductImageRemovedNotification>
+    internal class ProductImageRemovedNotificationHandler : INotificationHandler<ProductImageRemovedNotification>
     {
         private readonly IFileStorage _fileStorage;
 

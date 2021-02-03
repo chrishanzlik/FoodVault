@@ -1,5 +1,5 @@
 ﻿using FoodVault.Modules.Storage.Domain.Products;
-using FoodVault.Modules.Storage.Infrastructure.Database;
+using FoodVault.Modules.Storage.Infrastructure.Configuration.Database;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 

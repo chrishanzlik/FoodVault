@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace FoodVault.Modules.Storage.Application.Products.GetProductImage
 {
-    public class GetProductImageQueryHandler : IQueryHandler<GetProductImageQuery, FileUploadStream>
+    internal class GetProductImageQueryHandler : IQueryHandler<GetProductImageQuery, FileUploadStream>
     {
         private readonly IDbConnectionFactory _dbConnectionFactory;
         private readonly IFileStorage _fileStorage;

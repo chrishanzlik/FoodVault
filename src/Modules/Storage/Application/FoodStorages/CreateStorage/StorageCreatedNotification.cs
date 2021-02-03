@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 
 namespace FoodVault.Modules.Storage.Application.FoodStorages.CreateStorage
 {
-    public class StorageCreatedNotification : DomainEventNotification<FoodStorageCreatedEvent>
+    internal class StorageCreatedNotification : DomainEventNotification<FoodStorageCreatedEvent>
     {
         public StorageCreatedNotification(FoodStorageCreatedEvent domainEvent) : base(domainEvent)
         {

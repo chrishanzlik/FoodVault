@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace FoodVault.Modules.Storage.Application.FoodStorages.CreateStorage
 {
-    public class StorageCreatedNotificationHandler : INotificationHandler<StorageCreatedNotification>
+    internal class StorageCreatedNotificationHandler : INotificationHandler<StorageCreatedNotification>
     {
         public Task Handle(StorageCreatedNotification notification, CancellationToken cancellationToken)
         {

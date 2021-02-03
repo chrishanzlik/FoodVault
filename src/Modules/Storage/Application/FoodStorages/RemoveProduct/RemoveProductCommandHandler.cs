@@ -10,7 +10,7 @@ namespace FoodVault.Modules.Storage.Application.FoodStorages.RemoveProduct
     /// <summary>
     /// Command handler for <see cref="RemoveProductCommand"/>.
     /// </summary>
-    public class RemoveProductCommandHandler : ICommandHandler<RemoveProductCommand>
+    internal class RemoveProductCommandHandler : ICommandHandler<RemoveProductCommand>
     {
         private readonly IFoodStorageRepository _foodStorageRepository;
 

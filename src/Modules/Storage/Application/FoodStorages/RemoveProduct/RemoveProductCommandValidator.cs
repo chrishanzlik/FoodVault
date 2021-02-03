@@ -5,7 +5,7 @@ namespace FoodVault.Modules.Storage.Application.FoodStorages.RemoveProduct
     /// <summary>
     /// Validator for the <see cref="RemoveProductCommand"/>.
     /// </summary>
-    public class RemoveProductCommandValidator : AbstractValidator<RemoveProductCommand>
+    internal class RemoveProductCommandValidator : AbstractValidator<RemoveProductCommand>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="RemoveProductCommandValidator" /> class.

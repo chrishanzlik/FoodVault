@@ -5,7 +5,7 @@ namespace FoodVault.Modules.Storage.Application.Products.AddProductImage
     /// <summary>
     /// Command validator for <see cref="AddProductImageCommandValidator"/>.
     /// </summary>
-    public class AddProductImageCommandValidator : AbstractValidator<AddProductImageCommand>
+    internal class AddProductImageCommandValidator : AbstractValidator<AddProductImageCommand>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="AddProductImageCommandValidator" /> class.

@@ -13,5 +13,11 @@ namespace FoodVault.Framework.Application.Database
         /// </summary>
         /// <returns><see cref="IDbConnection"/> object.</returns>
         IDbConnection GetOpen();
+
+        /// <summary>
+        /// Retuns a new created open <see cref="IDbConnection"/> when invoked.
+        /// </summary>
+        /// <returns><see cref="IDbConnection"/> object.</returns>
+        IDbConnection CreateNew();
     }
 }

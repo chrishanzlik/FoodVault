@@ -12,4 +12,4 @@ The storage bounded context serves as example:
     ```dotnet tool install --global dotnet-ef```
 2. Navigate to the **Modules/Storage/Infrastructure** project folder
 3. Execute the migration command
-    ```dotnet ef migrations add "migration-name" --startup-project ..\..\..\Api -o Database\Migrations```
+    ```dotnet ef migrations add "migration-name" --startup-project ..\..\..\Api -o Configuration\Database\Migrations```

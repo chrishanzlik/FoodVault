@@ -8,7 +8,7 @@ namespace FoodVault.Modules.Storage.Application.FoodStorages.CreateStorage
     /// <summary>
     /// Command handler for the <see cref="CreateStorageCommand"/>.
     /// </summary>
-    public class CreateStorageCommandHandler : ICommandHandler<CreateStorageCommand>
+    internal class CreateStorageCommandHandler : ICommandHandler<CreateStorageCommand>
     {
         private readonly IFoodStorageRepository _foodStorageRepository;
 

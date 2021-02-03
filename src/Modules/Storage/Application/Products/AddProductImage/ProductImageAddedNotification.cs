@@ -9,7 +9,7 @@ namespace FoodVault.Modules.Storage.Application.Products.AddProductImage
     /// <summary>
     /// Notification about a <see cref="ProductImageAddedEvent"/>. Executes outside of the transaction.
     /// </summary>
-    public class ProductImageAddedNotification : DomainEventNotification<ProductImageAddedEvent>
+    internal class ProductImageAddedNotification : DomainEventNotification<ProductImageAddedEvent>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ProductImageAddedNotification" /> class.

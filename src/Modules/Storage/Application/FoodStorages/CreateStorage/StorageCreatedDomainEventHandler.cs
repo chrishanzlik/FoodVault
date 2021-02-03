@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace FoodVault.Modules.Storage.Application.FoodStorages.CreateStorage
 {
-    public class StorageCreatedDomainEventHandler : INotificationHandler<FoodStorageCreatedEvent>
+    internal class StorageCreatedDomainEventHandler : INotificationHandler<FoodStorageCreatedEvent>
     {
         public StorageCreatedDomainEventHandler()
         {

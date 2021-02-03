@@ -8,7 +8,7 @@ namespace FoodVault.Modules.Storage.Application.Products.SearchProduct
     /// <summary>
     /// Query handler for <see cref="SearchProductQuery"/>.
     /// </summary>
-    public class SearchProductQueryHandler : IQueryHandler<SearchProductQuery, ProductDto>
+    internal class SearchProductQueryHandler : IQueryHandler<SearchProductQuery, ProductDto>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="SearchProductQueryHandler" /> class.

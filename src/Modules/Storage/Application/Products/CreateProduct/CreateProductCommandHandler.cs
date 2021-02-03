@@ -9,7 +9,7 @@ namespace FoodVault.Modules.Storage.Application.Products.CreateProduct
     /// <summary>
     /// Command handler for <see cref="CreateProductCommand"/>.
     /// </summary>
-    public class CreateProductCommandHandler : ICommandHandler<CreateProductCommand>
+    internal class CreateProductCommandHandler : ICommandHandler<CreateProductCommand>
     {
         private readonly IProductRepository _productRepository;
 
