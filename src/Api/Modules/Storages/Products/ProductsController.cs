@@ -4,8 +4,6 @@ using FoodVault.Modules.Storage.Application.Products.CreateProduct;
 using FoodVault.Modules.Storage.Application.Products.GetProductImage;
 using FoodVault.Modules.Storage.Application.Products.RemoveProductImage;
 using FoodVault.Framework.Application.Commands;
-using FoodVault.Framework.Application.FileUploads;
-using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;

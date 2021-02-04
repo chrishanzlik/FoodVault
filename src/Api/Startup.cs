@@ -1,10 +1,8 @@
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
-using Dapper;
 using FoodVault.Api.Configuration.ExecutionContext;
 using FoodVault.Api.Modules.Storages;
 using FoodVault.Framework.Application.FileUploads;
-using FoodVault.Framework.Infrastructure.Database;
 using FoodVault.Modules.Storage.Infrastructure;
 using FoodVault.Modules.Storage.Infrastructure.Configuration;
 using Microsoft.AspNetCore.Builder;
@@ -15,7 +13,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 
 namespace FoodVault.Api
@@ -31,12 +28,7 @@ namespace FoodVault.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
-            ConfigureDapperTypeHandlers();
-
             services.AddControllers();
-
-            services.Configure<FileUploadSettings>(Configuration.GetSection(nameof(FileUploadSettings)));
-            services.AddSingleton<IFileUploadSettings>(x => x.GetService<IOptions<FileUploadSettings>>().Value);
 
             services.AddHttpContextAccessor();
 
@@ -86,8 +78,8 @@ namespace FoodVault.Api
         private void InitializeModules(ILifetimeScope container)
         {
             var httpContextAccessor = container.Resolve<IHttpContextAccessor>();
-            var fileUploadSettings = container.Resolve<IFileUploadSettings>();
             var executionContextAccessor = new ExecutionContextAccessor(httpContextAccessor);
+            var fileUploadSettings = Configuration.GetSection(nameof(FileUploadSettings)).Get<FileUploadSettings>();
 
             StorageStartup.Initialize(
                 Configuration["ConnectionString"],
@@ -95,13 +87,6 @@ namespace FoodVault.Api
                 fileUploadSettings,
                 container.Resolve<ILogger<StorageModule>>(),
                 null);
-        }
-
-        private void ConfigureDapperTypeHandlers()
-        {
-            //TODO: Move to module
-            SqlMapper.AddTypeHandler(new NullableDateTimeUtcDapperHandler());
-            SqlMapper.AddTypeHandler(new DateTimeUtcDapperHandler());
         }
     }
 }

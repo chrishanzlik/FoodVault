@@ -4,7 +4,7 @@ using FoodVault.Modules.Storage.Domain.FoodStorages;
 using FoodVault.Modules.Storage.Domain.Products;
 using FoodVault.Modules.Storage.Infrastructure.Domain.FoodStorages;
 using FoodVault.Modules.Storage.Infrastructure.Domain.Products;
-using FoodVault.Framework.Application.Database;
+using FoodVault.Framework.Application.DataAccess;
 using FoodVault.Framework.Application.FileUploads;
 using FoodVault.Framework.Domain;
 using FoodVault.Framework.Infrastructure.Database;
@@ -13,7 +13,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using FoodVault.Modules.Storage.Infrastructure.FileUploads;
 
-namespace FoodVault.Modules.Storage.Infrastructure.Configuration.Database
+namespace FoodVault.Modules.Storage.Infrastructure.Configuration.DataAccess
 {
     /// <summary>
     /// IoC container registrations for 'Database' stuff.

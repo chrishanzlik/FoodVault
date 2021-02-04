@@ -1,8 +1,10 @@
 ﻿using Autofac;
+using Dapper;
 using FoodVault.Framework.Application;
 using FoodVault.Framework.Application.FileUploads;
+using FoodVault.Framework.Infrastructure.Database;
 using FoodVault.Framework.Infrastructure.EventBus;
-using FoodVault.Modules.Storage.Infrastructure.Configuration.Database;
+using FoodVault.Modules.Storage.Infrastructure.Configuration.DataAccess;
 using FoodVault.Modules.Storage.Infrastructure.Configuration.EventBus;
 using FoodVault.Modules.Storage.Infrastructure.Configuration.Quartz;
 using FoodVault.Modules.Storage.Infrastructure.Domain;
@@ -27,7 +29,7 @@ namespace FoodVault.Modules.Storage.Infrastructure.Configuration
             ILogger logger,
             IEventBus eventsBus)
         {
-            //var moduleLogger = logger.ForContext("Module", "Meetings");
+            AddDapperTypeHandlers();
 
             ConfigureCompositionRoot(
                 connectionString,
@@ -69,15 +71,6 @@ namespace FoodVault.Modules.Storage.Infrastructure.Configuration
             containerBuilder.RegisterModule(new DatabaseModule(connectionString));
             containerBuilder.RegisterModule(new EventBusModule(eventBus));
 
-            //containerBuilder.RegisterModule(new LoggingModule(logger.ForContext("Module", "Meetings")));
-
-            //var loggerFactory = new SerilogLoggerFactory(logger);
-            //containerBuilder.RegisterModule(new DataAccessModule(connectionString, loggerFactory));
-            //containerBuilder.RegisterModule(new ProcessingModule());
-            //containerBuilder.RegisterModule(new EventsBusModule(eventsBus));
-            //containerBuilder.RegisterModule(new MediatorModule());
-            //containerBuilder.RegisterModule(new AuthenticationModule());
-
             //var domainNotificationsMap = new BiDictionary<string, Type>();
             //domainNotificationsMap.Add("MeetingGroupProposalAcceptedNotification", typeof(MeetingGroupProposalAcceptedNotification));
             //domainNotificationsMap.Add("MeetingGroupProposedNotification", typeof(MeetingGroupProposedNotification));
@@ -105,7 +98,7 @@ namespace FoodVault.Modules.Storage.Infrastructure.Configuration
             }
         }
 
-        static void MigrateAndSeedDatabase()
+        private static void MigrateAndSeedDatabase()
         {
             try
             {
@@ -119,6 +112,12 @@ namespace FoodVault.Modules.Storage.Infrastructure.Configuration
             {
                 _logger.LogError(ex, "An error occurred while migrating the database.");
             }
+        }
+
+        private static void AddDapperTypeHandlers()
+        {
+            SqlMapper.AddTypeHandler(new NullableDateTimeUtcDapperHandler());
+            SqlMapper.AddTypeHandler(new DateTimeUtcDapperHandler());
         }
     }
 }

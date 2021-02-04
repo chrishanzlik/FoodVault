@@ -1,6 +1,6 @@
 ﻿using Autofac;
 using Autofac.Core;
-using FoodVault.Modules.Storage.Infrastructure.Configuration.Database;
+using FoodVault.Modules.Storage.Infrastructure.Configuration.DataAccess;
 using FoodVault.Framework.Application.Events;
 using FoodVault.Framework.Domain;
 using FoodVault.Framework.Infrastructure.Outbox;

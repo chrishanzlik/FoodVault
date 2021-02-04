@@ -1,7 +1,7 @@
 ﻿using Dapper;
 using FoodVault.Modules.Storage.Domain.FoodStorages;
 using FoodVault.Modules.Storage.Domain.Products;
-using FoodVault.Framework.Application.Database;
+using FoodVault.Framework.Application.DataAccess;
 
 namespace FoodVault.Modules.Storage.Application.FoodStorages.DomainServices
 {

@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace FoodVault.Modules.Storage.Infrastructure.Configuration.Database.Migrations
+namespace FoodVault.Modules.Storage.Infrastructure.Configuration.DataAccess.Migrations
 {
     public partial class Init : Migration
     {

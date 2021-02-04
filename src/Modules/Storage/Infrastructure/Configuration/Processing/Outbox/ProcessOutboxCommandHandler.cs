@@ -1,7 +1,7 @@
 ﻿using Dapper;
 using FoodVault.Framework.Application.Commands;
 using FoodVault.Framework.Application.Events;
-using FoodVault.Framework.Application.Database;
+using FoodVault.Framework.Application.DataAccess;
 using MediatR;
 using Newtonsoft.Json;
 using System;

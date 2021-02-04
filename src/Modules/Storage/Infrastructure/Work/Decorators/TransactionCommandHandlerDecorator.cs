@@ -1,4 +1,4 @@
-﻿using FoodVault.Modules.Storage.Infrastructure.Configuration.Database;
+﻿using FoodVault.Modules.Storage.Infrastructure.Configuration.DataAccess;
 using FoodVault.Framework.Application.Commands;
 using FoodVault.Framework.Domain;
 using Microsoft.EntityFrameworkCore;

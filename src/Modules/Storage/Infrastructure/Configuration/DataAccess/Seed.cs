@@ -3,7 +3,7 @@ using FoodVault.Modules.Storage.Domain.Products;
 using System;
 using System.Linq;
 
-namespace FoodVault.Modules.Storage.Infrastructure.Configuration.Database
+namespace FoodVault.Modules.Storage.Infrastructure.Configuration.DataAccess
 {
     /// <summary>
     /// Database seed for test purposes.

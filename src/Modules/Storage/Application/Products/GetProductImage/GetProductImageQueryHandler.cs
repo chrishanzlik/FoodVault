@@ -1,5 +1,5 @@
 ﻿using Dapper;
-using FoodVault.Framework.Application.Database;
+using FoodVault.Framework.Application.DataAccess;
 using FoodVault.Framework.Application.FileUploads;
 using FoodVault.Framework.Application.Queries;
 using System;

@@ -1,6 +1,6 @@
 ﻿using Autofac;
 using Dapper;
-using FoodVault.Framework.Application.Database;
+using FoodVault.Framework.Application.DataAccess;
 using FoodVault.Framework.Infrastructure.EventBus;
 using FoodVault.Framework.Infrastructure.Serialization;
 using Newtonsoft.Json;

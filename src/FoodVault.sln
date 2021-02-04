@@ -15,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FoodVault.Modules.Storage.T
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FoodVault.Modules.Storage.Tests.IntegrationTests", "Modules\Storage\Tests\IntegrationTests\FoodVault.Modules.Storage.Tests.IntegrationTests.csproj", "{5FD8157A-6154-45A8-8E6D-70A0E22E2BAB}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{5094F806-C98F-43D3-9814-0BB615CA1C4B}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Solution Items", "_Solution Items", "{5094F806-C98F-43D3-9814-0BB615CA1C4B}"
 	ProjectSection(SolutionItems) = preProject
 		..\.gitignore = ..\.gitignore
 		..\LICENSE = ..\LICENSE
@@ -38,7 +38,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Framework", "Framework", "{
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FoodVault.Modules.Storage.Integration", "Modules\Storage\Integration\FoodVault.Modules.Storage.Integration.csproj", "{05AB8CA2-9D34-490F-9F68-69ED411760A6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FoodVault.Framework.EventBus", "Framework\EventBus\FoodVault.Framework.EventBus.csproj", "{4E35A973-F7AA-4961-9ED8-78963C1A8C89}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FoodVault.Framework.EventBus", "Framework\EventBus\FoodVault.Framework.EventBus.csproj", "{4E35A973-F7AA-4961-9ED8-78963C1A8C89}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
