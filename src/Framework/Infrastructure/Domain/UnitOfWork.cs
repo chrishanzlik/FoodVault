@@ -1,6 +1,4 @@
-﻿using FoodVault.Framework.Domain;
-using FoodVault.Framework.Infrastructure.Work;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using System.Threading;
 using System.Threading.Tasks;
 

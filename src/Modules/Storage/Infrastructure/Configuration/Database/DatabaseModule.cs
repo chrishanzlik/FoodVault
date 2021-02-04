@@ -1,6 +1,5 @@
 ﻿using Autofac;
 using FoodVault.Infrastructure.Database;
-using FoodVault.Infrastructure.FileUploads;
 using FoodVault.Modules.Storage.Domain.FoodStorages;
 using FoodVault.Modules.Storage.Domain.Products;
 using FoodVault.Modules.Storage.Infrastructure.Domain.FoodStorages;
@@ -12,6 +11,7 @@ using FoodVault.Framework.Infrastructure.Database;
 using FoodVault.Framework.Infrastructure.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using FoodVault.Modules.Storage.Infrastructure.FileUploads;
 
 namespace FoodVault.Modules.Storage.Infrastructure.Configuration.Database
 {

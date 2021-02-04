@@ -1,12 +1,11 @@
 ﻿using FoodVault.Modules.Storage.Domain.FoodStorages;
 using FoodVault.Modules.Storage.Domain.Products;
 using FoodVault.Framework.Application.FileUploads;
-using FoodVault.Framework.Infrastructure.FileUploads;
 using FoodVault.Framework.Infrastructure.InternalCommands;
 using FoodVault.Framework.Infrastructure.Outbox;
 using Microsoft.EntityFrameworkCore;
 
-namespace FoodVault.Modules.Storage.Infrastructure.Configuration.Database
+namespace FoodVault.Modules.Storage.Infrastructure
 {
     /// <summary>
     /// 'Storage' bounded-context database interface.
@@ -31,9 +30,6 @@ namespace FoodVault.Modules.Storage.Infrastructure.Configuration.Database
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(StorageContext).Assembly);
-            modelBuilder.ApplyConfiguration(new OutboxMessageEntityTypeConfig());
-            modelBuilder.ApplyConfiguration(new InternalCommandEntityTypeConfig());
-            modelBuilder.ApplyConfiguration(new FileUploadEntityTypeConfig());
         }
     }
 }

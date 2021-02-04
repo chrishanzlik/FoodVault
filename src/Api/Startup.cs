@@ -2,6 +2,7 @@ using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Dapper;
 using FoodVault.Api.Configuration.ExecutionContext;
+using FoodVault.Api.Modules.Storages;
 using FoodVault.Framework.Application.FileUploads;
 using FoodVault.Framework.Infrastructure.Database;
 using FoodVault.Modules.Storage.Infrastructure;
@@ -77,6 +78,11 @@ namespace FoodVault.Api
             });
         }
 
+        public void ConfigureContainer(ContainerBuilder containerBuilder)
+        {
+            containerBuilder.RegisterModule(new StorageAutofacModule());
+        }
+
         private void InitializeModules(ILifetimeScope container)
         {
             var httpContextAccessor = container.Resolve<IHttpContextAccessor>();
@@ -91,7 +97,7 @@ namespace FoodVault.Api
                 null);
         }
 
-        public void ConfigureDapperTypeHandlers()
+        private void ConfigureDapperTypeHandlers()
         {
             //TODO: Move to module
             SqlMapper.AddTypeHandler(new NullableDateTimeUtcDapperHandler());

@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace FoodVault.Infrastructure.FileUploads
+namespace FoodVault.Modules.Storage.Infrastructure.FileUploads
 {
     /// <summary>
     /// File interaction (save/load) with the local disk.

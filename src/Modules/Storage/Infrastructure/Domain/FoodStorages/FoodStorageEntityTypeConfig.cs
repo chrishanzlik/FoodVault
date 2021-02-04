@@ -12,7 +12,7 @@ namespace FoodVault.Modules.Storage.Infrastructure.Domain.FoodStorages
 
         public void Configure(EntityTypeBuilder<FoodStorage> builder)
         {
-            builder.ToTable("FoodStorages");
+            builder.ToTable("FoodStorages", "storage");
 
             builder.HasKey(x => x.Id);
 
@@ -22,7 +22,7 @@ namespace FoodVault.Modules.Storage.Infrastructure.Domain.FoodStorages
             {
                 x.WithOwner().HasForeignKey("FoodStorageId");
 
-                x.ToTable("StoredProducts");
+                x.ToTable("StoredProducts", "storage");
 
                 x.Property<ProductId>("ProductId");
 

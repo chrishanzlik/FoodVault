@@ -24,7 +24,7 @@ namespace FoodVault.Modules.Storage.Application.FoodStorages.DomainServices
         /// <inheritdoc />
         public bool ProductExists(ProductId id)
         {
-            const string sql = "SELECT COUNT(DISTINCT 1) FROM [dbo].[Products] WHERE Id = @id";
+            const string sql = "SELECT COUNT(DISTINCT 1) FROM [storage].[Products] WHERE Id = @id";
 
             var connection = _dbConnectionFactory.GetOpen();
 

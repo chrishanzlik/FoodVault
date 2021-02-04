@@ -31,7 +31,7 @@ namespace FoodVault.Modules.Storage.Application.FoodStorages.GetStorageOverview
                 "[Storage].[Id]," +
                 "[Storage].[Name]," +
                 "[Storage].[Description] " +
-                "FROM [dbo].[FoodStorages] as [Storage] " +
+                "FROM [storage].[FoodStorages] as [Storage] " +
                 "WHERE [Storage].[IsDeleted] = 0";
 
             var con = _dbConnectionFactory.GetOpen();

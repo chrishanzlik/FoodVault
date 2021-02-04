@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
 
-namespace FoodVault.Framework.Infrastructure.FileUploads
+namespace FoodVault.Modules.Storage.Infrastructure.FileUploads
 {
     /// <summary>
     /// File upload EF type configuration.
@@ -13,7 +13,7 @@ namespace FoodVault.Framework.Infrastructure.FileUploads
         /// <inheritdoc />
         public void Configure(EntityTypeBuilder<FileUpload> builder)
         {
-            builder.ToTable("FileUploads");
+            builder.ToTable("FileUploads", "storage");
 
             builder.HasKey(x => x.Id);
             

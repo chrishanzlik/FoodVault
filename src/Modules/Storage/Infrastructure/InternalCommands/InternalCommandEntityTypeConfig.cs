@@ -1,8 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using FoodVault.Framework.Infrastructure.InternalCommands;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
 
-namespace FoodVault.Framework.Infrastructure.InternalCommands
+namespace FoodVault.Modules.Storage.Infrastructure.InternalCommands
 {
     /// <summary>
     /// Internal command EF type configuration.
@@ -12,7 +13,7 @@ namespace FoodVault.Framework.Infrastructure.InternalCommands
         /// <inheritdoc />
         public void Configure(EntityTypeBuilder<InternalCommand> builder)
         {
-            builder.ToTable("InternalCommands");
+            builder.ToTable("InternalCommands", "storage");
             
             builder.HasKey(x => x.Id);
             

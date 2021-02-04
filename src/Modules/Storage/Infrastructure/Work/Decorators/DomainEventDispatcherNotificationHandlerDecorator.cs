@@ -1,4 +1,4 @@
-﻿using FoodVault.Framework.Infrastructure.Work;
+﻿using FoodVault.Framework.Infrastructure;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;

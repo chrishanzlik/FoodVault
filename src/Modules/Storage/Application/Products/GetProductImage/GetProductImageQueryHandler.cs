@@ -30,7 +30,7 @@ namespace FoodVault.Modules.Storage.Application.Products.GetProductImage
                 "SELECT" +
                 "[Product].[Name], " +
                 "[Product].[ImageId] " +
-                "FROM [dbo].[Products] AS [Product] " +
+                "FROM [storage].[Products] AS [Product] " +
                 "WHERE [Product].[Id] = @productId";
 
             var connection = _dbConnectionFactory.GetOpen();

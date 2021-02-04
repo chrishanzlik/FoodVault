@@ -46,11 +46,11 @@ namespace FoodVault.Modules.Storage.Infrastructure.Configuration.Processing.Outb
                 "[OutboxMessage].[Id], " +
                 "[OutboxMessage].[EventType], " +
                 "[OutboxMessage].[Payload] " +
-                "FROM [dbo].[OutboxMessages] AS [OutboxMessage] " +
+                "FROM [storage].[OutboxMessages] AS [OutboxMessage] " +
                 "WHERE [OutboxMessage].[ProcessedDate] IS NULL";
 
             const string processSql =
-                "UPDATE [dbo].[OutboxMessages] " +
+                "UPDATE [storage].[OutboxMessages] " +
                 "SET [ProcessedDate] = @date " +
                 "WHERE [Id] = @id";
 

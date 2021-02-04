@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace FoodVault.Framework.Infrastructure.Work
+namespace FoodVault.Framework.Infrastructure
 {
     /// <summary>
     /// Interface for an object that dispatches all applicable domain events.

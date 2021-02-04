@@ -4,12 +4,12 @@ using FoodVault.Modules.Storage.Infrastructure.Configuration.Database;
 using FoodVault.Framework.Application.Events;
 using FoodVault.Framework.Domain;
 using FoodVault.Framework.Infrastructure.Outbox;
-using FoodVault.Framework.Infrastructure.Work;
 using MediatR;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FoodVault.Framework.Infrastructure;
 
 namespace FoodVault.Modules.Storage.Infrastructure.Work
 {

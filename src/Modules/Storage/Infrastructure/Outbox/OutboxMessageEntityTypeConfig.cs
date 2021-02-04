@@ -1,8 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using FoodVault.Framework.Infrastructure.Outbox;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
 
-namespace FoodVault.Framework.Infrastructure.Outbox
+namespace FoodVault.Modules.Storage.Infrastructure.Outbox
 {
     /// <summary>
     /// Outbox message EF type configuration.
@@ -12,7 +13,7 @@ namespace FoodVault.Framework.Infrastructure.Outbox
         /// <inheritdoc />
         public void Configure(EntityTypeBuilder<OutboxMessage> builder)
         {
-            builder.ToTable("OutboxMessages");
+            builder.ToTable("OutboxMessages", "storage");
             
             builder.HasKey(x => x.Id);
 

@@ -3,10 +3,9 @@ using FoodVault.Modules.Storage.Infrastructure.Work.Decorators;
 using FoodVault.Framework.Application.Events;
 using FoodVault.Framework.Application.FileUploads;
 using FoodVault.Framework.Infrastructure;
-using FoodVault.Framework.Infrastructure.Work;
 using MediatR;
-using FoodVault.Infrastructure.FileUploads;
 using FoodVault.Framework.Infrastructure.Domain;
+using FoodVault.Modules.Storage.Infrastructure.FileUploads;
 
 namespace FoodVault.Modules.Storage.Infrastructure.Work
 {

@@ -47,12 +47,18 @@ namespace FoodVault.Modules.Storage.Infrastructure.Configuration
             QuartzStartup.StopQuartz();
         }
 
+        public static void InitializeDesignTime(string connectionString)
+        {
+            ConfigureCompositionRoot(connectionString, null, null, null, null, true);
+        }
+
         private static void ConfigureCompositionRoot(
             string connectionString,
             IExecutionContextAccessor executionContextAccessor,
             IFileUploadSettings fileUploadSettings,
             ILogger logger,
-            IEventBus eventBus)
+            IEventBus eventBus,
+            bool isDesignTime = false)
         {
             var containerBuilder = new ContainerBuilder();
 
@@ -82,15 +88,21 @@ namespace FoodVault.Modules.Storage.Infrastructure.Configuration
             //domainNotificationsMap.Add("MeetingCommentLikedNotification", typeof(MeetingCommentLikedNotification));
             //containerBuilder.RegisterModule(new OutboxModule(domainNotificationsMap));
 
+            if (isDesignTime)
+            {
+                _container = containerBuilder.Build();
+                StorageCompositionRoot.SetContainer(_container);
+            }
+            else
+            {
+                containerBuilder.RegisterInstance(executionContextAccessor);
+                containerBuilder.RegisterInstance(fileUploadSettings);
 
-            containerBuilder.RegisterInstance(executionContextAccessor);
-            containerBuilder.RegisterInstance(fileUploadSettings);
+                _container = containerBuilder.Build();
+                StorageCompositionRoot.SetContainer(_container);
 
-            _container = containerBuilder.Build();
-
-            StorageCompositionRoot.SetContainer(_container);
-
-            MigrateAndSeedDatabase();
+                MigrateAndSeedDatabase();
+            }
         }
 
         static void MigrateAndSeedDatabase()

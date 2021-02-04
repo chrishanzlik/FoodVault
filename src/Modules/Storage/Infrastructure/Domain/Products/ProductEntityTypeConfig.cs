@@ -11,7 +11,7 @@ namespace FoodVault.Modules.Storage.Infrastructure.Domain.Products
     {
         public void Configure(EntityTypeBuilder<Product> builder)
         {
-            builder.ToTable("Products");
+            builder.ToTable("Products", "storage");
 
             builder.HasKey(x => x.Id);
         }
