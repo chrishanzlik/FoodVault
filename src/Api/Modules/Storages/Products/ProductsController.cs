@@ -22,12 +22,10 @@ namespace FoodVault.Api.Modules.Storages.Products
     public class ProductsController : Controller
     {
         private readonly IStorageModule _storageModule;
-        private readonly IFileStorage _fileStorage;
 
-        public ProductsController(IStorageModule storageModule, IFileStorage fileStorage)
+        public ProductsController(IStorageModule storageModule)
         {
             _storageModule = storageModule;
-            _fileStorage = fileStorage;
         }
 
         [HttpPost]
@@ -54,7 +52,7 @@ namespace FoodVault.Api.Modules.Storages.Products
                 return BadRequest(new { errors });
             }
 
-            Guid imageId = await _fileStorage.StoreFileTemporaryAsync(upload.OpenReadStream(), upload.FileName,
+            Guid imageId = await _storageModule.StoreFileTemporaryAsync(upload.OpenReadStream(), upload.FileName,
                                                                       upload.ContentType, TimeSpan.FromHours(1));
 
             var command = new AddProductImageCommand(productId, imageId);

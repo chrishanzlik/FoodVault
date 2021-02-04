@@ -1,10 +1,13 @@
 ﻿using Autofac;
 using FoodVault.Framework.Application.Commands;
+using FoodVault.Framework.Application.FileUploads;
 using FoodVault.Framework.Application.Queries;
 using FoodVault.Modules.Storage.Application.Contracts;
 using FoodVault.Modules.Storage.Infrastructure.Configuration;
 using FoodVault.Modules.Storage.Infrastructure.Work;
 using MediatR;
+using System;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace FoodVault.Modules.Storage.Infrastructure
@@ -18,12 +21,18 @@ namespace FoodVault.Modules.Storage.Infrastructure
 
         public async Task<TResult> ExecuteQueryAsync<TResult>(IQuery<TResult> query)
         {
-            using (var scope = StorageCompositionRoot.BeginLifetimeScope())
-            {
-                var mediator = scope.Resolve<IMediator>();
+            using var scope = StorageCompositionRoot.BeginLifetimeScope();
+            var mediator = scope.Resolve<IMediator>();
 
-                return await mediator.Send(query);
-            }
+            return await mediator.Send(query);
+        }
+
+        public async Task<Guid> StoreFileTemporaryAsync(Stream fileStream, string fileName, string contentType, TimeSpan expirationTime)
+        {
+            using var scope = StorageCompositionRoot.BeginLifetimeScope();
+            var fileStorage = scope.Resolve<IFileStorage>();
+
+            return await fileStorage.StoreFileTemporaryAsync(fileStream, fileName, contentType, expirationTime);
         }
     }
 }
