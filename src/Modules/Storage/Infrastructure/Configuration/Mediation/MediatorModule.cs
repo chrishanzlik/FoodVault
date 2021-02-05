@@ -7,6 +7,7 @@ using FoodVault.Framework.Application.Validation;
 using FoodVault.Modules.Storage.Infrastructure.Configuration.Processing.FileUploads;
 using FoodVault.Modules.Storage.Infrastructure.Configuration.Processing.InternalCommands;
 using FoodVault.Modules.Storage.Infrastructure.Configuration.Processing.Outbox;
+using FoodVault.Modules.Storage.Infrastructure.Work;
 using MediatR;
 using MediatR.Pipeline;
 using System;
@@ -15,7 +16,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace FoodVault.Modules.Storage.Infrastructure.Work
+namespace FoodVault.Modules.Storage.Infrastructure.Configuration.Mediation
 {
     /// <summary>
     /// Registrations for 'Mediator' module.

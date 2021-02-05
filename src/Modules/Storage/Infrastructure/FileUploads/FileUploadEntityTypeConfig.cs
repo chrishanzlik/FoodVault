@@ -8,7 +8,7 @@ namespace FoodVault.Modules.Storage.Infrastructure.FileUploads
     /// <summary>
     /// File upload EF type configuration.
     /// </summary>
-    public sealed class FileUploadEntityTypeConfig : IEntityTypeConfiguration<FileUpload>
+    internal class FileUploadEntityTypeConfig : IEntityTypeConfiguration<FileUpload>
     {
         /// <inheritdoc />
         public void Configure(EntityTypeBuilder<FileUpload> builder)

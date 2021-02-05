@@ -8,7 +8,7 @@ namespace FoodVault.Modules.Storage.Infrastructure.Configuration.Processing.File
     /// <summary>
     /// Command handler for <see cref="RemoveExpiredFilesCommand"/>.
     /// </summary>
-    public class RemoveExpiredFilesCommandHandler : ICommandHandler<RemoveExpiredFilesCommand>
+    internal class RemoveExpiredFilesCommandHandler : ICommandHandler<RemoveExpiredFilesCommand>
     {
         private readonly IFileStorage _fileStorage;
 

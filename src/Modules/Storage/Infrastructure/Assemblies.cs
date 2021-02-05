@@ -1,7 +1,7 @@
 ﻿using FoodVault.Modules.Storage.Application.FoodStorages.CreateStorage;
 using System.Reflection;
 
-namespace FoodVault.Modules.Storage.Infrastructure.Work
+namespace FoodVault.Modules.Storage.Infrastructure
 {
     /// <summary>
     /// App assembly references.

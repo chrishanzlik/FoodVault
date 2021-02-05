@@ -41,7 +41,7 @@ namespace FoodVault.Modules.Storage.Infrastructure.Configuration.Processing
         {
             var result = await _decorated.Handle(command, cancellationToken);
 
-            if (command is InternalCommandBase ic)
+            if (command is InternalCommand ic)
             {
                 var internalCommand = await _storageContext.InternalCommands.FirstOrDefaultAsync(x => x.Id == ic.Id, cancellationToken);
 

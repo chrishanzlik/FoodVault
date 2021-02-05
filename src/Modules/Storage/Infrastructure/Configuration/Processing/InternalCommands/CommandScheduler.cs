@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace FoodVault.Modules.Storage.Infrastructure.Configuration.Processing.InternalCommands
 {
-    public class CommandScheduler : ICommandScheduler
+    internal class CommandScheduler : ICommandScheduler
     {
         private readonly IDbConnectionFactory _dbConnectionFactory;
 

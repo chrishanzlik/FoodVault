@@ -9,7 +9,7 @@ namespace FoodVault.Modules.Storage.Infrastructure.FileUploads
     /// <summary>
     /// File interaction (save/load) with the local disk.
     /// </summary>
-    public class LocalDiskFileStorage : IFileStorage
+    internal class LocalDiskFileStorage : IFileStorage
     {
         private readonly IFileUploadSettings _fileUploadSettings;
         private readonly IFileUploadRepository _fileUploadRepository;

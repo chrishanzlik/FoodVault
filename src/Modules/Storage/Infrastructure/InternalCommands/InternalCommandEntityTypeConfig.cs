@@ -8,7 +8,7 @@ namespace FoodVault.Modules.Storage.Infrastructure.InternalCommands
     /// <summary>
     /// Internal command EF type configuration.
     /// </summary>
-    public sealed class InternalCommandEntityTypeConfig : IEntityTypeConfiguration<InternalCommand>
+    internal sealed class InternalCommandEntityTypeConfig : IEntityTypeConfiguration<InternalCommand>
     {
         /// <inheritdoc />
         public void Configure(EntityTypeBuilder<InternalCommand> builder)

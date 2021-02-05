@@ -3,17 +3,16 @@ using FoodVault.Framework.Application.Events;
 using FoodVault.Framework.Application.FileUploads;
 using FoodVault.Framework.Infrastructure;
 using FoodVault.Framework.Infrastructure.DomainEvents;
-using FoodVault.Modules.Storage.Infrastructure.Configuration.Processing;
 using FoodVault.Modules.Storage.Infrastructure.FileUploads;
 using FoodVault.Modules.Storage.Infrastructure.Work.Decorators;
 using MediatR;
 
-namespace FoodVault.Modules.Storage.Infrastructure.Work
+namespace FoodVault.Modules.Storage.Infrastructure.Configuration.Processing
 {
     /// <summary>
     /// IoC container registrations for 'Work' stuff.
     /// </summary>
-    internal class WorkModule : Module
+    internal class ProcessingModule : Module
     {
         /// <inheritdoc />
         protected override void Load(ContainerBuilder builder)
@@ -41,10 +40,6 @@ namespace FoodVault.Modules.Storage.Infrastructure.Work
             builder.RegisterAssemblyTypes(Assemblies.Application)
                 .AsClosedTypesOf(typeof(IDomainEventNotification<>))
                 .InstancePerDependency();
-
-            builder.RegisterType<CommandDispatcher>()
-                .As<ICommandDispatcher>()
-                .InstancePerLifetimeScope();
 
             builder.RegisterGenericDecorator(
                 typeof(DomainEventDispatcherNotificationHandlerDecorator<>),

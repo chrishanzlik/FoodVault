@@ -8,7 +8,7 @@ namespace FoodVault.Modules.Storage.Infrastructure.Configuration.Processing
     /// <summary>
     /// Executes command within a own scope.
     /// </summary>
-    public static class CommandExecutor
+    internal static class CommandExecutor
     {
         /// <summary>
         /// Executes the given <see cref="ICommand"/> within a own scope.

@@ -10,7 +10,7 @@ namespace FoodVault.Modules.Storage.Infrastructure.FileUploads
     /// <summary>
     /// SQL repository for <see cref="FileUpload"/>s.
     /// </summary>
-    public class FileUploadSqlRepository : IFileUploadRepository
+    internal class FileUploadSqlRepository : IFileUploadRepository
     {
         private readonly IDbConnectionFactory _dbConnectionFactory;
 

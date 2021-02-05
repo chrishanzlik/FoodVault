@@ -6,14 +6,13 @@ using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
-using FoodVault.Framework.Infrastructure;
 
 namespace FoodVault.Modules.Storage.Infrastructure.Configuration.Processing.InternalCommands
 {
     /// <summary>
     /// Command handler for the <see cref="ProcessInternalCommandsCommand"/>.
     /// </summary>
-    public class ProcessInternalCommandsCommandHandler : ICommandHandler<ProcessInternalCommandsCommand>
+    internal class ProcessInternalCommandsCommandHandler : ICommandHandler<ProcessInternalCommandsCommand>
     {
         private readonly IDbConnectionFactory _dbConnectionFactory;
         private readonly Assembly _commandsAssembly;

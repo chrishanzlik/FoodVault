@@ -15,7 +15,7 @@ namespace FoodVault.Modules.Storage.Infrastructure.Configuration.Processing.Outb
     /// <summary>
     /// Command handler for processing the outbox.
     /// </summary>
-    public class ProcessOutboxCommandHandler : ICommandHandler<ProcessOutboxCommand>
+    internal class ProcessOutboxCommandHandler : ICommandHandler<ProcessOutboxCommand>
     {
         private readonly Assembly _commandsAssembly;
         private readonly IDbConnectionFactory _dbConnectionFactory;

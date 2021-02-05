@@ -8,7 +8,7 @@ namespace FoodVault.Modules.Storage.Infrastructure.Outbox
     /// <summary>
     /// Outbox message EF type configuration.
     /// </summary>
-    public sealed class OutboxMessageEntityTypeConfig : IEntityTypeConfiguration<OutboxMessage>
+    internal sealed class OutboxMessageEntityTypeConfig : IEntityTypeConfiguration<OutboxMessage>
     {
         /// <inheritdoc />
         public void Configure(EntityTypeBuilder<OutboxMessage> builder)

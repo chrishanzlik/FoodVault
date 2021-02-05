@@ -6,15 +6,14 @@ using FoodVault.Framework.Infrastructure.DataAccess;
 using FoodVault.Framework.Infrastructure.EventBus;
 using FoodVault.Modules.Storage.Infrastructure.Configuration.DataAccess;
 using FoodVault.Modules.Storage.Infrastructure.Configuration.EventBus;
+using FoodVault.Modules.Storage.Infrastructure.Configuration.Mediation;
+using FoodVault.Modules.Storage.Infrastructure.Configuration.Processing;
 using FoodVault.Modules.Storage.Infrastructure.Configuration.Processing.Outbox;
 using FoodVault.Modules.Storage.Infrastructure.Configuration.Quartz;
 using FoodVault.Modules.Storage.Infrastructure.Domain;
-using FoodVault.Modules.Storage.Infrastructure.Work;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace FoodVault.Modules.Storage.Infrastructure.Configuration
 {
@@ -68,7 +67,7 @@ namespace FoodVault.Modules.Storage.Infrastructure.Configuration
             containerBuilder.RegisterModule(new QuartzModule());
             containerBuilder.RegisterModule(new DomainModule());
             containerBuilder.RegisterModule(new MediatorModule());
-            containerBuilder.RegisterModule(new WorkModule());
+            containerBuilder.RegisterModule(new ProcessingModule());
             containerBuilder.RegisterModule(new OutboxModule());
             containerBuilder.RegisterModule(new DatabaseModule(connectionString));
             containerBuilder.RegisterModule(new EventBusModule(eventBus));
