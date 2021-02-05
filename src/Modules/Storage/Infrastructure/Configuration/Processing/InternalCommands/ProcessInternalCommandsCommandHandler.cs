@@ -1,9 +1,9 @@
 ﻿using Dapper;
-using FoodVault.Framework.Application.DataAccess;
 using FoodVault.Framework.Application.Commands;
+using FoodVault.Framework.Application.DataAccess;
+using FoodVault.Framework.Infrastructure.DomainEvents;
 using Newtonsoft.Json;
 using System.Linq;
-using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -15,19 +15,19 @@ namespace FoodVault.Modules.Storage.Infrastructure.Configuration.Processing.Inte
     internal class ProcessInternalCommandsCommandHandler : ICommandHandler<ProcessInternalCommandsCommand>
     {
         private readonly IDbConnectionFactory _dbConnectionFactory;
-        private readonly Assembly _commandsAssembly;
+        private readonly IDomainNotificationsRegistry _domainNotificationsRegistry;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ProcessInternalCommandsCommandHandler" /> class.
         /// </summary>
-        /// <param name="commandsAssembly">Assembly where all application commands are registered.</param>
+        /// <param name="domainNotificationsRegistry">Contains Name-Type maps of notifications.</param>
         /// <param name="dbConnectionFactory">Db connection factory.</param>
         public ProcessInternalCommandsCommandHandler(
-            Assembly commandsAssembly,
-            IDbConnectionFactory dbConnectionFactory)
+            IDbConnectionFactory dbConnectionFactory,
+            IDomainNotificationsRegistry domainNotificationsRegistry)
         {
             _dbConnectionFactory = dbConnectionFactory;
-            _commandsAssembly = commandsAssembly;
+            _domainNotificationsRegistry = domainNotificationsRegistry;
         }
 
         /// <inheritdoc />
@@ -45,7 +45,7 @@ namespace FoodVault.Modules.Storage.Infrastructure.Configuration.Processing.Inte
 
             foreach (var internalCommand in pendingCommands)
             {
-                var t = _commandsAssembly.GetType(internalCommand.CommandType);
+                var t = _domainNotificationsRegistry.GetType(internalCommand.CommandType);
                 var command = JsonConvert.DeserializeObject(internalCommand.Payload, t) as ICommand;
 
                 //TODO: handle result

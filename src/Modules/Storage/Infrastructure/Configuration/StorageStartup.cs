@@ -4,8 +4,12 @@ using FoodVault.Framework.Application;
 using FoodVault.Framework.Application.FileUploads;
 using FoodVault.Framework.Infrastructure.DataAccess;
 using FoodVault.Framework.Infrastructure.EventBus;
+using FoodVault.Modules.Storage.Application.FoodStorages.CreateStorage;
+using FoodVault.Modules.Storage.Application.Products.AddProductImage;
+using FoodVault.Modules.Storage.Application.Products.RemoveProductImage;
 using FoodVault.Modules.Storage.Infrastructure.Configuration.DataAccess;
 using FoodVault.Modules.Storage.Infrastructure.Configuration.EventBus;
+using FoodVault.Modules.Storage.Infrastructure.Configuration.FileUploads;
 using FoodVault.Modules.Storage.Infrastructure.Configuration.Mediation;
 using FoodVault.Modules.Storage.Infrastructure.Configuration.Processing;
 using FoodVault.Modules.Storage.Infrastructure.Configuration.Processing.Outbox;
@@ -14,6 +18,7 @@ using FoodVault.Modules.Storage.Infrastructure.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Collections.Generic;
 
 namespace FoodVault.Modules.Storage.Infrastructure.Configuration
 {
@@ -62,25 +67,20 @@ namespace FoodVault.Modules.Storage.Infrastructure.Configuration
             IEventBus eventBus,
             bool isDesignTime = false)
         {
-            var containerBuilder = new ContainerBuilder();
+            var domainNotificationRegistrations = new Dictionary<string, Type>();
+            domainNotificationRegistrations.Add("StorageCreatedNotification", typeof(StorageCreatedNotification));
+            domainNotificationRegistrations.Add("ProductImageRemovedNotification", typeof(ProductImageRemovedNotification));
+            domainNotificationRegistrations.Add("ProductImageAddedNotification", typeof(ProductImageAddedNotification));
 
+            var containerBuilder = new ContainerBuilder();
             containerBuilder.RegisterModule(new QuartzModule());
             containerBuilder.RegisterModule(new DomainModule());
             containerBuilder.RegisterModule(new MediatorModule());
             containerBuilder.RegisterModule(new ProcessingModule());
-            containerBuilder.RegisterModule(new OutboxModule());
+            containerBuilder.RegisterModule(new OutboxModule(domainNotificationRegistrations));
+            containerBuilder.RegisterModule(new FileUploadModule());
             containerBuilder.RegisterModule(new DatabaseModule(connectionString));
             containerBuilder.RegisterModule(new EventBusModule(eventBus));
-
-            //var domainNotificationsMap = new BiDictionary<string, Type>();
-            //domainNotificationsMap.Add("MeetingGroupProposalAcceptedNotification", typeof(MeetingGroupProposalAcceptedNotification));
-            //domainNotificationsMap.Add("MeetingGroupProposedNotification", typeof(MeetingGroupProposedNotification));
-            //domainNotificationsMap.Add("MeetingGroupCreatedNotification", typeof(MeetingGroupCreatedNotification));
-            //domainNotificationsMap.Add("MeetingAttendeeAddedNotification", typeof(MeetingAttendeeAddedNotification));
-            //domainNotificationsMap.Add("MemberCreatedNotification", typeof(MemberCreatedNotification));
-            //domainNotificationsMap.Add("MemberSubscriptionExpirationDateChangedNotification", typeof(MemberSubscriptionExpirationDateChangedNotification));
-            //domainNotificationsMap.Add("MeetingCommentLikedNotification", typeof(MeetingCommentLikedNotification));
-            //containerBuilder.RegisterModule(new OutboxModule(domainNotificationsMap));
 
             if (isDesignTime)
             {

@@ -1,12 +1,12 @@
 ﻿using Dapper;
 using FoodVault.Framework.Application.Commands;
-using FoodVault.Framework.Application.Events;
 using FoodVault.Framework.Application.DataAccess;
+using FoodVault.Framework.Application.Events;
+using FoodVault.Framework.Infrastructure.DomainEvents;
 using MediatR;
 using Newtonsoft.Json;
 using System;
 using System.Linq;
-using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -17,24 +17,24 @@ namespace FoodVault.Modules.Storage.Infrastructure.Configuration.Processing.Outb
     /// </summary>
     internal class ProcessOutboxCommandHandler : ICommandHandler<ProcessOutboxCommand>
     {
-        private readonly Assembly _commandsAssembly;
         private readonly IDbConnectionFactory _dbConnectionFactory;
         private readonly IMediator _mediator;
+        private readonly IDomainNotificationsRegistry _domainNotificationRegistry;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ProcessOutboxCommandHandler" /> class.
         /// </summary>
-        /// <param name="commandsAssembly">Assembly containing application commands.</param>
+        /// <param name="domainNotificationsRegistry">Name-Type mappings of notifications.</param>
         /// <param name="dbConnectionFactory">Database connection factory.</param>
         /// <param name="mediator">Application mediator.</param>
         public ProcessOutboxCommandHandler(
-            Assembly commandsAssembly,
             IDbConnectionFactory dbConnectionFactory,
-            IMediator mediator)
+            IMediator mediator,
+            IDomainNotificationsRegistry domainNotificationsRegistry)
         {
-            _commandsAssembly = commandsAssembly;
             _dbConnectionFactory = dbConnectionFactory;
             _mediator = mediator;
+            _domainNotificationRegistry = domainNotificationsRegistry;
         }
 
         /// <inheritdoc />
@@ -60,7 +60,7 @@ namespace FoodVault.Modules.Storage.Infrastructure.Configuration.Processing.Outb
             {
                 foreach(var msg in pendingMessages)
                 {
-                    var t = _commandsAssembly.GetType(msg.EventType);
+                    var t = _domainNotificationRegistry.GetType(msg.EventType);
                     var ev = JsonConvert.DeserializeObject(msg.Payload, t) as IDomainEventNotification;
 
                     await _mediator.Publish(ev, cancellationToken);

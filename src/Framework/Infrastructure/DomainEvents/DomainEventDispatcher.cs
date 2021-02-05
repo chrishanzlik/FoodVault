@@ -17,17 +17,20 @@ namespace FoodVault.Framework.Infrastructure.DomainEvents
         private readonly ILifetimeScope _lifeTimeScope;
         private readonly IOutbox _outbox;
         private readonly IDomainEventAccessor _domainEventAccessor;
+        private readonly IDomainNotificationsRegistry _domainNotificationsRegistry;
 
         public DomainEventDispatcher(
             IMediator mediator,
             ILifetimeScope lifeTimeScope,
             IOutbox outbox,
-            IDomainEventAccessor domainEventAccessor)
+            IDomainEventAccessor domainEventAccessor,
+            IDomainNotificationsRegistry domainNotificationsRegistry)
         {
             _mediator = mediator;
             _lifeTimeScope = lifeTimeScope;
             _outbox = outbox;
             _domainEventAccessor = domainEventAccessor;
+            _domainNotificationsRegistry = domainNotificationsRegistry;
         }
 
         public async Task DispatchEventsAsync()
@@ -65,7 +68,7 @@ namespace FoodVault.Framework.Infrastructure.DomainEvents
         {
             foreach(var notification in notifications)
             {
-                var type = notification.GetType().FullName;
+                var type = _domainNotificationsRegistry.GetName(notification.GetType());
                 var payload = JsonConvert.SerializeObject(notification, new JsonSerializerSettings
                 {
                     ContractResolver = new AllPropertiesContractResolver()

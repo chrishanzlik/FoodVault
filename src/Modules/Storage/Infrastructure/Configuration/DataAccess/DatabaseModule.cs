@@ -6,7 +6,6 @@ using FoodVault.Modules.Storage.Infrastructure.Domain.FoodStorages;
 using FoodVault.Modules.Storage.Infrastructure.Domain.Products;
 using FoodVault.Framework.Application.DataAccess;
 using FoodVault.Framework.Application.FileUploads;
-using FoodVault.Framework.Domain;
 using FoodVault.Framework.Infrastructure.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
@@ -38,25 +37,11 @@ namespace FoodVault.Modules.Storage.Infrastructure.Configuration.DataAccess
                .WithParameter("connectionString", _connectionString)
                .InstancePerLifetimeScope();
 
-            builder.RegisterType<FoodStorageRepository>()
-                .As<IFoodStorageRepository>()
-                .InstancePerLifetimeScope();
-
-            builder.RegisterType<ProductRepository>()
-                .As<IProductRepository>()
-                .InstancePerLifetimeScope();
-
-            builder.RegisterType<FileUploadSqlRepository>()
-                .As<IFileUploadRepository>()
-                .InstancePerLifetimeScope();
-
-            builder.RegisterType<EntityIdValueConverterSelector>()
-                .As<IValueConverterSelector>()
-                .InstancePerLifetimeScope();
-
-            builder.RegisterType<LocalDiskFileStorage>()
-                .As<IFileStorage>()
-                .InstancePerLifetimeScope();
+            builder.RegisterAssemblyTypes(ThisAssembly)
+                .Where(type => type.Name.EndsWith("Repository"))
+                .AsImplementedInterfaces()
+                .InstancePerLifetimeScope()
+                .FindConstructorsWith(new ConstructorFinder());
 
             builder
                 .Register(c =>

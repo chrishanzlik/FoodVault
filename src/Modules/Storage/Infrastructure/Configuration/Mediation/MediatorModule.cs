@@ -40,25 +40,11 @@ namespace FoodVault.Modules.Storage.Infrastructure.Configuration.Mediation
             foreach (var mediatrOpenType in mediatrOpenTypes)
             {
                 builder
-                    .RegisterAssemblyTypes(Assemblies.Application)
+                    .RegisterAssemblyTypes(Assemblies.Application, ThisAssembly)
                     .AsClosedTypesOf(mediatrOpenType)
-                    .FindConstructorsWith(new AllConstructorFinder())
+                    .FindConstructorsWith(new ConstructorFinder())
                     .AsImplementedInterfaces();
             }
-
-            builder.RegisterType<ProcessOutboxCommandHandler>()
-                .AsImplementedInterfaces()
-                .WithParameter("commandsAssembly", Assemblies.Application)
-                .InstancePerLifetimeScope();
-
-            builder.RegisterType<ProcessInternalCommandsCommandHandler>()
-                .AsImplementedInterfaces()
-                .WithParameter("commandsAssembly", Assemblies.Application)
-                .InstancePerLifetimeScope();
-
-            builder.RegisterType<RemoveExpiredFilesCommandHandler>()
-                .AsImplementedInterfaces()
-                .InstancePerLifetimeScope();
 
             builder.RegisterGeneric(typeof(RequestPostProcessorBehavior<,>)).As(typeof(IPipelineBehavior<,>));
             builder.RegisterGeneric(typeof(RequestPreProcessorBehavior<,>)).As(typeof(IPipelineBehavior<,>));
@@ -100,20 +86,6 @@ namespace FoodVault.Modules.Storage.Infrastructure.Configuration.Mediation
             }
 
             public bool IsAdapterForIndividualComponents => _source.IsAdapterForIndividualComponents;
-        }
-
-        private class AllConstructorFinder : IConstructorFinder
-        {
-            private static readonly ConcurrentDictionary<Type, ConstructorInfo[]> Cache =
-                new ConcurrentDictionary<Type, ConstructorInfo[]>();
-
-            public ConstructorInfo[] FindConstructors(Type targetType)
-            {
-                var result = Cache.GetOrAdd(targetType,
-                    t => t.GetTypeInfo().DeclaredConstructors.ToArray());
-
-                return result.Length > 0 ? result : throw new NoConstructorsFoundException(targetType);
-            }
         }
     }
 }
