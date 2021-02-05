@@ -6,7 +6,7 @@ namespace FoodVault.Modules.Storage.Application.FoodStorages.StoreProduct
     /// <summary>
     /// Stores a product to a food storage.
     /// </summary>
-    public class StoreProductCommand : ICommand
+    public class StoreProductCommand : Command
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="StoreProductCommand" /> class.

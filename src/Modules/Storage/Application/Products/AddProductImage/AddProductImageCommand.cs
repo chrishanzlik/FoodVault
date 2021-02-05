@@ -6,7 +6,7 @@ namespace FoodVault.Modules.Storage.Application.Products.AddProductImage
     /// <summary>
     /// This command adds an product image to a product.
     /// </summary>
-    public class AddProductImageCommand : ICommand
+    public class AddProductImageCommand : Command
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="AddProductImageCommand" /> class.

@@ -2,7 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace FoodVault.Framework.Infrastructure.Domain
+namespace FoodVault.Framework.Infrastructure
 {
     /// <summary>
     /// Unit of work.

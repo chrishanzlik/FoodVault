@@ -2,10 +2,11 @@
 using Dapper;
 using FoodVault.Framework.Application;
 using FoodVault.Framework.Application.FileUploads;
-using FoodVault.Framework.Infrastructure.Database;
+using FoodVault.Framework.Infrastructure.DataAccess;
 using FoodVault.Framework.Infrastructure.EventBus;
 using FoodVault.Modules.Storage.Infrastructure.Configuration.DataAccess;
 using FoodVault.Modules.Storage.Infrastructure.Configuration.EventBus;
+using FoodVault.Modules.Storage.Infrastructure.Configuration.Processing.Outbox;
 using FoodVault.Modules.Storage.Infrastructure.Configuration.Quartz;
 using FoodVault.Modules.Storage.Infrastructure.Domain;
 using FoodVault.Modules.Storage.Infrastructure.Work;
@@ -68,6 +69,7 @@ namespace FoodVault.Modules.Storage.Infrastructure.Configuration
             containerBuilder.RegisterModule(new DomainModule());
             containerBuilder.RegisterModule(new MediatorModule());
             containerBuilder.RegisterModule(new WorkModule());
+            containerBuilder.RegisterModule(new OutboxModule());
             containerBuilder.RegisterModule(new DatabaseModule(connectionString));
             containerBuilder.RegisterModule(new EventBusModule(eventBus));
 

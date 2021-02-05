@@ -1,5 +1,5 @@
-﻿using System.Threading.Tasks;
-using System.Windows.Input;
+﻿using FoodVault.Framework.Application.Commands;
+using System.Threading.Tasks;
 
 namespace FoodVault.Framework.Application
 {

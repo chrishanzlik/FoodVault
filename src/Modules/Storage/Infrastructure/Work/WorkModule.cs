@@ -1,11 +1,12 @@
 ﻿using Autofac;
-using FoodVault.Modules.Storage.Infrastructure.Work.Decorators;
 using FoodVault.Framework.Application.Events;
 using FoodVault.Framework.Application.FileUploads;
 using FoodVault.Framework.Infrastructure;
-using MediatR;
-using FoodVault.Framework.Infrastructure.Domain;
+using FoodVault.Framework.Infrastructure.DomainEvents;
+using FoodVault.Modules.Storage.Infrastructure.Configuration.Processing;
 using FoodVault.Modules.Storage.Infrastructure.FileUploads;
+using FoodVault.Modules.Storage.Infrastructure.Work.Decorators;
+using MediatR;
 
 namespace FoodVault.Modules.Storage.Infrastructure.Work
 {
@@ -33,13 +34,13 @@ namespace FoodVault.Modules.Storage.Infrastructure.Work
                 .As<IDomainEventDispatcher>()
                 .InstancePerLifetimeScope();
 
+            builder.RegisterType<DomainEventAccessor>()
+                .As<IDomainEventAccessor>()
+                .InstancePerLifetimeScope();
+
             builder.RegisterAssemblyTypes(Assemblies.Application)
                 .AsClosedTypesOf(typeof(IDomainEventNotification<>))
                 .InstancePerDependency();
-
-            builder.RegisterType<IsolatedCommandExecutor>()
-                .As<ICommandExecutor>()
-                .InstancePerLifetimeScope();
 
             builder.RegisterType<CommandDispatcher>()
                 .As<ICommandDispatcher>()

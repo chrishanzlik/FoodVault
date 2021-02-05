@@ -4,7 +4,7 @@ using FoodVault.Framework.Application.FileUploads;
 using FoodVault.Framework.Application.Queries;
 using FoodVault.Modules.Storage.Application.Contracts;
 using FoodVault.Modules.Storage.Infrastructure.Configuration;
-using FoodVault.Modules.Storage.Infrastructure.Work;
+using FoodVault.Modules.Storage.Infrastructure.Configuration.Processing;
 using MediatR;
 using System;
 using System.IO;

@@ -6,7 +6,7 @@ namespace FoodVault.Modules.Storage.Application.Products.RemoveProductImage
     /// <summary>
     /// This command removes an product image from a product.
     /// </summary>
-    public class RemoveProductImageCommand : ICommand
+    public class RemoveProductImageCommand : Command
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="RemoveProductImageCommand" /> class.

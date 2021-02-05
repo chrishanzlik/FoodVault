@@ -8,7 +8,7 @@ namespace FoodVault.Modules.Storage.Application.FoodStorages.CreateStorage
     /// <summary>
     /// Command for creating food storages.
     /// </summary>
-    public class CreateStorageCommand : ICommand
+    public class CreateStorageCommand : Command
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="CreateStorageCommand" /> class.

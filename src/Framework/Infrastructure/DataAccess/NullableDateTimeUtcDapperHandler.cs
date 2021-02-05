@@ -2,7 +2,7 @@
 using System;
 using System.Data;
 
-namespace FoodVault.Framework.Infrastructure.Database
+namespace FoodVault.Framework.Infrastructure.DataAccess
 {
     /// <summary>
     /// Class that provides specified UTC dates on loaded nullable entities with dapper.

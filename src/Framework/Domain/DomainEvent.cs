@@ -12,12 +12,14 @@ namespace FoodVault.Framework.Domain
         /// </summary>
         public DomainEvent()
         {
+            Id = Guid.NewGuid();
             RaisedAt = DateTime.UtcNow;
         }
 
-        /// <summary>
-        /// Gets the point when the event was raised.
-        /// </summary>
+        /// <inheritdoc />
         public DateTime RaisedAt { get; }
+
+        /// <inheritdoc />
+        public Guid Id { get; }
     }
 }

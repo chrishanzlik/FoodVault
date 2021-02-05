@@ -16,7 +16,6 @@ namespace FoodVault.Modules.Storage.Infrastructure.Configuration.Processing.Inte
     public class ProcessInternalCommandsCommandHandler : ICommandHandler<ProcessInternalCommandsCommand>
     {
         private readonly IDbConnectionFactory _dbConnectionFactory;
-        private readonly ICommandExecutor _commandExecutor;
         private readonly Assembly _commandsAssembly;
 
         /// <summary>
@@ -24,15 +23,12 @@ namespace FoodVault.Modules.Storage.Infrastructure.Configuration.Processing.Inte
         /// </summary>
         /// <param name="commandsAssembly">Assembly where all application commands are registered.</param>
         /// <param name="dbConnectionFactory">Db connection factory.</param>
-        /// <param name="commandExecutor">Command executor.</param>
         public ProcessInternalCommandsCommandHandler(
             Assembly commandsAssembly,
-            IDbConnectionFactory dbConnectionFactory,
-            ICommandExecutor commandExecutor)
+            IDbConnectionFactory dbConnectionFactory)
         {
             _dbConnectionFactory = dbConnectionFactory;
             _commandsAssembly = commandsAssembly;
-            _commandExecutor = commandExecutor;
         }
 
         /// <inheritdoc />
@@ -54,7 +50,7 @@ namespace FoodVault.Modules.Storage.Infrastructure.Configuration.Processing.Inte
                 var command = JsonConvert.DeserializeObject(internalCommand.Payload, t) as ICommand;
 
                 //TODO: handle result
-                await _commandExecutor.Execute(command);
+                await CommandExecutor.ExecuteAsync(command);
             }
 
             return CommandResult.Ok();

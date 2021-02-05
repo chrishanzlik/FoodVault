@@ -1,13 +1,11 @@
-﻿using FoodVault.Modules.Storage.Infrastructure.Configuration.DataAccess;
-using FoodVault.Framework.Application.Commands;
-using FoodVault.Framework.Domain;
+﻿using FoodVault.Framework.Application.Commands;
+using FoodVault.Framework.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using FoodVault.Framework.Infrastructure;
 
-namespace FoodVault.Modules.Storage.Infrastructure.Work.Decorators
+namespace FoodVault.Modules.Storage.Infrastructure.Configuration.Processing
 {
     /// <summary>
     /// Command handler decorator for commiting transactions and dispatching domain events.
@@ -27,6 +25,7 @@ namespace FoodVault.Modules.Storage.Infrastructure.Work.Decorators
         /// </summary>
         /// <param name="decorated">Decorated command handler.</param>
         /// <param name="unitOfWork">Unit of work transaction scope.</param>
+        /// <param name="storageContext">Storage DB context.</param>
         public TransactionCommandHandlerDecorator(
             ICommandHandler<TCommand> decorated,
             IUnitOfWork unitOfWork,

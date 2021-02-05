@@ -1,8 +1,8 @@
-﻿using FoodVault.Modules.Storage.Domain.FoodStorages;
-using FoodVault.Modules.Storage.Domain.Products;
-using FoodVault.Framework.Application.FileUploads;
+﻿using FoodVault.Framework.Application.FileUploads;
+using FoodVault.Framework.Application.Outbox;
 using FoodVault.Framework.Infrastructure.InternalCommands;
-using FoodVault.Framework.Infrastructure.Outbox;
+using FoodVault.Modules.Storage.Domain.FoodStorages;
+using FoodVault.Modules.Storage.Domain.Products;
 using Microsoft.EntityFrameworkCore;
 
 namespace FoodVault.Modules.Storage.Infrastructure

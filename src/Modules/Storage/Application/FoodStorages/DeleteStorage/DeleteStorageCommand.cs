@@ -6,7 +6,7 @@ namespace FoodVault.Modules.Storage.Application.FoodStorages.DeleteStorage
     /// <summary>
     /// Command for deleting food storages.
     /// </summary>
-    public class DeleteStorageCommand : ICommand
+    public class DeleteStorageCommand : Command
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="DeleteStorageCommand" /> class.

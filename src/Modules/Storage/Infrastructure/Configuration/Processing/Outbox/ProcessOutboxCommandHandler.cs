@@ -9,7 +9,6 @@ using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
-using FoodVault.Framework.Infrastructure.Outbox;
 
 namespace FoodVault.Modules.Storage.Infrastructure.Configuration.Processing.Outbox
 {

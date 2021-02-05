@@ -1,10 +1,9 @@
 ﻿using Autofac;
 using FoodVault.Framework.Application.Commands;
-using FoodVault.Modules.Storage.Infrastructure.Configuration;
 using MediatR;
 using System.Threading.Tasks;
 
-namespace FoodVault.Modules.Storage.Infrastructure.Work
+namespace FoodVault.Modules.Storage.Infrastructure.Configuration.Processing
 {
     /// <summary>
     /// Executes command within a own scope.

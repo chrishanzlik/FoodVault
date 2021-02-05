@@ -8,22 +8,27 @@ namespace FoodVault.Framework.Infrastructure.InternalCommands
     public class InternalCommand
     {
         /// <summary>
-        /// Gets the identifier of the internal command.
+        /// Gets or sets the identifier of the internal command.
         /// </summary>
         public Guid Id { get; set; }
 
         /// <summary>
-        /// Gets the type of the command.
+        /// Gets or sets the type of the command.
         /// </summary>
         public string CommandType { get; set; }
 
         /// <summary>
-        /// Gets the commands data.
+        /// Gets or sets the commands data.
         /// </summary>
         public string Payload { get; set; }
 
         /// <summary>
-        /// Gets the time when the command was processed.
+        /// Gets or sets the time, when the command was enqueued.
+        /// </summary>
+        public DateTime? EnqueueDate { get; set; }
+
+        /// <summary>
+        /// Gets or sets the time when the command was processed.
         /// If null, the command is not processed yet.
         /// </summary>
         public DateTime? ProcessedDate { get; set; }

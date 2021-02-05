@@ -1,4 +1,4 @@
-﻿using FoodVault.Framework.Infrastructure.Outbox;
+﻿using FoodVault.Framework.Application.Outbox;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;

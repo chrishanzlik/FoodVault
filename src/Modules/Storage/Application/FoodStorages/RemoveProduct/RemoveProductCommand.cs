@@ -6,7 +6,7 @@ namespace FoodVault.Modules.Storage.Application.FoodStorages.RemoveProduct
     /// <summary>
     /// Removes a product from a food storage.
     /// </summary>
-    public class RemoveProductCommand : ICommand
+    public class RemoveProductCommand : Command
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="RemoveProductCommand" /> class.

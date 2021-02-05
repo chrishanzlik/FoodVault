@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace FoodVault.Framework.Infrastructure.Outbox
+namespace FoodVault.Framework.Application.Outbox
 {
     /// <summary>
     /// Outbox message.
@@ -21,9 +21,9 @@ namespace FoodVault.Framework.Infrastructure.Outbox
         /// <param name="raisingTime"></param>
         /// <param name="eventType"></param>
         /// <param name="payload"></param>
-        public OutboxMessage(DateTime raisingTime, string eventType, string payload)
+        public OutboxMessage(Guid id, DateTime raisingTime, string eventType, string payload)
         {
-            Id = Guid.NewGuid();
+            Id = id;
             RaisingTime = raisingTime;
             EventType = eventType;
             Payload = payload;

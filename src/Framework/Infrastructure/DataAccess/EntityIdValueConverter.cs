@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using System;
 
-namespace FoodVault.Framework.Infrastructure.Database
+namespace FoodVault.Framework.Infrastructure.DataAccess
 {
     /// <summary>
     /// Converter between <see cref="EntityId"/> types and <see cref="Guid"/>.
