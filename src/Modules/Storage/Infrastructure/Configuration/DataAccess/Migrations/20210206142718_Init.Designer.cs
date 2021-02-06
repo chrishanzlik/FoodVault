@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FoodVault.Modules.Storage.Infrastructure.Configuration.DataAccess.Migrations
 {
     [DbContext(typeof(StorageContext))]
-    [Migration("20210204121040_AddOwnSchemataToStorageModule")]
-    partial class AddOwnSchemataToStorageModule
+    [Migration("20210206142718_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -49,26 +49,7 @@ namespace FoodVault.Modules.Storage.Infrastructure.Configuration.DataAccess.Migr
                     b.ToTable("FileUploads", "storage");
                 });
 
-            modelBuilder.Entity("FoodVault.Framework.Infrastructure.InternalCommands.InternalCommand", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("CommandType")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Payload")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("ProcessedDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("InternalCommands", "storage");
-                });
-
-            modelBuilder.Entity("FoodVault.Framework.Infrastructure.Outbox.OutboxMessage", b =>
+            modelBuilder.Entity("FoodVault.Framework.Application.Outbox.OutboxMessage", b =>
                 {
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
@@ -88,6 +69,28 @@ namespace FoodVault.Modules.Storage.Infrastructure.Configuration.DataAccess.Migr
                     b.HasKey("Id");
 
                     b.ToTable("OutboxMessages", "storage");
+                });
+
+            modelBuilder.Entity("FoodVault.Framework.Infrastructure.InternalCommands.InternalCommand", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CommandType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("EnqueueDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Payload")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("ProcessedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("InternalCommands", "storage");
                 });
 
             modelBuilder.Entity("FoodVault.Modules.Storage.Domain.FoodStorages.FoodStorage", b =>

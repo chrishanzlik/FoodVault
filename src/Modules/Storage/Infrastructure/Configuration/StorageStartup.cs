@@ -10,6 +10,7 @@ using FoodVault.Modules.Storage.Application.Products.RemoveProductImage;
 using FoodVault.Modules.Storage.Infrastructure.Configuration.DataAccess;
 using FoodVault.Modules.Storage.Infrastructure.Configuration.EventBus;
 using FoodVault.Modules.Storage.Infrastructure.Configuration.FileUploads;
+using FoodVault.Modules.Storage.Infrastructure.Configuration.Logging;
 using FoodVault.Modules.Storage.Infrastructure.Configuration.Mediation;
 using FoodVault.Modules.Storage.Infrastructure.Configuration.Processing;
 using FoodVault.Modules.Storage.Infrastructure.Configuration.Processing.Outbox;
@@ -45,7 +46,7 @@ namespace FoodVault.Modules.Storage.Infrastructure.Configuration
 
             _logger = logger;
 
-            //QuartzStartup.Initialize(logger);
+            QuartzStartup.Initialize(logger);
             EventBusStartup.Initialize(logger);
         }
 
@@ -54,9 +55,9 @@ namespace FoodVault.Modules.Storage.Infrastructure.Configuration
             QuartzStartup.StopQuartz();
         }
 
-        public static void InitializeDesignTime(string connectionString)
+        public static void InitializeDesignTime(string connectionString, ILogger logger)
         {
-            ConfigureCompositionRoot(connectionString, null, null, null, null, true);
+            ConfigureCompositionRoot(connectionString, null, null, logger, null, true);
         }
 
         private static void ConfigureCompositionRoot(
@@ -73,6 +74,7 @@ namespace FoodVault.Modules.Storage.Infrastructure.Configuration
             domainNotificationRegistrations.Add("ProductImageAddedNotification", typeof(ProductImageAddedNotification));
 
             var containerBuilder = new ContainerBuilder();
+            containerBuilder.RegisterModule(new LoggingModule(logger));
             containerBuilder.RegisterModule(new QuartzModule());
             containerBuilder.RegisterModule(new DomainModule());
             containerBuilder.RegisterModule(new ProcessingModule());

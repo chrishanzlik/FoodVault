@@ -7,8 +7,12 @@ namespace FoodVault.Modules.Storage.Infrastructure.Configuration.DataAccess.Migr
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.EnsureSchema(
+                name: "storage");
+
             migrationBuilder.CreateTable(
                 name: "FileUploads",
+                schema: "storage",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -26,6 +30,7 @@ namespace FoodVault.Modules.Storage.Infrastructure.Configuration.DataAccess.Migr
 
             migrationBuilder.CreateTable(
                 name: "FoodStorages",
+                schema: "storage",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -40,11 +45,13 @@ namespace FoodVault.Modules.Storage.Infrastructure.Configuration.DataAccess.Migr
 
             migrationBuilder.CreateTable(
                 name: "InternalCommands",
+                schema: "storage",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CommandType = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Payload = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    EnqueueDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     ProcessedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
@@ -54,6 +61,7 @@ namespace FoodVault.Modules.Storage.Infrastructure.Configuration.DataAccess.Migr
 
             migrationBuilder.CreateTable(
                 name: "OutboxMessages",
+                schema: "storage",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -69,6 +77,7 @@ namespace FoodVault.Modules.Storage.Infrastructure.Configuration.DataAccess.Migr
 
             migrationBuilder.CreateTable(
                 name: "Products",
+                schema: "storage",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -84,6 +93,7 @@ namespace FoodVault.Modules.Storage.Infrastructure.Configuration.DataAccess.Migr
 
             migrationBuilder.CreateTable(
                 name: "StoredProducts",
+                schema: "storage",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -98,6 +108,7 @@ namespace FoodVault.Modules.Storage.Infrastructure.Configuration.DataAccess.Migr
                     table.ForeignKey(
                         name: "FK_StoredProducts_FoodStorages_FoodStorageId",
                         column: x => x.FoodStorageId,
+                        principalSchema: "storage",
                         principalTable: "FoodStorages",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -105,6 +116,7 @@ namespace FoodVault.Modules.Storage.Infrastructure.Configuration.DataAccess.Migr
 
             migrationBuilder.CreateIndex(
                 name: "IX_StoredProducts_FoodStorageId",
+                schema: "storage",
                 table: "StoredProducts",
                 column: "FoodStorageId");
         }
@@ -112,22 +124,28 @@ namespace FoodVault.Modules.Storage.Infrastructure.Configuration.DataAccess.Migr
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "FileUploads");
+                name: "FileUploads",
+                schema: "storage");
 
             migrationBuilder.DropTable(
-                name: "InternalCommands");
+                name: "InternalCommands",
+                schema: "storage");
 
             migrationBuilder.DropTable(
-                name: "OutboxMessages");
+                name: "OutboxMessages",
+                schema: "storage");
 
             migrationBuilder.DropTable(
-                name: "Products");
+                name: "Products",
+                schema: "storage");
 
             migrationBuilder.DropTable(
-                name: "StoredProducts");
+                name: "StoredProducts",
+                schema: "storage");
 
             migrationBuilder.DropTable(
-                name: "FoodStorages");
+                name: "FoodStorages",
+                schema: "storage");
         }
     }
 }
