@@ -9,16 +9,24 @@ using System.Threading.Tasks;
 
 namespace FoodVault.Modules.Storage.Infrastructure.Configuration.Processing.InternalCommands
 {
+    /// <summary>
+    /// Schedules commands as SQL statement for later execution.
+    /// </summary>
     internal class CommandScheduler : ICommandScheduler
     {
         private readonly IDbConnectionFactory _dbConnectionFactory;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CommandScheduler" /> class.
+        /// </summary>
+        /// <param name="dbConnectionFactory">Sql connection factory.</param>
         public CommandScheduler(IDbConnectionFactory dbConnectionFactory)
         {
             _dbConnectionFactory = dbConnectionFactory;
         }
 
-        public async Task ScheduleAsync<T>(ICommand command)
+        /// <inheritdoc />
+        public async Task ScheduleAsync(ICommand command)
         {
             const string sql =
                 "INSERT INTO [storage].[InternalCommands] ([Id], [EnqueueDate] , [CommandType], [Payload]) VALUES " +

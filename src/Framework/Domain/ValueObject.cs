@@ -5,12 +5,16 @@ using System.Reflection;
 
 namespace FoodVault.Framework.Domain
 {
+    /// <summary>
+    /// Base class for a DDD value object.
+    /// </summary>
     public abstract class ValueObject : IEquatable<ValueObject>
     {
         private List<PropertyInfo> _properties;
 
         private List<FieldInfo> _fields;
 
+        /// <inheritdoc />
         public static bool operator ==(ValueObject obj1, ValueObject obj2)
         {
             if (object.Equals(obj1, null))
@@ -26,16 +30,19 @@ namespace FoodVault.Framework.Domain
             return obj1.Equals(obj2);
         }
 
+        /// <inheritdoc />
         public static bool operator !=(ValueObject obj1, ValueObject obj2)
         {
             return !(obj1 == obj2);
         }
 
+        /// <inheritdoc />
         public bool Equals(ValueObject obj)
         {
             return Equals(obj as object);
         }
 
+        /// <inheritdoc />
         public override bool Equals(object obj)
         {
             if (obj == null || GetType() != obj.GetType())
@@ -47,6 +54,7 @@ namespace FoodVault.Framework.Domain
                 && GetFields().All(f => FieldsAreEqual(obj, f));
         }
 
+        /// <inheritdoc />
         public override int GetHashCode()
         {
             unchecked
@@ -68,6 +76,10 @@ namespace FoodVault.Framework.Domain
             }
         }
 
+        /// <summary>
+        /// Checks a domain rule for validity. Throws when invalid.
+        /// </summary>
+        /// <param name="rule">Rule to check.</param>
         protected static void CheckRule(IDomainRule rule)
         {
             if (!rule.Validate())
@@ -92,11 +104,8 @@ namespace FoodVault.Framework.Domain
             {
                 this._properties = GetType()
                     .GetProperties(BindingFlags.Instance | BindingFlags.Public)
-                    //.Where(p => p.GetCustomAttribute(typeof(IgnoreMemberAttribute)) == null)
+                    .Where(p => p.GetCustomAttribute(typeof(IgnoreMemberAttribute)) == null)
                     .ToList();
-
-                // Not available in Core
-                // !Attribute.IsDefined(p, typeof(IgnoreMemberAttribute))).ToList();
             }
 
             return this._properties;
@@ -107,7 +116,7 @@ namespace FoodVault.Framework.Domain
             if (this._fields == null)
             {
                 this._fields = GetType().GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
-                    //.Where(p => p.GetCustomAttribute(typeof(IgnoreMemberAttribute)) == null)
+                    .Where(p => p.GetCustomAttribute(typeof(IgnoreMemberAttribute)) == null)
                     .ToList();
             }
 

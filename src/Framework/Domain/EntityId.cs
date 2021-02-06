@@ -18,9 +18,9 @@ namespace FoodVault.Framework.Domain
         public Guid Value { get; }
 
         /// <summary>
-        /// 
+        /// Initializes a new instance of the <see cref="EntityId" /> class.
         /// </summary>
-        /// <param name="value"></param>
+        /// <param name="value">Idnetifier</param>
         protected EntityId(Guid value)
         {
             Value = value;

@@ -11,6 +11,9 @@ using System.Threading.Tasks;
 
 namespace FoodVault.Framework.Infrastructure.DomainEvents
 {
+    /// <summary>
+    /// Class that dispatches domain events, which are attached to entities.
+    /// </summary>
     public class DomainEventDispatcher : IDomainEventDispatcher
     {
         private readonly IMediator _mediator;
@@ -19,6 +22,14 @@ namespace FoodVault.Framework.Infrastructure.DomainEvents
         private readonly IDomainEventAccessor _domainEventAccessor;
         private readonly IDomainNotificationsRegistry _domainNotificationsRegistry;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DomainEventDispatcher" /> class.
+        /// </summary>
+        /// <param name="mediator">Module mediator.</param>
+        /// <param name="lifeTimeScope">Autofac lifetime scope.</param>
+        /// <param name="outbox">Modules outbox.</param>
+        /// <param name="domainEventAccessor">Domain event accessor.</param>
+        /// <param name="domainNotificationsRegistry">Domain notification name-type mappings.</param>
         public DomainEventDispatcher(
             IMediator mediator,
             ILifetimeScope lifeTimeScope,
@@ -33,6 +44,7 @@ namespace FoodVault.Framework.Infrastructure.DomainEvents
             _domainNotificationsRegistry = domainNotificationsRegistry;
         }
 
+        /// <inheritdoc />
         public async Task DispatchEventsAsync()
         {
             var domainEventNotifications = new List<IDomainEventNotification<IDomainEvent>>();

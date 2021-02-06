@@ -7,8 +7,12 @@ using System.Reflection;
 
 namespace FoodVault.Framework.Infrastructure.Serialization
 {
+    /// <summary>
+    /// Contract resolver for Newtonsoft.Json, that resolves all properites from a given type.
+    /// </summary>
     public class AllPropertiesContractResolver : DefaultContractResolver
     {
+        /// <inheritdoc />
         protected override IList<JsonProperty> CreateProperties(Type type, MemberSerialization memberSerialization)
         {
             var properties = type.GetProperties(

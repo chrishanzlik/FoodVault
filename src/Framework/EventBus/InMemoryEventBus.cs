@@ -5,12 +5,11 @@ using System.Threading.Tasks;
 
 namespace FoodVault.Framework.EventBus
 {
+    /// <summary>
+    /// In memory event bus.
+    /// </summary>
     public sealed class InMemoryEventBus
     {
-        static InMemoryEventBus()
-        {
-        }
-
         private InMemoryEventBus()
         {
             _handlers = new List<HandlerSubscription>();
