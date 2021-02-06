@@ -81,7 +81,7 @@ namespace FoodVault.Modules.Storage.Infrastructure.Configuration
             containerBuilder.RegisterModule(new MediatorModule());
             containerBuilder.RegisterModule(new OutboxModule(domainNotificationRegistrations));
             containerBuilder.RegisterModule(new FileUploadModule());
-            containerBuilder.RegisterModule(new DatabaseModule(connectionString));
+            containerBuilder.RegisterModule(new DataAccess.DataAccess(connectionString));
             containerBuilder.RegisterModule(new EventBusModule(eventBus));
 
             if (isDesignTime)

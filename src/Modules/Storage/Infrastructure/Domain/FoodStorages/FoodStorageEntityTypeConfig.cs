@@ -6,10 +6,14 @@ using System;
 
 namespace FoodVault.Modules.Storage.Infrastructure.Domain.FoodStorages
 {
+    /// <summary>
+    /// Food storage entity type configuration.
+    /// </summary>
     internal sealed class FoodStorageEntityTypeConfig : IEntityTypeConfiguration<FoodStorage>
     {
         internal const string StoredProducts = "StoredProducts";
 
+        /// <inheritdoc />
         public void Configure(EntityTypeBuilder<FoodStorage> builder)
         {
             builder.ToTable("FoodStorages", "storage");

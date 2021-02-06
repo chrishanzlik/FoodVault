@@ -1,14 +1,15 @@
 ﻿using FoodVault.Modules.Storage.Domain.Products;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace FoodVault.Modules.Storage.Infrastructure.Domain.Products
 {
+    /// <summary>
+    /// Product entity type configuration.
+    /// </summary>
     internal sealed class ProductEntityTypeConfig : IEntityTypeConfiguration<Product>
     {
+        /// <inheritdoc />
         public void Configure(EntityTypeBuilder<Product> builder)
         {
             builder.ToTable("Products", "storage");

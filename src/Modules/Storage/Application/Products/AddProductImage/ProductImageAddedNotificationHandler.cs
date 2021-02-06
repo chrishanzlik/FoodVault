@@ -12,6 +12,10 @@ namespace FoodVault.Modules.Storage.Application.Products.AddProductImage
     {
         private readonly IFileStorage _fileStorage;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ProductImageAddedNotificationHandler" /> class.
+        /// </summary>
+        /// <param name="fileStorage"></param>
         public ProductImageAddedNotificationHandler(IFileStorage fileStorage)
         {
             _fileStorage = fileStorage;

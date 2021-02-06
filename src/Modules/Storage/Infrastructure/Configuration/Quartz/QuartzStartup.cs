@@ -4,21 +4,25 @@ using FoodVault.Modules.Storage.Infrastructure.Configuration.Processing.Outbox;
 using Microsoft.Extensions.Logging;
 using Quartz;
 using Quartz.Impl;
-using Quartz.Logging;
 using System;
-using System.Collections.Generic;
 using System.Collections.Specialized;
-using System.Text;
 
 namespace FoodVault.Modules.Storage.Infrastructure.Configuration.Quartz
 {
+    /// <summary>
+    /// Quartz startup class.
+    /// </summary>
     internal static class QuartzStartup
     {
         private static IScheduler _scheduler;
 
+        /// <summary>
+        /// Initializes quartz scheduling.
+        /// </summary>
+        /// <param name="logger">Application logger.</param>
         internal static void Initialize(ILogger logger)
         {
-            //logger.Information("Quartz starting...");
+            logger.LogInformation("Quartz starting...");
 
             var schedulerConfiguration = new NameValueCollection();
             schedulerConfiguration.Add("quartz.scheduler.instanceName", "Meetings");

@@ -8,9 +8,14 @@ using System.Threading.Tasks;
 
 namespace FoodVault.Modules.Storage.Infrastructure.Configuration.EventBus
 {
+    /// <summary>
+    /// Generic integration event handler.
+    /// </summary>
+    /// <typeparam name="T">Type of the integration event.</typeparam>
     internal class IntegrationEventGenericHandler<T> : IIntegrationEventHandler<T>
         where T : IntegrationEvent
     {
+        /// <inheritdoc />
         public async Task Handle(T @event)
         {
             using var scope = StorageCompositionRoot.BeginLifetimeScope();

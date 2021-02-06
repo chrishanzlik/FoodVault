@@ -1,30 +1,24 @@
 ﻿using Autofac;
-using FoodVault.Infrastructure.Database;
-using FoodVault.Modules.Storage.Domain.FoodStorages;
-using FoodVault.Modules.Storage.Domain.Products;
-using FoodVault.Modules.Storage.Infrastructure.Domain.FoodStorages;
-using FoodVault.Modules.Storage.Infrastructure.Domain.Products;
 using FoodVault.Framework.Application.DataAccess;
-using FoodVault.Framework.Application.FileUploads;
 using FoodVault.Framework.Infrastructure.DataAccess;
+using FoodVault.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using FoodVault.Modules.Storage.Infrastructure.FileUploads;
 
 namespace FoodVault.Modules.Storage.Infrastructure.Configuration.DataAccess
 {
     /// <summary>
-    /// IoC container registrations for 'Database' stuff.
+    /// IoC container registrations for 'DataAccess' stuff.
     /// </summary>
-    internal class DatabaseModule : Module
+    internal class DataAccess : Module
     {
         private readonly string _connectionString;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DatabaseModule" /> class.
+        /// Initializes a new instance of the <see cref="DataAccess" /> class.
         /// </summary>
         /// <param name="connectionString">Connection string to connect with the <see cref="StorageContext"/>.</param>
-        public DatabaseModule(string connectionString)
+        public DataAccess(string connectionString)
         {
             _connectionString = connectionString;
         }

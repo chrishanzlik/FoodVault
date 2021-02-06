@@ -1,12 +1,18 @@
 ﻿using Autofac;
-using Autofac.Core;
 using FoodVault.Framework.Infrastructure.EventBus;
 using Microsoft.Extensions.Logging;
 
 namespace FoodVault.Modules.Storage.Infrastructure.Configuration.EventBus
 {
+    /// <summary>
+    /// EventBus startup class.
+    /// </summary>
     internal static class EventBusStartup
     {
+        /// <summary>
+        /// Initializes the event bus.
+        /// </summary>
+        /// <param name="logger">Application logger.</param>
         public static void Initialize(ILogger logger)
         {
             SubscribeToIntegrationEvents(logger);

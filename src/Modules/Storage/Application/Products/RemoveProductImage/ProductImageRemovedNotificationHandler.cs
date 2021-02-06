@@ -12,6 +12,10 @@ namespace FoodVault.Modules.Storage.Application.Products.RemoveProductImage
     {
         private readonly IFileStorage _fileStorage;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ProductImageRemovedNotificationHandler" /> class.
+        /// </summary>
+        /// <param name="fileStorage">Applications file storage.</param>
         public ProductImageRemovedNotificationHandler(IFileStorage fileStorage)
         {
             _fileStorage = fileStorage;

@@ -12,13 +12,18 @@ using System.Threading.Tasks;
 
 namespace FoodVault.Modules.Storage.Infrastructure
 {
+    /// <summary>
+    /// Storage module.
+    /// </summary>
     public class StorageModule : IStorageModule
     {
+        /// <inheritdoc />
         public async Task<ICommandResult> ExecuteCommandAsync(ICommand command)
         {
             return await CommandExecutor.ExecuteAsync(command);
         }
 
+        /// <inheritdoc />
         public async Task<TResult> ExecuteQueryAsync<TResult>(IQuery<TResult> query)
         {
             using var scope = StorageCompositionRoot.BeginLifetimeScope();
@@ -27,6 +32,7 @@ namespace FoodVault.Modules.Storage.Infrastructure
             return await mediator.Send(query);
         }
 
+        /// <inheritdoc />
         public async Task<Guid> StoreFileTemporaryAsync(Stream fileStream, string fileName, string contentType, TimeSpan expirationTime)
         {
             using var scope = StorageCompositionRoot.BeginLifetimeScope();
