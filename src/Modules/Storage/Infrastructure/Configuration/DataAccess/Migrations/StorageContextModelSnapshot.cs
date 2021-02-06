@@ -69,6 +69,28 @@ namespace FoodVault.Modules.Storage.Infrastructure.Configuration.DataAccess.Migr
                     b.ToTable("OutboxMessages", "storage");
                 });
 
+            modelBuilder.Entity("FoodVault.Framework.Infrastructure.Inbox.InboxMessage", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("EventType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Payload")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("ProcessedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("RaisingTime")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("InboxMessages", "storage");
+                });
+
             modelBuilder.Entity("FoodVault.Framework.Infrastructure.InternalCommands.InternalCommand", b =>
                 {
                     b.Property<Guid>("Id")

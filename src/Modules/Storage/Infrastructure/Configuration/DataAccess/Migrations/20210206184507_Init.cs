@@ -44,6 +44,22 @@ namespace FoodVault.Modules.Storage.Infrastructure.Configuration.DataAccess.Migr
                 });
 
             migrationBuilder.CreateTable(
+                name: "InboxMessages",
+                schema: "storage",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    RaisingTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    EventType = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Payload = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ProcessedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_InboxMessages", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "InternalCommands",
                 schema: "storage",
                 columns: table => new
@@ -125,6 +141,10 @@ namespace FoodVault.Modules.Storage.Infrastructure.Configuration.DataAccess.Migr
         {
             migrationBuilder.DropTable(
                 name: "FileUploads",
+                schema: "storage");
+
+            migrationBuilder.DropTable(
+                name: "InboxMessages",
                 schema: "storage");
 
             migrationBuilder.DropTable(

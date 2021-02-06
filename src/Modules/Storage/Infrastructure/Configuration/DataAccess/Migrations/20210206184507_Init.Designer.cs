@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FoodVault.Modules.Storage.Infrastructure.Configuration.DataAccess.Migrations
 {
     [DbContext(typeof(StorageContext))]
-    [Migration("20210206142718_Init")]
+    [Migration("20210206184507_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -69,6 +69,28 @@ namespace FoodVault.Modules.Storage.Infrastructure.Configuration.DataAccess.Migr
                     b.HasKey("Id");
 
                     b.ToTable("OutboxMessages", "storage");
+                });
+
+            modelBuilder.Entity("FoodVault.Framework.Infrastructure.Inbox.InboxMessage", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("EventType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Payload")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("ProcessedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("RaisingTime")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("InboxMessages", "storage");
                 });
 
             modelBuilder.Entity("FoodVault.Framework.Infrastructure.InternalCommands.InternalCommand", b =>

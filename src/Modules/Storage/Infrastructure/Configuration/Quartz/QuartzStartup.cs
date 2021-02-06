@@ -1,4 +1,5 @@
 ﻿using FoodVault.Modules.Storage.Infrastructure.Configuration.Processing.FileUploads;
+using FoodVault.Modules.Storage.Infrastructure.Configuration.Processing.Inbox;
 using FoodVault.Modules.Storage.Infrastructure.Configuration.Processing.InternalCommands;
 using FoodVault.Modules.Storage.Infrastructure.Configuration.Processing.Outbox;
 using Microsoft.Extensions.Logging;
@@ -24,6 +25,7 @@ namespace FoodVault.Modules.Storage.Infrastructure.Configuration.Quartz
         {
             logger.LogInformation("Quartz starting...");
 
+            //TODO: ?
             var schedulerConfiguration = new NameValueCollection();
             schedulerConfiguration.Add("quartz.scheduler.instanceName", "Meetings");
 
@@ -59,17 +61,17 @@ namespace FoodVault.Modules.Storage.Infrastructure.Configuration.Quartz
                 .ScheduleJob(processOutboxJob, triggerOutboxProcessing)
                 .GetAwaiter().GetResult();
 
-            //var processInboxJob = JobBuilder.Create<ProcessInboxJob>().Build();
-            //var processInboxTrigger =
-            //    TriggerBuilder
-            //        .Create()
-            //        .StartNow()
-            //        .WithCronSchedule("0/2 * * ? * *")
-            //        .Build();
+            var processInboxJob = JobBuilder.Create<ProcessInboxJob>().Build();
+            var processInboxTrigger =
+                TriggerBuilder
+                    .Create()
+                    .StartNow()
+                    .WithSimpleSchedule(x => x.WithInterval(TimeSpan.FromSeconds(10)).RepeatForever())
+                    .Build();
 
-            //_scheduler
-            //    .ScheduleJob(processInboxJob, processInboxTrigger)
-            //    .GetAwaiter().GetResult();
+            _scheduler
+                .ScheduleJob(processInboxJob, processInboxTrigger)
+                .GetAwaiter().GetResult();
 
             var processInternalCommandsJob = JobBuilder.Create<ProcessInternalCommandsJob>().Build();
             var triggerCommandsProcessing =
@@ -80,7 +82,7 @@ namespace FoodVault.Modules.Storage.Infrastructure.Configuration.Quartz
                     .Build();
             _scheduler.ScheduleJob(processInternalCommandsJob, triggerCommandsProcessing).GetAwaiter().GetResult();
 
-            //logger.Information("Quartz started.");
+            logger.LogInformation("Quartz started.");
         }
 
         internal static void StopQuartz()
