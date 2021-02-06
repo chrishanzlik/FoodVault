@@ -5,7 +5,7 @@ namespace FoodVault.Modules.Storage.Infrastructure.Configuration.Processing.File
     /// <summary>
     /// Command that removes expired files from the filestorage.
     /// </summary>
-    internal class RemoveExpiredFilesCommand : Command
+    internal class RemoveExpiredFilesCommand : Command, IRecurringCommand
     {
     }
 }

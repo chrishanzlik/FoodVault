@@ -5,7 +5,7 @@ namespace FoodVault.Modules.Storage.Infrastructure.Configuration.Processing.Inte
     /// <summary>
     /// Command that triggers internal command processing.
     /// </summary>
-    internal class ProcessInternalCommandsCommand : Command
+    internal class ProcessInternalCommandsCommand : Command, IRecurringCommand
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ProcessInternalCommandsCommand" /> class.

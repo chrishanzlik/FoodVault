@@ -45,7 +45,7 @@ namespace FoodVault.Modules.Storage.Infrastructure.Configuration
 
             _logger = logger;
 
-            QuartzStartup.Initialize(logger);
+            //QuartzStartup.Initialize(logger);
             EventBusStartup.Initialize(logger);
         }
 
@@ -75,8 +75,8 @@ namespace FoodVault.Modules.Storage.Infrastructure.Configuration
             var containerBuilder = new ContainerBuilder();
             containerBuilder.RegisterModule(new QuartzModule());
             containerBuilder.RegisterModule(new DomainModule());
-            containerBuilder.RegisterModule(new MediatorModule());
             containerBuilder.RegisterModule(new ProcessingModule());
+            containerBuilder.RegisterModule(new MediatorModule());
             containerBuilder.RegisterModule(new OutboxModule(domainNotificationRegistrations));
             containerBuilder.RegisterModule(new FileUploadModule());
             containerBuilder.RegisterModule(new DatabaseModule(connectionString));

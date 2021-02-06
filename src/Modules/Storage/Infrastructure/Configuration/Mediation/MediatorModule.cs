@@ -1,17 +1,10 @@
 ﻿using Autofac;
 using Autofac.Core;
-using Autofac.Core.Activators.Reflection;
 using Autofac.Features.Variance;
 using FluentValidation;
-using FoodVault.Framework.Application.Validation;
-using FoodVault.Modules.Storage.Infrastructure.Configuration.Processing.FileUploads;
-using FoodVault.Modules.Storage.Infrastructure.Configuration.Processing.InternalCommands;
-using FoodVault.Modules.Storage.Infrastructure.Configuration.Processing.Outbox;
-using FoodVault.Modules.Storage.Infrastructure.Work;
 using MediatR;
 using MediatR.Pipeline;
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -48,7 +41,6 @@ namespace FoodVault.Modules.Storage.Infrastructure.Configuration.Mediation
 
             builder.RegisterGeneric(typeof(RequestPostProcessorBehavior<,>)).As(typeof(IPipelineBehavior<,>));
             builder.RegisterGeneric(typeof(RequestPreProcessorBehavior<,>)).As(typeof(IPipelineBehavior<,>));
-            builder.RegisterGeneric(typeof(CommandValidationPipelineBehavior<>)).As(typeof(IPipelineBehavior<,>));
 
             builder.Register<ServiceFactory>(ctx =>
             {

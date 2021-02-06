@@ -5,7 +5,7 @@ namespace FoodVault.Modules.Storage.Infrastructure.Configuration.Processing.Outb
     /// <summary>
     /// Command for triggering the outbox processing.
     /// </summary>
-    internal class ProcessOutboxCommand : Command
+    internal class ProcessOutboxCommand : Command, IRecurringCommand
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="OutboxMessage" /> class.
