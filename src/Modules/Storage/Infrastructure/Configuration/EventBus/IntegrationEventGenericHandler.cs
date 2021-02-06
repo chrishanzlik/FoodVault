@@ -27,7 +27,7 @@ namespace FoodVault.Modules.Storage.Infrastructure.Configuration.EventBus
                 ContractResolver = new AllPropertiesContractResolver()
             });
 
-            const string sql = "INSERT INTO [storage].[InboxMessages] (Id, OccurredOn, EventType, Payload) " +
+            const string sql = "INSERT INTO [storage].[InboxMessages] (Id, RaisingTime, EventType, Payload) " +
                       "VALUES (@Id, @OccurredOn, @EventType, @Payload)";
 
             await connection.ExecuteScalarAsync(sql, new
