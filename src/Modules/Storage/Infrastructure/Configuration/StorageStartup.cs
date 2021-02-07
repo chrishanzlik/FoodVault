@@ -23,7 +23,7 @@ using System.Collections.Generic;
 
 namespace FoodVault.Modules.Storage.Infrastructure.Configuration
 {
-    public class StorageStartup
+    internal class StorageStartup
     {
         private static IContainer _container;
         private static ILogger _logger;
@@ -57,6 +57,8 @@ namespace FoodVault.Modules.Storage.Infrastructure.Configuration
 
         public static void InitializeDesignTime(string connectionString, ILogger logger)
         {
+            AddDapperTypeHandlers();
+
             ConfigureCompositionRoot(connectionString, null, null, logger, null, true);
         }
 
@@ -81,7 +83,7 @@ namespace FoodVault.Modules.Storage.Infrastructure.Configuration
             containerBuilder.RegisterModule(new MediatorModule());
             containerBuilder.RegisterModule(new OutboxModule(domainNotificationRegistrations));
             containerBuilder.RegisterModule(new FileUploadModule());
-            containerBuilder.RegisterModule(new DataAccess.DataAccess(connectionString));
+            containerBuilder.RegisterModule(new DataAccessModule(connectionString));
             containerBuilder.RegisterModule(new EventBusModule(eventBus));
 
             if (isDesignTime)

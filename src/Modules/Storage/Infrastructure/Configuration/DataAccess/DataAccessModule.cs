@@ -10,15 +10,15 @@ namespace FoodVault.Modules.Storage.Infrastructure.Configuration.DataAccess
     /// <summary>
     /// IoC container registrations for 'DataAccess' stuff.
     /// </summary>
-    internal class DataAccess : Module
+    internal class DataAccessModule : Module
     {
         private readonly string _connectionString;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DataAccess" /> class.
+        /// Initializes a new instance of the <see cref="DataAccessModule" /> class.
         /// </summary>
         /// <param name="connectionString">Connection string to connect with the <see cref="StorageContext"/>.</param>
-        public DataAccess(string connectionString)
+        public DataAccessModule(string connectionString)
         {
             _connectionString = connectionString;
         }

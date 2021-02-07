@@ -81,7 +81,7 @@ namespace FoodVault.Api
             var executionContextAccessor = new ExecutionContextAccessor(httpContextAccessor);
             var fileUploadSettings = Configuration.GetSection(nameof(FileUploadSettings)).Get<FileUploadSettings>();
 
-            StorageStartup.Initialize(
+            StorageModule.Initialize(
                 Configuration["ConnectionString"],
                 executionContextAccessor,
                 fileUploadSettings,
