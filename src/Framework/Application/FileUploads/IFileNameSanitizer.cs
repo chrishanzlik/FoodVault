@@ -9,7 +9,8 @@
         /// Gets rid of invalid or unallowed characters within a file name.
         /// </summary>
         /// <param name="fileName">Name to sanitize.</param>
+        /// <param name="extension">Optional extension to append. Specify without leading dot!</param>
         /// <returns>Sanitized file name.</returns>
-        string Sanitize(string fileName);
+        string Sanitize(string fileName, string extension);
     }
 }
