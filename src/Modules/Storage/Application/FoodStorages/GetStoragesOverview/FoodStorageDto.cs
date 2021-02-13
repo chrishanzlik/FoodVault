@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace FoodVault.Modules.Storage.Application.FoodStorages.GetStorageOverview
+namespace FoodVault.Modules.Storage.Application.FoodStorages.GetStoragesOverview
 {
     /// <summary>
     /// Food storage data transfer object.
@@ -21,5 +21,15 @@ namespace FoodVault.Modules.Storage.Application.FoodStorages.GetStorageOverview
         /// Gets the description of the storage.
         /// </summary>
         public string Description { get; set; }
+
+        /// <summary>
+        /// Gets the product count of the storage.
+        /// </summary>
+        public int Products { get; set; }
+
+        /// <summary>
+        /// Gets the amount of expired products.
+        /// </summary>
+        public int ExpiredProducts { get; set; }
     }
 }

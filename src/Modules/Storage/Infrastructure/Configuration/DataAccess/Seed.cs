@@ -17,6 +17,12 @@ namespace FoodVault.Modules.Storage.Infrastructure.Configuration.DataAccess
         public static void Apply(StorageContext context)
         {
 #if DEBUG
+            // Stop reseed every startup...
+            if (context.FoodStorages.Any())
+            {
+                return;
+            }
+
             SeedStorages(context);
             SeedProducts(context);
             FillStorages(context);
@@ -65,6 +71,8 @@ namespace FoodVault.Modules.Storage.Infrastructure.Configuration.DataAccess
 
             foreach(var storage in storages)
             {
+                if (storage.StoredProducts.Any()) continue;
+
                 var prodCount = rnd.Next(products.Count / 2, products.Count);
                 var productsToAdd = products
                     .OrderBy(x => rnd.Next())

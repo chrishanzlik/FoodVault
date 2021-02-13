@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace FoodVault.Modules.Storage.Application.FoodStorages.GetStorageOverview
+namespace FoodVault.Modules.Storage.Application.FoodStorages.GetStoragesOverview
 {
     /// <summary>
     /// Query handler for <see cref="GetStorageOverviewQuery"/>.
@@ -30,9 +30,16 @@ namespace FoodVault.Modules.Storage.Application.FoodStorages.GetStorageOverview
                 "SELECT " +
                 "[Storage].[Id]," +
                 "[Storage].[Name]," +
-                "[Storage].[Description] " +
+                "[Storage].[Description], " +
+                "SUM([StoredProduct].[Quantity]) AS [Products], " +
+                "SUM(CASE WHEN [StoredProduct].[ExpirationDate] < GETDATE() THEN [StoredProduct].[Quantity] ELSE NULL END) AS [ExpiredProducts] " +
                 "FROM [storage].[FoodStorages] as [Storage] " +
-                "WHERE [Storage].[IsDeleted] = 0";
+                "LEFT JOIN [storage].[StoredProducts] AS [StoredProduct] ON [StoredProduct].[FoodStorageId] = [Storage].[Id] " +
+                "WHERE [Storage].[IsDeleted] = 0 " +
+                "GROUP BY " +
+                "[Storage].[Id]," +
+                "[Storage].[Name]," +
+                "[Storage].[Description]";
 
             var con = _dbConnectionFactory.GetOpen();
 

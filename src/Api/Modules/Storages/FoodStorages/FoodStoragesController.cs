@@ -1,7 +1,7 @@
 ﻿using FoodVault.Api.Common;
 using FoodVault.Modules.Storage.Application.FoodStorages.CreateStorage;
 using FoodVault.Modules.Storage.Application.FoodStorages.DeleteStorage;
-using FoodVault.Modules.Storage.Application.FoodStorages.GetStorageOverview;
+using FoodVault.Modules.Storage.Application.FoodStorages.GetStoragesOverview;
 using FoodVault.Modules.Storage.Application.FoodStorages.RemoveProduct;
 using FoodVault.Modules.Storage.Application.FoodStorages.StoreProduct;
 using FoodVault.Framework.Application.Commands;
@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
 using FoodVault.Modules.Storage.Application.Contracts;
+using FoodVault.Modules.Storage.Application.FoodStorages.GetStorageContent;
 
 namespace FoodVault.Api.Modules.Storages.FoodStorages
 {
@@ -30,7 +31,7 @@ namespace FoodVault.Api.Modules.Storages.FoodStorages
 
             var result = await _storageModule.ExecuteQueryAsync(query);
 
-            return Json(result);
+            return Ok(result);
         }
 
         [HttpPost]
@@ -54,6 +55,16 @@ namespace FoodVault.Api.Modules.Storages.FoodStorages
         }
 
         #region StorageProducts
+
+        [HttpGet("{foodStorageId}/products")]
+        public async Task<IActionResult> GetStoredProductsAsync([FromRoute] Guid foodStorageId)
+        {
+            var query = new GetStorageContentQuery(foodStorageId);
+
+            var result = await _storageModule.ExecuteQueryAsync(query);
+
+            return Ok(result);
+        }
 
         [HttpPost("{foodStorageId}/products")]
         public async Task<IActionResult> AddProductsToStorageAsync(

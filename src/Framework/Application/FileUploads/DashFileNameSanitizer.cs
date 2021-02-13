@@ -19,9 +19,7 @@ namespace FoodVault.Framework.Application.FileUploads
         /// <inheritdoc />
         public string Sanitize(string fileName, string extension)
         {
-            //TODO: get extension first and save into var. then sanitize. after that attach the extension again.
-
-            if (string.IsNullOrEmpty(fileName))
+            if (string.IsNullOrWhiteSpace(fileName))
             {
                 throw new ArgumentException("Parameter 'fileName' cannot be null or empty.");
             }

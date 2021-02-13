@@ -1,7 +1,7 @@
 ﻿using FoodVault.Framework.Application.Queries;
 using System.Collections.Generic;
 
-namespace FoodVault.Modules.Storage.Application.FoodStorages.GetStorageOverview
+namespace FoodVault.Modules.Storage.Application.FoodStorages.GetStoragesOverview
 {
     /// <summary>
     /// Query that requests all available food storages.
