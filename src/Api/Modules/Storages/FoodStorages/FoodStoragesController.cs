@@ -10,6 +10,7 @@ using System;
 using System.Threading.Tasks;
 using FoodVault.Modules.Storage.Application.Contracts;
 using FoodVault.Modules.Storage.Application.FoodStorages.GetStorageContent;
+using FoodVault.Modules.Storage.Application.FoodStorages.ChangeStorageProfile;
 
 namespace FoodVault.Api.Modules.Storages.FoodStorages
 {
@@ -45,9 +46,19 @@ namespace FoodVault.Api.Modules.Storages.FoodStorages
         }
 
         [HttpDelete("{foodStorageId}")]
-        public async Task<IActionResult> DeleteStorageAsync(Guid foodStorageId)
+        public async Task<IActionResult> DeleteStorageAsync([FromRoute] Guid foodStorageId)
         {
             var command = new DeleteStorageCommand(foodStorageId);
+
+            ICommandResult result = await _storageModule.ExecuteCommandAsync(command);
+
+            return result.ToActionResult();
+        }
+
+        [HttpPatch("{foodStorageId}")]
+        public async Task<IActionResult> ChangeStorageProfileAsync([FromRoute] Guid foodStorageId, [FromBody] ChangeStorageRequest request)
+        {
+            var command = new ChangeStorageProfileCommand(foodStorageId, request.StorageName, request.Description);
 
             ICommandResult result = await _storageModule.ExecuteCommandAsync(command);
 

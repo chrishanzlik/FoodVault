@@ -29,8 +29,11 @@ namespace FoodVault.Modules.Storage.Domain.FoodStorages
         /// </summary>
         /// <param name="storageName">Storage name.</param>
         /// <param name="description">Storage description.</param>
-        public FoodStorage(string storageName, string description)
+        /// <param name="nameUniquessChecker">Checks that the choosen name is unique.</param>
+        internal FoodStorage(string storageName, string description, IStorageNameUniquessChecker nameUniquessChecker)
         {
+            this.CheckDomainRule(new StorageNameMustBeUniqueRule(storageName, nameUniquessChecker));
+
             Id = new FoodStorageId(Guid.NewGuid());
             Name = storageName;
             Description = description;
@@ -60,6 +63,17 @@ namespace FoodVault.Modules.Storage.Domain.FoodStorages
         /// </summary>
         public IReadOnlyCollection<StoredProduct> StoredProducts => _storedProducts.AsReadOnly();
 
+        /// <summary>
+        /// Creates a new <see cref="FoodStorage"/>.
+        /// </summary>
+        /// <param name="storageName">Name of the food storage.</param>
+        /// <param name="description">Optional description of the food storage.</param>
+        /// <param name="nameUniquessChecker">Domain service that checks that the choosen name is unique.</param>
+        /// <returns>Created FoodStorage.</returns>
+        public static FoodStorage CreateNew(string storageName, string description, IStorageNameUniquessChecker nameUniquessChecker)
+        {
+            return new FoodStorage(storageName, description, nameUniquessChecker);
+        }
 
         /// <summary>
         /// Removes a product from the storage.
@@ -119,12 +133,15 @@ namespace FoodVault.Modules.Storage.Domain.FoodStorages
         /// <summary>
         /// Renames the storage and sets the description.
         /// </summary>
-        public void Rename(string name, string description)
+        public void Rename(string storageName, string storageDescription, IStorageNameUniquessChecker nameUniquessChecker)
         {
-            this.CheckDomainRule(new StorageNameMustBeMinFourCharactersLongRule(name));
-
-            this.Name = name;
-            this.Description = description;
+            if (!storageName.Equals(this.Name, StringComparison.OrdinalIgnoreCase))
+            {
+                this.CheckDomainRule(new StorageNameMustBeUniqueRule(storageName, nameUniquessChecker));
+            }
+            
+            this.Name = storageName;
+            this.Description = storageDescription;
         }
 
         /// <summary>

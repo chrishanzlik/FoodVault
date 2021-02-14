@@ -35,7 +35,7 @@ namespace FoodVault.Modules.Storage.Infrastructure.Configuration.DataAccess
             {
                 var storageSeed = new[]
                 {
-                    new FoodStorage("Test-Storage", "Initial test storage.")
+                    FoodStorage.CreateNew("Test-Storage", "Initial test storage.", new FakeStorageNameUniquessChecker())
                 };
                 context.FoodStorages.AddRange(storageSeed);
                 context.SaveChanges();
@@ -91,6 +91,11 @@ namespace FoodVault.Modules.Storage.Infrastructure.Configuration.DataAccess
         private class FakeProductExistsChecker : IProductExistsChecker
         {
             public bool ProductExists(ProductId id) => true;
+        }
+
+        private class FakeStorageNameUniquessChecker : IStorageNameUniquessChecker
+        {
+            public bool StorageNameIsUnique(string storageName) => true;
         }
     }
 }

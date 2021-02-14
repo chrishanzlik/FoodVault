@@ -15,6 +15,10 @@ namespace FoodVault.Modules.Storage.Infrastructure.Domain
             builder.RegisterType<ProdcutExistsSqlChecker>()
                 .As<IProductExistsChecker>()
                 .InstancePerLifetimeScope();
+
+            builder.RegisterType<StorageNameUniquessSqlChecker>()
+                .As<IStorageNameUniquessChecker>()
+                .InstancePerLifetimeScope();
         }
     }
 }
