@@ -9,6 +9,9 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
+using Microsoft.AspNetCore.Mvc.Routing;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -78,13 +81,17 @@ namespace FoodVault.Api
         private void InitializeModules(ILifetimeScope container)
         {
             var httpContextAccessor = container.Resolve<IHttpContextAccessor>();
+            var linkGenerator = container.Resolve<LinkGenerator>();
+
             var executionContextAccessor = new ExecutionContextAccessor(httpContextAccessor);
             var fileUploadSettings = Configuration.GetSection(nameof(FileUploadSettings)).Get<FileUploadSettings>();
+            var storageModuleUrlBuilder = new StorageModuleUrlBuilder(httpContextAccessor, linkGenerator);
 
             StorageModule.Initialize(
                 Configuration["ConnectionString"],
                 executionContextAccessor,
                 fileUploadSettings,
+                storageModuleUrlBuilder,
                 container.Resolve<ILogger<StorageModule>>(),
                 null);
         }

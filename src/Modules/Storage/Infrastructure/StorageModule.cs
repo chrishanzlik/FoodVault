@@ -4,6 +4,7 @@ using FoodVault.Framework.Application.Commands;
 using FoodVault.Framework.Application.FileUploads;
 using FoodVault.Framework.Application.Queries;
 using FoodVault.Framework.Infrastructure.EventBus;
+using FoodVault.Modules.Storage.Application.Common;
 using FoodVault.Modules.Storage.Application.Contracts;
 using FoodVault.Modules.Storage.Infrastructure.Configuration;
 using FoodVault.Modules.Storage.Infrastructure.Configuration.Processing;
@@ -65,12 +66,14 @@ namespace FoodVault.Modules.Storage.Infrastructure
         /// <param name="connectionString">Database connection string.</param>
         /// <param name="executionContextAccessor">Accesor for application execution context.</param>
         /// <param name="fileUploadSettings">File upload settings.</param>
+        /// <param name="urlBuilder">Url builder for the storage module.</param>
         /// <param name="logger">Application logger.</param>
         /// <param name="eventsBus">Applications event bus.</param>
         public static void Initialize(
             string connectionString,
             IExecutionContextAccessor executionContextAccessor,
             IFileUploadSettings fileUploadSettings,
+            IStorageModuleUrlBuilder urlBuilder,
             ILogger logger,
             IEventBus eventsBus)
         {
@@ -78,6 +81,7 @@ namespace FoodVault.Modules.Storage.Infrastructure
                 connectionString,
                 executionContextAccessor,
                 fileUploadSettings,
+                urlBuilder,
                 logger,
                 eventsBus);
         }
