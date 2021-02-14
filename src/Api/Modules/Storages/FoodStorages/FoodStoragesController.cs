@@ -25,9 +25,9 @@ namespace FoodVault.Api.Modules.Storages.FoodStorages
         }
         
         [HttpGet]
-        public async Task<IActionResult> GetStorageOverviewAsync()
+        public async Task<IActionResult> GetStorageOverviewAsync([FromQuery] string name = null)
         {
-            var query = new GetStorageOverviewQuery();
+            var query = new GetStorageOverviewQuery(nameFilter: name?.Trim());
 
             var result = await _storageModule.ExecuteQueryAsync(query);
 

@@ -35,7 +35,7 @@ namespace FoodVault.Modules.Storage.Application.FoodStorages.GetStoragesOverview
                 "SUM(CASE WHEN [StoredProduct].[ExpirationDate] < GETDATE() THEN [StoredProduct].[Quantity] ELSE NULL END) AS [ExpiredProducts] " +
                 "FROM [storage].[FoodStorages] as [Storage] " +
                 "LEFT JOIN [storage].[StoredProducts] AS [StoredProduct] ON [StoredProduct].[FoodStorageId] = [Storage].[Id] " +
-                "WHERE [Storage].[IsDeleted] = 0 " +
+                "WHERE [Storage].[IsDeleted] = 0 AND (@nameFilter IS NULL OR [Storage].[Name] LIKE @nameFilter) " +
                 "GROUP BY " +
                 "[Storage].[Id]," +
                 "[Storage].[Name]," +
@@ -43,7 +43,7 @@ namespace FoodVault.Modules.Storage.Application.FoodStorages.GetStoragesOverview
 
             var con = _dbConnectionFactory.GetOpen();
 
-            var storages = await con.QueryAsync<FoodStorageDto>(sql);
+            var storages = await con.QueryAsync<FoodStorageDto>(sql, new { nameFilter = '%' + request.NameFilter + '%' });
 
             return storages.AsList();
         }
