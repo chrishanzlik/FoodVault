@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Framework\Application\FoodVault.Framework.Application.csproj" />
+    <ProjectReference Include="..\Domain\FoodVault.Modules.UserAccess.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

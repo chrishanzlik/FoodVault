@@ -1,5 +1,5 @@
 ﻿using FoodVault.Api.Modules.Storages.Products;
-using FoodVault.Modules.Storage.Application.Common;
+using FoodVault.Modules.Storage.Application.Contracts;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using System;

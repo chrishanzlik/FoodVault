@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace FoodVault.Modules.Storage.Application.Common
+namespace FoodVault.Modules.Storage.Application.Contracts
 {
     public interface IStorageModuleUrlBuilder
     {

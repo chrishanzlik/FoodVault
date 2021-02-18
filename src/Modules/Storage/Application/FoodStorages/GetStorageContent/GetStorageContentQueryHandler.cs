@@ -1,7 +1,7 @@
 ﻿using Dapper;
 using FoodVault.Framework.Application.DataAccess;
 using FoodVault.Framework.Application.Queries;
-using FoodVault.Modules.Storage.Application.Common;
+using FoodVault.Modules.Storage.Application.Contracts;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;

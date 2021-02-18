@@ -4,21 +4,21 @@ using FoodVault.Framework.Application.Commands;
 using FoodVault.Framework.Application.FileUploads;
 using FoodVault.Framework.Application.Queries;
 using FoodVault.Framework.Infrastructure.EventBus;
-using FoodVault.Modules.Storage.Application.Contracts;
-using FoodVault.Modules.Storage.Infrastructure.Configuration;
-using FoodVault.Modules.Storage.Infrastructure.Configuration.Processing;
+using FoodVault.Modules.UserAccess.Application.Contracts;
+using FoodVault.Modules.UserAccess.Infrastructure.Configuration;
+using FoodVault.Modules.UserAccess.Infrastructure.Configuration.Processing;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.IO;
 using System.Threading.Tasks;
 
-namespace FoodVault.Modules.Storage.Infrastructure
+namespace FoodVault.Modules.UserAccess.Infrastructure
 {
     /// <summary>
-    /// Storage module.
+    /// User access module
     /// </summary>
-    public class StorageModule : IStorageModule
+    public class UserAccessModule : IUserAccessModule
     {
         #region Interface implementation
 
@@ -31,7 +31,7 @@ namespace FoodVault.Modules.Storage.Infrastructure
         /// <inheritdoc />
         public async Task<TResult> ExecuteQueryAsync<TResult>(IQuery<TResult> query)
         {
-            using var scope = StorageCompositionRoot.BeginLifetimeScope();
+            using var scope = UserAccessCompositionRoot.BeginLifetimeScope();
             var mediator = scope.Resolve<IMediator>();
 
             return await mediator.Send(query);
@@ -44,7 +44,7 @@ namespace FoodVault.Modules.Storage.Infrastructure
             string contentType,
             TimeSpan expirationTime)
         {
-            using var scope = StorageCompositionRoot.BeginLifetimeScope();
+            using var scope = UserAccessCompositionRoot.BeginLifetimeScope();
             var fileStorage = scope.Resolve<IFileStorage>();
 
             return await fileStorage.StoreFileTemporaryAsync(
@@ -72,11 +72,11 @@ namespace FoodVault.Modules.Storage.Infrastructure
             string connectionString,
             IExecutionContextAccessor executionContextAccessor,
             IFileUploadSettings fileUploadSettings,
-            IStorageModuleUrlBuilder urlBuilder,
+            IUserAccessModuleUrlBuilder urlBuilder,
             ILogger logger,
             IEventBus eventsBus)
         {
-            StorageStartup.Initialize(
+            UserAccessStartup.Initialize(
                 connectionString,
                 executionContextAccessor,
                 fileUploadSettings,
@@ -90,7 +90,7 @@ namespace FoodVault.Modules.Storage.Infrastructure
         /// </summary>
         public static void Shutdown()
         {
-            StorageStartup.Stop();
+            UserAccessStartup.Stop();
         }
 
         #endregion

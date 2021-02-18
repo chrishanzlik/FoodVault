@@ -2,9 +2,11 @@ using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using FoodVault.Api.Configuration.ExecutionContext;
 using FoodVault.Api.Modules.Storages;
+using FoodVault.Api.Modules.UserAccess;
 using FoodVault.Framework.Application.FileUploads;
 using FoodVault.Modules.Storage.Infrastructure;
 using FoodVault.Modules.Storage.Infrastructure.Configuration;
+using FoodVault.Modules.UserAccess.Infrastructure;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -76,6 +78,7 @@ namespace FoodVault.Api
         public void ConfigureContainer(ContainerBuilder containerBuilder)
         {
             containerBuilder.RegisterModule(new StorageAutofacModule());
+            containerBuilder.RegisterModule(new UserAccessAutofacModule());
         }
 
         private void InitializeModules(ILifetimeScope container)
@@ -85,7 +88,9 @@ namespace FoodVault.Api
 
             var executionContextAccessor = new ExecutionContextAccessor(httpContextAccessor);
             var fileUploadSettings = Configuration.GetSection(nameof(FileUploadSettings)).Get<FileUploadSettings>();
+
             var storageModuleUrlBuilder = new StorageModuleUrlBuilder(httpContextAccessor, linkGenerator);
+            var userAccessModuleUrlBuilder = new UserAccessModuleUrlBuilder(httpContextAccessor, linkGenerator);
 
             StorageModule.Initialize(
                 Configuration["ConnectionString"],
@@ -93,6 +98,14 @@ namespace FoodVault.Api
                 fileUploadSettings,
                 storageModuleUrlBuilder,
                 container.Resolve<ILogger<StorageModule>>(),
+                null);
+
+            UserAccessModule.Initialize(
+                Configuration["ConnectionString"],
+                executionContextAccessor,
+                fileUploadSettings,
+                userAccessModuleUrlBuilder,
+                container.Resolve<ILogger<UserAccessModule>>(),
                 null);
         }
     }
