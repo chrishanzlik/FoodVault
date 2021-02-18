@@ -1,14 +1,14 @@
 ﻿using FoodVault.Framework.Domain;
 
-namespace FoodVault.Modules.UserAccess.Domain.Users
+namespace FoodVault.Modules.UserAccess.Domain
 {
     public class EmailAddress : ValueObject
     {
         public EmailAddress(string email)
         {
-            EmailValue = email;
+            Value = email;
         }
 
-        public string EmailValue { get; }
+        public string Value { get; }
     }
 }

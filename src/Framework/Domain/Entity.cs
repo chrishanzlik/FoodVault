@@ -53,7 +53,7 @@ namespace FoodVault.Framework.Domain
         /// <param name="domainRule">Rule to check.</param>
         public void CheckDomainRule(IDomainRule domainRule)
         {
-            if (!domainRule.Validate())
+            if (!domainRule.Pass())
             {
                 throw new DomainRuleValidationException(domainRule);
             }

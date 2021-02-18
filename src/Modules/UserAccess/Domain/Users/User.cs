@@ -1,4 +1,5 @@
 ﻿using FoodVault.Framework.Domain;
+using FoodVault.Modules.UserAccess.Domain.UserRegistrations;
 using FoodVault.Modules.UserAccess.Domain.Users.Events;
 using System;
 using System.Collections.Generic;
@@ -16,6 +17,8 @@ namespace FoodVault.Modules.UserAccess.Domain.Users
 
         private bool _isActive;
 
+        private PasswordHash _passwordHash;
+
         private EmailAddress _email;
 
         private List<UserRole> _roles;
@@ -27,26 +30,39 @@ namespace FoodVault.Modules.UserAccess.Domain.Users
         {
         }
 
-        private User(string email, string firstName, string lastName)
+        private User(Guid id, EmailAddress email, PasswordHash hash, string firstName, string lastName)
         {
-            Id = new UserId(Guid.NewGuid());
-
+            Id = new UserId(id);
             _firstName = firstName;
             _lastName = lastName;
+            _passwordHash = hash;
+            _email = email;
             _isActive = true;
-            _email = new EmailAddress(email);
 
-            _roles = new List<UserRole>();
-            _roles.Add(UserRole.Member);
+            _roles = new List<UserRole>
+            {
+                UserRole.Member
+            };
 
             this.AddDomainEvent(new UserCreatedEvent(Id));
         }
 
+        /// <summary>
+        /// Gets the <see cref="User"/>s identifier.
+        /// </summary>
         public UserId Id { get; private set; }
 
-        public static User CreateNew(string email, string firstName, string lastName)
+        /// <summary>
+        /// Creates a new user.
+        /// </summary>
+        /// <param name="email"></param>
+        /// <param name="firstName"></param>
+        /// <param name="lastName"></param>
+        /// <param name="hash"></param>
+        /// <returns></returns>
+        internal static User CreateForRegistration(UserRegistrationId registrationId, EmailAddress email, PasswordHash hash, string firstName, string lastName)
         {
-            return new User(email, firstName, lastName);
+            return new User(registrationId, email, hash, firstName, lastName);
         }
     }
 }

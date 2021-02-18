@@ -1,7 +1,5 @@
 ﻿using FoodVault.Framework.Domain;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace FoodVault.Modules.UserAccess.Domain.Users
 {

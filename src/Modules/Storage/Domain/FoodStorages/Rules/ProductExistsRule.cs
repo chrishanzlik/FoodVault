@@ -26,6 +26,6 @@ namespace FoodVault.Modules.Storage.Domain.FoodStorages.Rules
         public string Message => $"A product with the id '{_productId}' does not exists.";
 
         /// <inheritdoc />
-        public bool Validate() => _productExistsChecker.ProductExists(_productId);
+        public bool Pass() => _productExistsChecker.ProductExists(_productId);
     }
 }

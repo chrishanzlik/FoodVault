@@ -25,6 +25,6 @@ namespace FoodVault.Modules.Storage.Domain.FoodStorages.Rules
         public string Message => $"The storage name '{_storageName}' is already forgiven.";
 
         /// <inheritdoc />
-        public bool Validate() => _nameUniquesChecker.StorageNameIsUnique(_storageName);
+        public bool Pass() => _nameUniquesChecker.StorageNameIsUnique(_storageName);
     }
 }

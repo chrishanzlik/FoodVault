@@ -22,7 +22,7 @@ namespace FoodVault.Modules.Storage.Domain.FoodStorages.Rules
         public string Message => "Quantity of a added or removed product must be at least 1.";
 
         /// <inheritdoc />
-        public bool Validate()
+        public bool Pass()
         {
             return _quantity >= 1;
         }
