@@ -1,7 +1,7 @@
 ﻿using FoodVault.Api.Common;
 using FoodVault.Modules.Storage.Application.FoodStorages.CreateStorage;
 using FoodVault.Modules.Storage.Application.FoodStorages.DeleteStorage;
-using FoodVault.Modules.Storage.Application.FoodStorages.GetStoragesOverview;
+using FoodVault.Modules.Storage.Application.FoodStorages.GetStoragesForUser;
 using FoodVault.Modules.Storage.Application.FoodStorages.RemoveProduct;
 using FoodVault.Modules.Storage.Application.FoodStorages.StoreProduct;
 using FoodVault.Framework.Application.Commands;
@@ -28,7 +28,7 @@ namespace FoodVault.Api.Modules.Storages.FoodStorages
         [HttpGet]
         public async Task<IActionResult> GetStorageOverviewAsync([FromQuery] string name = null)
         {
-            var query = new GetStorageOverviewQuery(nameFilter: name?.Trim());
+            var query = new GetStoragesForUserQuery(nameFilter: name?.Trim());
 
             var result = await _storageModule.ExecuteQueryAsync(query);
 

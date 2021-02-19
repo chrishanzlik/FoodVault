@@ -1,6 +1,7 @@
 ﻿using Dapper;
 using FoodVault.Framework.Application.DataAccess;
 using FoodVault.Modules.Storage.Domain.FoodStorages;
+using System;
 
 namespace FoodVault.Modules.Storage.Application.FoodStorages.DomainServices
 {
@@ -21,16 +22,16 @@ namespace FoodVault.Modules.Storage.Application.FoodStorages.DomainServices
         }
 
         /// <inheritdoc />
-        public bool StorageNameIsUnique(string storageName)
+        public bool IsNameUniqueForUser(string storageName, Guid userId)
         {
             //TODO: Scope to user
 
             const string sql =
-                "SELECT COUNT(1) FROM [storage].[FoodStorages] WHERE [FoodStorages].[Name] = @storageName";
+                "SELECT COUNT(1) FROM [storage].[FoodStorages] WHERE [FoodStorages].[Name] = @storageName AND [FoodStorages].[OwnerId] = @userId";
 
             var connection = _dbConnectionFactory.GetOpen();
 
-            return !connection.ExecuteScalar<bool>(sql, new { storageName });
+            return !connection.ExecuteScalar<bool>(sql, new { storageName, userId });
         }
     }
 }

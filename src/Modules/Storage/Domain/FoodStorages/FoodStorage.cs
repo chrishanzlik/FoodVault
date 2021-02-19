@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using FoodVault.Framework.Domain;
 using FoodVault.Modules.Storage.Domain.Products;
+using FoodVault.Modules.Storage.Domain.Users;
 
 namespace FoodVault.Modules.Storage.Domain.FoodStorages
 {
@@ -16,6 +17,8 @@ namespace FoodVault.Modules.Storage.Domain.FoodStorages
         private readonly List<StoredProduct> _storedProducts = new List<StoredProduct>();
 
         private bool _isDeleted;
+
+        private UserId _ownerId;
 
         /// <summary>
         /// Required by Entity Framework.
@@ -30,14 +33,15 @@ namespace FoodVault.Modules.Storage.Domain.FoodStorages
         /// <param name="storageName">Storage name.</param>
         /// <param name="description">Storage description.</param>
         /// <param name="nameUniquessChecker">Checks that the choosen name is unique.</param>
-        internal FoodStorage(string storageName, string description, IStorageNameUniquessChecker nameUniquessChecker)
+        internal FoodStorage(UserId userId, string storageName, string description, IStorageNameUniquessChecker nameUniquessChecker)
         {
-            this.CheckDomainRule(new StorageNameMustBeUniqueRule(storageName, nameUniquessChecker));
+            this.CheckDomainRule(new StorageNameMustBeUniqueRule(storageName, userId, nameUniquessChecker));
 
             Id = new FoodStorageId(Guid.NewGuid());
             Name = storageName;
             Description = description;
 
+            _ownerId = userId;
             _isDeleted = false;
 
             this.AddDomainEvent(new FoodStorageCreatedEvent(Id));
@@ -70,9 +74,9 @@ namespace FoodVault.Modules.Storage.Domain.FoodStorages
         /// <param name="description">Optional description of the food storage.</param>
         /// <param name="nameUniquessChecker">Domain service that checks that the choosen name is unique.</param>
         /// <returns>Created FoodStorage.</returns>
-        public static FoodStorage CreateNew(string storageName, string description, IStorageNameUniquessChecker nameUniquessChecker)
+        public static FoodStorage CreateForUser(UserId userId, string storageName, string description, IStorageNameUniquessChecker nameUniquessChecker)
         {
-            return new FoodStorage(storageName, description, nameUniquessChecker);
+            return new FoodStorage(userId, storageName, description, nameUniquessChecker);
         }
 
         /// <summary>
@@ -137,7 +141,7 @@ namespace FoodVault.Modules.Storage.Domain.FoodStorages
         {
             if (!storageName.Equals(this.Name, StringComparison.OrdinalIgnoreCase))
             {
-                this.CheckDomainRule(new StorageNameMustBeUniqueRule(storageName, nameUniquessChecker));
+                this.CheckDomainRule(new StorageNameMustBeUniqueRule(storageName, _ownerId, nameUniquessChecker));
             }
             
             this.Name = storageName;

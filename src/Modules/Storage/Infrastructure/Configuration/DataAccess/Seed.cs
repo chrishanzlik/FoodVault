@@ -1,5 +1,6 @@
 ﻿using FoodVault.Modules.Storage.Domain.FoodStorages;
 using FoodVault.Modules.Storage.Domain.Products;
+using FoodVault.Modules.Storage.Domain.Users;
 using System;
 using System.Linq;
 
@@ -35,7 +36,7 @@ namespace FoodVault.Modules.Storage.Infrastructure.Configuration.DataAccess
             {
                 var storageSeed = new[]
                 {
-                    FoodStorage.CreateNew("Test-Storage", "Initial test storage.", new FakeStorageNameUniquessChecker())
+                    FoodStorage.CreateForUser(new UserId(Guid.Empty), "Test-Storage", "Initial test storage.", new FakeStorageNameUniquessChecker())
                 };
                 context.FoodStorages.AddRange(storageSeed);
                 context.SaveChanges();
@@ -95,7 +96,7 @@ namespace FoodVault.Modules.Storage.Infrastructure.Configuration.DataAccess
 
         private class FakeStorageNameUniquessChecker : IStorageNameUniquessChecker
         {
-            public bool StorageNameIsUnique(string storageName) => true;
+            public bool IsNameUniqueForUser(string storageName, Guid userId) => true;
         }
     }
 }

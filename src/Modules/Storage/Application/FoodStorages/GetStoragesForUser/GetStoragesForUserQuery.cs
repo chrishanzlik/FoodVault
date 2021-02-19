@@ -1,18 +1,18 @@
 ﻿using FoodVault.Framework.Application.Queries;
 using System.Collections.Generic;
 
-namespace FoodVault.Modules.Storage.Application.FoodStorages.GetStoragesOverview
+namespace FoodVault.Modules.Storage.Application.FoodStorages.GetStoragesForUser
 {
     /// <summary>
     /// Query that requests all available food storages.
     /// </summary>
-    public class GetStorageOverviewQuery : IQuery<IEnumerable<FoodStorageDto>>
+    public class GetStoragesForUserQuery : IQuery<IEnumerable<FoodStorageDto>>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="GetStorageOverviewQuery" /> class.
+        /// Initializes a new instance of the <see cref="GetStoragesForUserQuery" /> class.
         /// </summary>
         /// <param name="nameFilter">Optional filtering for storage name.</param>
-        public GetStorageOverviewQuery(
+        public GetStoragesForUserQuery(
             string nameFilter = null)
         {
             NameFilter = nameFilter;

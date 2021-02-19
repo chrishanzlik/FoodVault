@@ -2,6 +2,6 @@
 {
     public interface IEmailFreeChecker
     {
-        bool EmailCanBeUsed(string email);
+        bool IsFreeEmail(string email);
     }
 }

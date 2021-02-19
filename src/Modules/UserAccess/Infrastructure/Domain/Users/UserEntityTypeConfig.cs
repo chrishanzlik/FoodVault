@@ -1,4 +1,5 @@
-﻿using FoodVault.Modules.UserAccess.Domain.Users;
+﻿using FoodVault.Modules.UserAccess.Domain;
+using FoodVault.Modules.UserAccess.Domain.Users;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -22,7 +23,7 @@ namespace FoodVault.Modules.UserAccess.Infrastructure.Domain.Users
 
             builder.OwnsOne<EmailAddress>("_email", emailBuilder =>
             {
-                emailBuilder.Property(x => x.EmailValue).HasColumnName("EmailAddress");
+                emailBuilder.Property(x => x.Value).HasColumnName("EmailAddress");
             });
 
             builder.OwnsMany<UserRole>("_roles", roleBuilder =>

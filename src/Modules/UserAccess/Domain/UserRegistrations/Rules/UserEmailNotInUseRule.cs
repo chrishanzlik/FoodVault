@@ -25,6 +25,6 @@ namespace FoodVault.Modules.UserAccess.Domain.UserRegistrations.Rules
         public string Message => $"The E-Mail address {_email.Value} is already registered.";
         
         /// <inheritdoc />
-        public bool Pass() => _emailFreeChecker.EmailCanBeUsed(_email.Value);
+        public bool Pass() => _emailFreeChecker.IsFreeEmail(_email.Value);
     }
 }

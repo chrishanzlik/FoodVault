@@ -1,7 +1,9 @@
-﻿namespace FoodVault.Modules.Storage.Domain.FoodStorages
+﻿using System;
+
+namespace FoodVault.Modules.Storage.Domain.FoodStorages
 {
     public interface IStorageNameUniquessChecker
     {
-        bool StorageNameIsUnique(string storageName);
+        bool IsNameUniqueForUser(string storageName, Guid userId);
     }
 }

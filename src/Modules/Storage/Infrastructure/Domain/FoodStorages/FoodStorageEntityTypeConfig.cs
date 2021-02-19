@@ -1,5 +1,6 @@
 ﻿using FoodVault.Modules.Storage.Domain.FoodStorages;
 using FoodVault.Modules.Storage.Domain.Products;
+using FoodVault.Modules.Storage.Domain.Users;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
@@ -21,6 +22,8 @@ namespace FoodVault.Modules.Storage.Infrastructure.Domain.FoodStorages
             builder.HasKey(x => x.Id);
 
             builder.Property<bool>("_isDeleted").HasColumnName("IsDeleted");
+
+            builder.Property<UserId>("_ownerId").HasColumnName("OwnerId");
 
             builder.OwnsMany<StoredProduct>(StoredProducts, x =>
             {

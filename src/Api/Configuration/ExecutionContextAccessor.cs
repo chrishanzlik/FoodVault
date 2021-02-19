@@ -13,8 +13,10 @@ namespace FoodVault.Api.Configuration.ExecutionContext
             _httpContextAccessor = httpContextAccessor;
         }
 
-        public Guid UserId => throw new NotImplementedException();
+        //TODO: 
+        public Guid UserId => Guid.Empty;
 
-        public bool IsAvailable => throw new NotImplementedException();
+        //TODO: 
+        public bool IsAvailable => true;
     }
 }

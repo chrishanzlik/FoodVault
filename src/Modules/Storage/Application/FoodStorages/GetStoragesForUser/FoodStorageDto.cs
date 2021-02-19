@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace FoodVault.Modules.Storage.Application.FoodStorages.GetStoragesOverview
+namespace FoodVault.Modules.Storage.Application.FoodStorages.GetStoragesForUser
 {
     /// <summary>
     /// Food storage data transfer object.
