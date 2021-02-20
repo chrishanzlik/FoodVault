@@ -15,6 +15,7 @@ namespace FoodVault.Modules.Storage.Domain.FoodStorages
     public class FoodStorage : Entity, IAggregateRoot
     {
         private readonly List<StoredProduct> _storedProducts = new List<StoredProduct>();
+        private readonly List<StorageShare> _storageShares = new List<StorageShare>();
 
         private bool _isDeleted;
 
@@ -66,6 +67,11 @@ namespace FoodVault.Modules.Storage.Domain.FoodStorages
         /// Gets a list of all stored products within this storage.
         /// </summary>
         public IReadOnlyCollection<StoredProduct> StoredProducts => _storedProducts.AsReadOnly();
+
+        /// <summary>
+        /// Gets a list of all active storage shares.
+        /// </summary>
+        public IReadOnlyCollection<StorageShare> StorageShares => _storageShares.AsReadOnly();
 
         /// <summary>
         /// Creates a new <see cref="FoodStorage"/>.
@@ -156,6 +162,19 @@ namespace FoodVault.Modules.Storage.Domain.FoodStorages
             this._isDeleted = true;
 
             this.AddDomainEvent(new FoodStorageDeletedEvent(this.Id));
+        }
+
+        /// <summary>
+        /// Shares the storage with another user.
+        /// </summary>
+        /// <param name="userId">User id to share with.</param>
+        /// <param name="hasWritePermission">If the user can add or remove storage items.</param>
+        /// <param name="userSharesFinder">Domain services that checks if the storage is already shared to the given user id.</param>
+        public void ShareStorage(UserId userId, bool hasWritePermission, IStorageUserSharesFinder userSharesFinder)
+        {
+            this.CheckDomainRule(new StorageIsNotAlreadySharedToUserRule(Id, userId, userSharesFinder));
+
+            _storageShares.Add(StorageShare.CreateForUser(Id, userId, hasWritePermission));
         }
     }
 }
