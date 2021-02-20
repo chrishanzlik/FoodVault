@@ -170,8 +170,11 @@ namespace FoodVault.Modules.Storage.Domain.FoodStorages
         /// <param name="userId">User id to share with.</param>
         /// <param name="hasWritePermission">If the user can add or remove storage items.</param>
         /// <param name="userSharesFinder">Domain services that checks if the storage is already shared to the given user id.</param>
-        public void ShareStorage(UserId userId, bool hasWritePermission, IStorageUserSharesFinder userSharesFinder)
+        /// <param name="userContext">Informations about the executing user.</param>
+        public void Share(UserId userId, bool hasWritePermission, IStorageUserSharesFinder userSharesFinder, IUserContext userContext)
         {
+            this.CheckDomainRule(new StorageCannotBeSharedToTheOwnerRule(_ownerId, userId));
+            this.CheckDomainRule(new OnlyStorageOwnerCanCreateSharesRule(_ownerId, userContext));
             this.CheckDomainRule(new StorageIsNotAlreadySharedToUserRule(Id, userId, userSharesFinder));
 
             _storageShares.Add(StorageShare.CreateForUser(Id, userId, hasWritePermission));

@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using FoodVault.Modules.Storage.Application.FoodStorages.DomainServices;
 using FoodVault.Modules.Storage.Domain.FoodStorages;
+using FoodVault.Modules.Storage.Domain.Users;
 
 namespace FoodVault.Modules.Storage.Infrastructure.Domain
 {
@@ -18,6 +19,10 @@ namespace FoodVault.Modules.Storage.Infrastructure.Domain
 
             builder.RegisterType<StorageNameUniquessSqlChecker>()
                 .As<IStorageNameUniquessChecker>()
+                .InstancePerLifetimeScope();
+
+            builder.RegisterType<UserContext>()
+                .As<IUserContext>()
                 .InstancePerLifetimeScope();
         }
     }
