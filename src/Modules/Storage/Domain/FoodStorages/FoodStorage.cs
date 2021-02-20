@@ -174,10 +174,30 @@ namespace FoodVault.Modules.Storage.Domain.FoodStorages
         public void Share(UserId userId, bool hasWritePermission, IStorageUserSharesFinder userSharesFinder, IUserContext userContext)
         {
             this.CheckDomainRule(new StorageCannotBeSharedToTheOwnerRule(_ownerId, userId));
-            this.CheckDomainRule(new OnlyStorageOwnerCanCreateSharesRule(_ownerId, userContext));
+            this.CheckDomainRule(new OnlyStorageOwnerCanAddOrRemoveSharesRule(_ownerId, userContext));
             this.CheckDomainRule(new StorageIsNotAlreadySharedToUserRule(Id, userId, userSharesFinder));
 
             _storageShares.Add(StorageShare.CreateForUser(Id, userId, hasWritePermission));
+
+            this.AddDomainEvent(new StorageShareCreatedEvent(userId, Id, hasWritePermission));
+        }
+
+        /// <summary>
+        /// Remove a storage share for a user.
+        /// </summary>
+        /// <param name="userId">Users id.</param>
+        /// <param name="userContext">Informations about the executing user.</param>
+        public void Unshare(UserId userId, IUserContext userContext)
+        {
+            this.CheckDomainRule(new OnlyStorageOwnerCanAddOrRemoveSharesRule(_ownerId, userContext));
+
+            var toRemove = this.StorageShares.FirstOrDefault(x => x.UserId == userId);
+            if (toRemove != null)
+            {
+                _storageShares.Remove(toRemove);
+
+                this.AddDomainEvent(new StorageShareRemovedEvent(userId, Id));
+            }
         }
     }
 }

@@ -173,13 +173,12 @@ namespace FoodVault.Modules.Storage.Infrastructure.Configuration.DataAccess.Migr
                             b1.Property<DateTime>("SharedAt")
                                 .HasColumnType("datetime2");
 
+                            b1.Property<Guid?>("UserId")
+                                .HasColumnType("uniqueidentifier");
+
                             b1.Property<bool>("_canWrite")
                                 .HasColumnType("bit")
                                 .HasColumnName("CanWrite");
-
-                            b1.Property<Guid?>("_userId")
-                                .HasColumnType("uniqueidentifier")
-                                .HasColumnName("UserId");
 
                             b1.HasKey("Id");
 

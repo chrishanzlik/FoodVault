@@ -36,7 +36,8 @@ namespace FoodVault.Modules.Storage.Infrastructure.Configuration.DataAccess.Migr
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    OwnerId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -108,6 +109,29 @@ namespace FoodVault.Modules.Storage.Infrastructure.Configuration.DataAccess.Migr
                 });
 
             migrationBuilder.CreateTable(
+                name: "StorageShares",
+                schema: "storage",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    SharedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    FoodStorageId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CanWrite = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_StorageShares", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_StorageShares_FoodStorages_FoodStorageId",
+                        column: x => x.FoodStorageId,
+                        principalSchema: "storage",
+                        principalTable: "FoodStorages",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "StoredProducts",
                 schema: "storage",
                 columns: table => new
@@ -129,6 +153,12 @@ namespace FoodVault.Modules.Storage.Infrastructure.Configuration.DataAccess.Migr
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_StorageShares_FoodStorageId",
+                schema: "storage",
+                table: "StorageShares",
+                column: "FoodStorageId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_StoredProducts_FoodStorageId",
@@ -157,6 +187,10 @@ namespace FoodVault.Modules.Storage.Infrastructure.Configuration.DataAccess.Migr
 
             migrationBuilder.DropTable(
                 name: "Products",
+                schema: "storage");
+
+            migrationBuilder.DropTable(
+                name: "StorageShares",
                 schema: "storage");
 
             migrationBuilder.DropTable(

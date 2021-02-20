@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FoodVault.Modules.Storage.Infrastructure.Configuration.DataAccess.Migrations
 {
     [DbContext(typeof(StorageContext))]
-    [Migration("20210220131839_AddStorageShares")]
-    partial class AddStorageShares
+    [Migration("20210220201113_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -175,13 +175,12 @@ namespace FoodVault.Modules.Storage.Infrastructure.Configuration.DataAccess.Migr
                             b1.Property<DateTime>("SharedAt")
                                 .HasColumnType("datetime2");
 
+                            b1.Property<Guid?>("UserId")
+                                .HasColumnType("uniqueidentifier");
+
                             b1.Property<bool>("_canWrite")
                                 .HasColumnType("bit")
                                 .HasColumnName("CanWrite");
-
-                            b1.Property<Guid?>("_userId")
-                                .HasColumnType("uniqueidentifier")
-                                .HasColumnName("UserId");
 
                             b1.HasKey("Id");
 

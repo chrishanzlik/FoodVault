@@ -25,8 +25,6 @@ namespace FoodVault.Modules.Storage.Domain.FoodStorages
 
             _foodStorageId = storageId;
             _canWrite = canWrite;
-
-            this.AddDomainEvent(new StorageShareCreatedEvent(userId, storageId, _canWrite));
         }
 
         /// <summary>

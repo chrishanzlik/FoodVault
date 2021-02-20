@@ -11,6 +11,9 @@ using System.Threading.Tasks;
 using FoodVault.Modules.Storage.Application.Contracts;
 using FoodVault.Modules.Storage.Application.FoodStorages.GetStorageContent;
 using FoodVault.Modules.Storage.Application.FoodStorages.ChangeStorageProfile;
+using FoodVault.Modules.Storage.Application.FoodStorages.ShareStorage;
+using FoodVault.Modules.Storage.Application.FoodStorages.UnshareStorage;
+using FoodVault.Modules.Storage.Application.FoodStorages.GetStorageShares;
 
 namespace FoodVault.Api.Modules.Storages.FoodStorages
 {
@@ -103,6 +106,40 @@ namespace FoodVault.Api.Modules.Storages.FoodStorages
             [FromQuery] DateTime? expiration = null)
         {
             var command = new RemoveProductCommand(foodStorageId, productId, quantity, expiration);
+
+            ICommandResult result = await _storageModule.ExecuteCommandAsync(command);
+
+            return result.ToActionResult();
+        }
+
+        #endregion
+
+        #region Shares
+
+        [HttpGet("{foodStorageId}/Shares")]
+        public async Task<IActionResult> GetStorageSharesAsync([FromRoute] Guid foodStorageId)
+        {
+            var query = new GetStorageSharesQuery(foodStorageId);
+
+            var result = await _storageModule.ExecuteQueryAsync(query);
+
+            return Ok(result);
+        }
+
+        [HttpPost("{foodStorageId}/Shares")]
+        public async Task<IActionResult> ShareStorageAsync([FromRoute] Guid foodStorageId, [FromBody] ShareStorageRequest request)
+        {
+            var command = new ShareStorageCommand(foodStorageId, request.UserId, request.WriteAccess);
+
+            ICommandResult result = await _storageModule.ExecuteCommandAsync(command);
+
+            return result.ToActionResult();
+        }
+
+        [HttpDelete("{foodStorageId}/Shares/{userId}")]
+        public async Task<IActionResult> UnshareStorageAsync([FromRoute] Guid foodStorageId, [FromRoute] Guid userId)
+        {
+            var command = new UnshareStorageCommand(foodStorageId, userId);
 
             ICommandResult result = await _storageModule.ExecuteCommandAsync(command);
 

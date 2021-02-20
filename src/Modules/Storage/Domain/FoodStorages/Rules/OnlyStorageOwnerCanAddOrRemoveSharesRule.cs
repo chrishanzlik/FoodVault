@@ -4,12 +4,12 @@ using System;
 
 namespace FoodVault.Modules.Storage.Domain.FoodStorages.Rules
 {
-    public class OnlyStorageOwnerCanCreateSharesRule : IDomainRule
+    public class OnlyStorageOwnerCanAddOrRemoveSharesRule : IDomainRule
     {
         private readonly IUserContext _userContext;
         private readonly UserId _ownerId;
 
-        public OnlyStorageOwnerCanCreateSharesRule(UserId ownerId, IUserContext userContext)
+        public OnlyStorageOwnerCanAddOrRemoveSharesRule(UserId ownerId, IUserContext userContext)
         {
             _ownerId = ownerId;
             _userContext = userContext;

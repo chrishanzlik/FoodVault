@@ -50,9 +50,9 @@ namespace FoodVault.Modules.Storage.Infrastructure.Domain.FoodStorages
 
                 x.ToTable("StorageShares", "storage");
 
-                x.Property<FoodStorageId>("FoodStorageId");
+                //x.Property<FoodStorageId>("_foodStorageId").HasColumnName("FoodStorageId");
 
-                x.Property<UserId>("_userId").HasColumnName("UserId");
+                x.Property<UserId>("UserId");
 
                 x.Property<bool>("_canWrite").HasColumnName("CanWrite");
 

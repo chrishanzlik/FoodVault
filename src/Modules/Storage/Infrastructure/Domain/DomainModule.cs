@@ -21,6 +21,10 @@ namespace FoodVault.Modules.Storage.Infrastructure.Domain
                 .As<IStorageNameUniquessChecker>()
                 .InstancePerLifetimeScope();
 
+            builder.RegisterType<StorageUserSharesFinder>()
+                .As<IStorageUserSharesFinder>()
+                .InstancePerLifetimeScope();
+
             builder.RegisterType<UserContext>()
                 .As<IUserContext>()
                 .InstancePerLifetimeScope();
