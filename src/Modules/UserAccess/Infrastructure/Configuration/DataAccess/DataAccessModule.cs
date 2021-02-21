@@ -43,7 +43,7 @@ namespace FoodVault.Modules.UserAccess.Infrastructure.Configuration.DataAccess
                     var options = new DbContextOptionsBuilder<UserAccessContext>()
                         .UseSqlServer(_connectionString, options =>
                         {
-                            options.MigrationsHistoryTable("_UserAccessMigrationHistory", "users");
+                            options.MigrationsHistoryTable("__MigrationHistory", "users");
                         })
                         .ReplaceService<IValueConverterSelector, EntityIdValueConverterSelector>()
                         .Options;
