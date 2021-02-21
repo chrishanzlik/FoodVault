@@ -3,16 +3,15 @@ using Autofac.Extensions.DependencyInjection;
 using FoodVault.Api.Configuration.ExecutionContext;
 using FoodVault.Api.Modules.Storages;
 using FoodVault.Api.Modules.UserAccess;
+using FoodVault.Framework.Application.Emails;
 using FoodVault.Framework.Application.FileUploads;
+using FoodVault.Framework.Infrastructure.Emails;
 using FoodVault.Modules.Storage.Infrastructure;
-using FoodVault.Modules.Storage.Infrastructure.Configuration;
 using FoodVault.Modules.UserAccess.Infrastructure;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Infrastructure;
-using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -88,6 +87,8 @@ namespace FoodVault.Api
 
             var executionContextAccessor = new ExecutionContextAccessor(httpContextAccessor);
             var fileUploadSettings = Configuration.GetSection(nameof(FileUploadSettings)).Get<FileUploadSettings>();
+            var mailerSettings = Configuration.GetSection(nameof(MailerSettings)).Get<MailerSettings>();
+            var mailer = new SmtpEmailSender(mailerSettings);
 
             var storageModuleUrlBuilder = new StorageModuleUrlBuilder(httpContextAccessor, linkGenerator);
             var userAccessModuleUrlBuilder = new UserAccessModuleUrlBuilder(httpContextAccessor, linkGenerator);
@@ -104,6 +105,7 @@ namespace FoodVault.Api
                 Configuration["ConnectionString"],
                 executionContextAccessor,
                 userAccessModuleUrlBuilder,
+                mailer,
                 container.Resolve<ILogger<UserAccessModule>>(),
                 null);
         }

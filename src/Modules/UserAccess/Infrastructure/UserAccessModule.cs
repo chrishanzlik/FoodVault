@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using FoodVault.Framework.Application;
 using FoodVault.Framework.Application.Commands;
+using FoodVault.Framework.Application.Emails;
 using FoodVault.Framework.Application.FileUploads;
 using FoodVault.Framework.Application.Queries;
 using FoodVault.Framework.Infrastructure.EventBus;
@@ -65,12 +66,14 @@ namespace FoodVault.Modules.UserAccess.Infrastructure
         /// <param name="connectionString">Database connection string.</param>
         /// <param name="executionContextAccessor">Accesor for application execution context.</param>
         /// <param name="urlBuilder">Url builder for the storage module.</param>
+        /// <param name="mailer">Services for sending emails.</param>
         /// <param name="logger">Application logger.</param>
         /// <param name="eventsBus">Applications event bus.</param>
         public static void Initialize(
             string connectionString,
             IExecutionContextAccessor executionContextAccessor,
             IUserAccessModuleUrlBuilder urlBuilder,
+            IEmailSender mailer,
             ILogger logger,
             IEventBus eventsBus)
         {
@@ -78,6 +81,7 @@ namespace FoodVault.Modules.UserAccess.Infrastructure
                 connectionString,
                 executionContextAccessor,
                 urlBuilder,
+                mailer,
                 logger,
                 eventsBus);
         }

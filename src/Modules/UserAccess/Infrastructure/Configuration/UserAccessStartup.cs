@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using Dapper;
 using FoodVault.Framework.Application;
+using FoodVault.Framework.Application.Emails;
 using FoodVault.Framework.Application.FileUploads;
 using FoodVault.Framework.Infrastructure.DataAccess;
 using FoodVault.Framework.Infrastructure.EventBus;
@@ -30,6 +31,7 @@ namespace FoodVault.Modules.UserAccess.Infrastructure.Configuration
             string connectionString,
             IExecutionContextAccessor executionContextAccessor,
             IUserAccessModuleUrlBuilder urlBuilder,
+            IEmailSender mailer,
             ILogger logger,
             IEventBus eventsBus)
         {
@@ -39,6 +41,7 @@ namespace FoodVault.Modules.UserAccess.Infrastructure.Configuration
                 connectionString,
                 executionContextAccessor,
                 urlBuilder,
+                mailer,
                 logger,
                 eventsBus);
 
@@ -52,7 +55,7 @@ namespace FoodVault.Modules.UserAccess.Infrastructure.Configuration
         {
             AddDapperTypeHandlers();
 
-            ConfigureCompositionRoot(connectionString, null, null, logger, null, true);
+            ConfigureCompositionRoot(connectionString, null, null, null, logger, null, true);
         }
 
         internal static void Stop()
@@ -64,6 +67,7 @@ namespace FoodVault.Modules.UserAccess.Infrastructure.Configuration
             string connectionString,
             IExecutionContextAccessor executionContextAccessor,
             IUserAccessModuleUrlBuilder urlBuilder,
+            IEmailSender mailer,
             ILogger logger,
             IEventBus eventBus,
             bool isDesignTime = false)
@@ -90,6 +94,7 @@ namespace FoodVault.Modules.UserAccess.Infrastructure.Configuration
             {
                 containerBuilder.RegisterInstance(executionContextAccessor);
                 containerBuilder.RegisterInstance(urlBuilder);
+                containerBuilder.RegisterInstance(mailer);
 
                 _container = containerBuilder.Build();
                 UserAccessCompositionRoot.SetContainer(_container);
