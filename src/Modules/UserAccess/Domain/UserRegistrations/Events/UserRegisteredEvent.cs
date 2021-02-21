@@ -10,11 +10,11 @@ namespace FoodVault.Modules.UserAccess.Domain.UserRegistrations.Events
         /// <summary>
         /// Initializes a new instance of the <see cref="UserRegisteredEvent" /> class.
         /// </summary>
-        /// <param name="registrationId">Id of the registration.</param>
+        /// <param name="userRegistrationId">Id of the registration.</param>
         /// <param name="email">Users email address.</param>
-        public UserRegisteredEvent(UserRegistrationId registrationId, EmailAddress email)
+        public UserRegisteredEvent(UserRegistrationId userRegistrationId, EmailAddress email)
         {
-            UserRegistrationId = registrationId;
+            UserRegistrationId = userRegistrationId;
             Email = email;
         }
 

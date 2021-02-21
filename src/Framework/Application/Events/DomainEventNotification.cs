@@ -1,5 +1,4 @@
 ﻿using FoodVault.Framework.Domain;
-using Newtonsoft.Json;
 using System;
 
 namespace FoodVault.Framework.Application.Events
@@ -23,7 +22,6 @@ namespace FoodVault.Framework.Application.Events
         }
 
         /// <inheritdoc />
-        [JsonIgnore]
         public TEvent DomainEvent { get; }
 
         /// <inheritdoc />

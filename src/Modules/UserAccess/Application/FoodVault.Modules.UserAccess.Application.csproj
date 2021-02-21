@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Dapper" Version="2.0.78" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\..\Framework\Application\FoodVault.Framework.Application.csproj" />
     <ProjectReference Include="..\Domain\FoodVault.Modules.UserAccess.Domain.csproj" />
   </ItemGroup>

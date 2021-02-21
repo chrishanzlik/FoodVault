@@ -1,9 +1,9 @@
 ﻿using Dapper;
 using FoodVault.Framework.Application.Commands;
 using FoodVault.Framework.Application.DataAccess;
-using FoodVault.Framework.Infrastructure.DomainEvents;
 using Newtonsoft.Json;
-using System.Linq;
+using Polly;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -15,19 +15,14 @@ namespace FoodVault.Modules.Storage.Infrastructure.Configuration.Processing.Inte
     internal class ProcessInternalCommandsCommandHandler : ICommandHandler<ProcessInternalCommandsCommand>
     {
         private readonly IDbConnectionFactory _dbConnectionFactory;
-        private readonly IDomainNotificationsRegistry _domainNotificationsRegistry;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ProcessInternalCommandsCommandHandler" /> class.
         /// </summary>
-        /// <param name="domainNotificationsRegistry">Contains Name-Type maps of notifications.</param>
         /// <param name="dbConnectionFactory">Db connection factory.</param>
-        public ProcessInternalCommandsCommandHandler(
-            IDbConnectionFactory dbConnectionFactory,
-            IDomainNotificationsRegistry domainNotificationsRegistry)
+        public ProcessInternalCommandsCommandHandler(IDbConnectionFactory dbConnectionFactory)
         {
             _dbConnectionFactory = dbConnectionFactory;
-            _domainNotificationsRegistry = domainNotificationsRegistry;
         }
 
         /// <inheritdoc />
@@ -35,24 +30,63 @@ namespace FoodVault.Modules.Storage.Infrastructure.Configuration.Processing.Inte
         {
             var connection = _dbConnectionFactory.GetOpen();
 
-            const string sql = "SELECT " +
-                               "[Command].[CommandType], " +
-                               "[Command].[Payload] " +
-                               "FROM [storage].[InternalCommands] AS [Command] " +
-                               "WHERE [Command].[ProcessedDate] IS NULL";
+            const string fetchSql =
+                "SELECT " +
+                "[Command].[Id], " +
+                "[Command].[CommandType], " +
+                "[Command].[Payload] " +
+                "FROM [storage].[InternalCommands] AS [Command] " +
+                "WHERE [Command].[ProcessedDate] IS NULL " +
+                "ORDER BY [Command].[EnqueueDate]";
 
-            var pendingCommands = (await connection.QueryAsync<InternalCommandDto>(sql)).ToList();
+            const string errorSql =
+                "UPDATE [storage].[InternalCommands] " +
+                "SET [ProcessedDate] = @processed, [Error] = @error " +
+                "WHERE [Id] = @id";
+
+            var pendingCommands = (await connection.QueryAsync<InternalCommandDto>(fetchSql)).AsList();
+            var policy = Policy
+                .Handle<Exception>()
+                .WaitAndRetryAsync(new[]
+                {
+                    TimeSpan.FromSeconds(1),
+                    TimeSpan.FromSeconds(2),
+                    TimeSpan.FromSeconds(3)
+                });
 
             foreach (var internalCommand in pendingCommands)
             {
-                var t = _domainNotificationsRegistry.GetType(internalCommand.CommandType);
-                var command = JsonConvert.DeserializeObject(internalCommand.Payload, t) as ICommand;
+                var policyResult = await policy.ExecuteAndCaptureAsync(() => ExecuteCommandAsync(internalCommand));
 
-                //TODO: handle result
-                await CommandExecutor.ExecuteAsync(command);
+                if (policyResult.Outcome == OutcomeType.Failure)
+                {
+                    await connection.ExecuteScalarAsync(errorSql, new
+                    {
+                        processed = DateTime.UtcNow,
+                        error = policyResult.FinalException.ToString(),
+                        id = internalCommand.Id
+                    });
+                }
+
+                else if (!policyResult.Result.Success)
+                {
+                    await connection.ExecuteScalarAsync(errorSql, new
+                    {
+                        processed = DateTime.UtcNow,
+                        error = string.Join(';', policyResult.Result.Errors),
+                        id = internalCommand.Id
+                    });
+                }
             }
 
             return CommandResult.Ok();
+        }
+
+        private async Task<ICommandResult> ExecuteCommandAsync(InternalCommandDto internalCommand)
+        {
+            var t = Assemblies.Application.GetType(internalCommand.CommandType);
+            var command = JsonConvert.DeserializeObject(internalCommand.Payload, t) as ICommand;
+            return await CommandExecutor.ExecuteAsync(command);
         }
     }
 }

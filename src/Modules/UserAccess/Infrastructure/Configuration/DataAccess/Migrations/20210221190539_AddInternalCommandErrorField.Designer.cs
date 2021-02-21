@@ -4,14 +4,16 @@ using FoodVault.Modules.UserAccess.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FoodVault.Modules.UserAccess.Infrastructure.Configuration.DataAccess.Migrations
 {
     [DbContext(typeof(UserAccessContext))]
-    partial class UserAccessContextModelSnapshot : ModelSnapshot
+    [Migration("20210221190539_AddInternalCommandErrorField")]
+    partial class AddInternalCommandErrorField
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

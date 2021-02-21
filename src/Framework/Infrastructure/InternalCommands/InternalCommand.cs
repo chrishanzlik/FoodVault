@@ -23,6 +23,11 @@ namespace FoodVault.Framework.Infrastructure.InternalCommands
         public string Payload { get; set; }
 
         /// <summary>
+        /// Gets or sets an occured error while executing the command.
+        /// </summary>
+        public string Error { get; set; }
+
+        /// <summary>
         /// Gets or sets the time, when the command was enqueued.
         /// </summary>
         public DateTime? EnqueueDate { get; set; }

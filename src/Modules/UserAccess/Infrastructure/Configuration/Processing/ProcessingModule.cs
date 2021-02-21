@@ -1,9 +1,11 @@
 ﻿using Autofac;
+using FoodVault.Framework.Application;
 using FoodVault.Framework.Application.Commands;
 using FoodVault.Framework.Application.Events;
 using FoodVault.Framework.Infrastructure;
 using FoodVault.Framework.Infrastructure.DomainEvents;
 using FoodVault.Framework.Infrastructure.Work.Decorators;
+using FoodVault.Modules.UserAccess.Infrastructure.Configuration.Processing.InternalCommands;
 using MediatR;
 using System.Linq;
 
@@ -23,6 +25,10 @@ namespace FoodVault.Modules.UserAccess.Infrastructure.Configuration.Processing
 
             builder.RegisterType<DomainEventDispatcher>()
                 .As<IDomainEventDispatcher>()
+                .InstancePerLifetimeScope();
+
+            builder.RegisterType<CommandScheduler>()
+                .As<ICommandScheduler>()
                 .InstancePerLifetimeScope();
 
             builder.RegisterType<DomainEventAccessor>()
