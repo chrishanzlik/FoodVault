@@ -2,6 +2,7 @@
 using FoodVault.Framework.Application.Outbox;
 using FoodVault.Framework.Infrastructure.Inbox;
 using FoodVault.Framework.Infrastructure.InternalCommands;
+using FoodVault.Modules.UserAccess.Domain.UserRegistrations;
 using FoodVault.Modules.UserAccess.Domain.Users;
 using Microsoft.EntityFrameworkCore;
 
@@ -21,8 +22,8 @@ namespace FoodVault.Modules.UserAccess.Infrastructure
         }
 
         public DbSet<User> Users { get; set; }
+        public DbSet<UserRegistration> UserRegistrations { get; set; }
         public DbSet<InternalCommand> InternalCommands { get; set; }
-        public DbSet<FileUpload> FileUploads { get; set; }
         public DbSet<OutboxMessage> OutboxMessages { get; set; }
         public DbSet<InboxMessage> InboxMessages { get; set; }
 

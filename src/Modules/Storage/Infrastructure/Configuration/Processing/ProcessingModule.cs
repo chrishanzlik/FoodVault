@@ -4,8 +4,8 @@ using FoodVault.Framework.Application.Events;
 using FoodVault.Framework.Application.FileUploads;
 using FoodVault.Framework.Infrastructure;
 using FoodVault.Framework.Infrastructure.DomainEvents;
+using FoodVault.Framework.Infrastructure.Work.Decorators;
 using FoodVault.Modules.Storage.Infrastructure.FileUploads;
-using FoodVault.Modules.Storage.Infrastructure.Work.Decorators;
 using MediatR;
 using System.Linq;
 

@@ -4,9 +4,9 @@ namespace FoodVault.Modules.UserAccess.Domain
 {
     public class PasswordHash : ValueObject
     {
-        public PasswordHash(string hash)
+        public PasswordHash(string value)
         {
-            Value = hash;
+            Value = value;
         }
 
         public string Value { get; }

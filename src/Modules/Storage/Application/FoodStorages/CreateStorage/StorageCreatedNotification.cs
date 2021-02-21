@@ -2,6 +2,7 @@
 using FoodVault.Modules.Storage.Domain.FoodStorages.Events;
 using FoodVault.Framework.Application.Events;
 using Newtonsoft.Json;
+using System;
 
 namespace FoodVault.Modules.Storage.Application.FoodStorages.CreateStorage
 {
@@ -14,7 +15,8 @@ namespace FoodVault.Modules.Storage.Application.FoodStorages.CreateStorage
         /// Initializes a new instance of the <see cref="StorageCreatedNotification" /> class.
         /// </summary>
         /// <param name="domainEvent">Event to handle.</param>
-        public StorageCreatedNotification(FoodStorageCreatedEvent domainEvent) : base(domainEvent)
+        /// <param name="id">Notifications id.</param>
+        public StorageCreatedNotification(FoodStorageCreatedEvent domainEvent, Guid id) : base(domainEvent, id)
         {
             FoodStorageId = domainEvent.FoodStorageId;
         }
@@ -23,8 +25,9 @@ namespace FoodVault.Modules.Storage.Application.FoodStorages.CreateStorage
         /// Initializes a new instance of the <see cref="StorageCreatedNotification" /> class.
         /// </summary>
         /// <param name="foodStorageId">Identifier of the food storage.</param>
+        /// <param name="id">Notifications id.</param>
         [JsonConstructor]
-        public StorageCreatedNotification(FoodStorageId foodStorageId) : base(null)
+        public StorageCreatedNotification(FoodStorageId foodStorageId, Guid id) : base(null, id)
         {
             FoodStorageId = foodStorageId;
         }

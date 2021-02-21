@@ -21,18 +21,25 @@ namespace FoodVault.Modules.UserAccess.Infrastructure.Domain.Users
 
             builder.Property<string>("_lastName").HasColumnName("LastName");
 
-            builder.OwnsOne<EmailAddress>("_email", emailBuilder =>
+            builder.Property<bool>("_isActive").HasColumnName("IsActive");
+
+            builder.OwnsOne<PasswordHash>("_passwordHash", b =>
             {
-                emailBuilder.Property(x => x.Value).HasColumnName("EmailAddress");
+                b.Property(x => x.Value).HasColumnName("PasswordHash");
             });
 
-            builder.OwnsMany<UserRole>("_roles", roleBuilder =>
+            builder.OwnsOne<EmailAddress>("_email", b =>
             {
-                roleBuilder.WithOwner().HasForeignKey("UserId");
-                roleBuilder.ToTable("UserRoles", "users");
-                roleBuilder.Property<UserId>("UserId");
-                roleBuilder.Property<string>("Value").HasColumnName("RoleName");
-                roleBuilder.HasKey("UserId", "Value");
+                b.Property(x => x.Value).HasColumnName("EmailAddress");
+            });
+
+            builder.OwnsMany<UserRole>("_roles", b =>
+            {
+                b.WithOwner().HasForeignKey("UserId");
+                b.ToTable("UserRoles", "users");
+                b.Property<UserId>("UserId");
+                b.Property<string>("Value").HasColumnName("RoleName");
+                b.HasKey("UserId", "Value");
             });
         }
     }

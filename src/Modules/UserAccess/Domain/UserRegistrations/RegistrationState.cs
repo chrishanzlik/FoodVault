@@ -7,6 +7,14 @@ namespace FoodVault.Modules.UserAccess.Domain.UserRegistrations
     /// </summary>
     public class RegistrationState : ValueObject
     {
+        /// <summary>
+        /// Required by Entity Framework.
+        /// </summary>
+        private RegistrationState()
+        {
+
+        }
+
         private RegistrationState(string state)
         {
             Value = state;

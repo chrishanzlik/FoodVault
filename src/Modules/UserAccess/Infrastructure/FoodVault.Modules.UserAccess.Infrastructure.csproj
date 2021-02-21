@@ -5,8 +5,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.2" />
+    <PackageReference Include="Quartz" Version="3.2.4" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\..\Framework\Application\FoodVault.Framework.Application.csproj" />
     <ProjectReference Include="..\..\..\Framework\Domain\FoodVault.Framework.Domain.csproj" />
+    <ProjectReference Include="..\..\..\Framework\EventBus\FoodVault.Framework.EventBus.csproj" />
     <ProjectReference Include="..\..\..\Framework\Infrastructure\FoodVault.Framework.Infrastructure.csproj" />
     <ProjectReference Include="..\Application\FoodVault.Modules.UserAccess.Application.csproj" />
     <ProjectReference Include="..\Domain\FoodVault.Modules.UserAccess.Domain.csproj" />

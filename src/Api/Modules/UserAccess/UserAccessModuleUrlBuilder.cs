@@ -1,6 +1,7 @@
 ﻿using FoodVault.Modules.UserAccess.Application.Contracts;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
+using System;
 
 namespace FoodVault.Api.Modules.UserAccess
 {
@@ -13,6 +14,12 @@ namespace FoodVault.Api.Modules.UserAccess
         {
             _httpContextAccessor = httpContextAccessor;
             _linkGenerator = linkGenerator;
+        }
+
+        public string BuildConfirmationLink(Guid registrationId)
+        {
+            //TODO:
+            return "TODO...";
         }
     }
 }

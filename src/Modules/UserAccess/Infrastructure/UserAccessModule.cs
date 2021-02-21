@@ -64,14 +64,12 @@ namespace FoodVault.Modules.UserAccess.Infrastructure
         /// </summary>
         /// <param name="connectionString">Database connection string.</param>
         /// <param name="executionContextAccessor">Accesor for application execution context.</param>
-        /// <param name="fileUploadSettings">File upload settings.</param>
         /// <param name="urlBuilder">Url builder for the storage module.</param>
         /// <param name="logger">Application logger.</param>
         /// <param name="eventsBus">Applications event bus.</param>
         public static void Initialize(
             string connectionString,
             IExecutionContextAccessor executionContextAccessor,
-            IFileUploadSettings fileUploadSettings,
             IUserAccessModuleUrlBuilder urlBuilder,
             ILogger logger,
             IEventBus eventsBus)
@@ -79,7 +77,6 @@ namespace FoodVault.Modules.UserAccess.Infrastructure
             UserAccessStartup.Initialize(
                 connectionString,
                 executionContextAccessor,
-                fileUploadSettings,
                 urlBuilder,
                 logger,
                 eventsBus);

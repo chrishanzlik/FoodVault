@@ -4,9 +4,9 @@ namespace FoodVault.Modules.UserAccess.Domain
 {
     public class EmailAddress : ValueObject
     {
-        public EmailAddress(string email)
+        public EmailAddress(string value)
         {
-            Value = email;
+            Value = value;
         }
 
         public string Value { get; }

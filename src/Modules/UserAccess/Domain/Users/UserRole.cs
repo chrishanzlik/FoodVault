@@ -8,6 +8,13 @@ namespace FoodVault.Modules.UserAccess.Domain.Users
     public class UserRole : ValueObject
     {
         /// <summary>
+        /// Required by Entity Framework Core.
+        /// </summary>
+        private UserRole()
+        {
+        }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="UserRole" /> class.
         /// </summary>
         /// <param name="roleValue">Role string value.</param>

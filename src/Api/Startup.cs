@@ -103,7 +103,6 @@ namespace FoodVault.Api
             UserAccessModule.Initialize(
                 Configuration["ConnectionString"],
                 executionContextAccessor,
-                fileUploadSettings,
                 userAccessModuleUrlBuilder,
                 container.Resolve<ILogger<UserAccessModule>>(),
                 null);

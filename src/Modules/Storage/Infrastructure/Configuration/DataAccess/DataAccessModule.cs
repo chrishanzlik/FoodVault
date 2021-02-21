@@ -41,7 +41,10 @@ namespace FoodVault.Modules.Storage.Infrastructure.Configuration.DataAccess
                 .Register(c =>
                 {
                     var options = new DbContextOptionsBuilder<StorageContext>()
-                        .UseSqlServer(_connectionString)
+                        .UseSqlServer(_connectionString, options =>
+                        {
+                            options.MigrationsHistoryTable("_StorageMigrationHistory", "stroage");
+                        })
                         .ReplaceService<IValueConverterSelector, EntityIdValueConverterSelector>()
                         .Options;
 

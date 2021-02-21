@@ -40,6 +40,11 @@ namespace FoodVault.Modules.UserAccess.Domain.UserRegistrations
         }
 
         /// <summary>
+        /// Gets the registration id;
+        /// </summary>
+        public UserRegistrationId Id { get; }
+
+        /// <summary>
         /// Creates a new user registration.
         /// </summary>
         /// <param name="email">Users email</param>
@@ -89,10 +94,5 @@ namespace FoodVault.Modules.UserAccess.Domain.UserRegistrations
 
             this.AddDomainEvent(new UserRegistrationExpiredEvent(Id));
         }
-
-        /// <summary>
-        /// Gets the registration id;
-        /// </summary>
-        public UserRegistrationId Id { get; }
     }
 }
