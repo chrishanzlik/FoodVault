@@ -15,9 +15,10 @@ namespace FoodVault.Framework.Application.Events
         /// Initializes a new instance of the <see cref="DomainEventNotification" /> class.
         /// </summary>
         /// <param name="domainEvent">Domain event to notify about.</param>
-        public DomainEventNotification(TEvent domainEvent)
+        /// <param name="domainEvent">Id of the domain event.</param>
+        public DomainEventNotification(TEvent domainEvent, Guid id)
         {
-            Id = Guid.NewGuid();
+            Id = id;
             DomainEvent = domainEvent;
         }
 

@@ -36,7 +36,7 @@ namespace FoodVault.Modules.UserAccess.Domain.UserRegistrations
             _lastName = lastName;
             _state = RegistrationState.WaitingForConfirmation;
 
-            this.AddDomainEvent(new UserRegisteredEvent(Id));
+            this.AddDomainEvent(new UserRegisteredEvent(Id, _email));
         }
 
         /// <summary>

@@ -1,6 +1,6 @@
 ﻿using FoodVault.Framework.Domain;
 
-namespace FoodVault.Modules.UserAccess.Domain.UserRegistrations
+namespace FoodVault.Modules.UserAccess.Domain
 {
     public class PasswordHash : ValueObject
     {
