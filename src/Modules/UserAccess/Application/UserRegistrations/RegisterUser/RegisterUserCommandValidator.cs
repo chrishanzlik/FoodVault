@@ -13,7 +13,7 @@ namespace FoodVault.Modules.UserAccess.Application.UserRegistrations.RegisterUse
         public RegisterUserCommandValidator()
         {
             RuleFor(x => x.Email).EmailAddress();
-            RuleFor(x => x.Password).NotEmpty().MinimumLength(6); //TODO: Better password strength
+            RuleFor(x => x.Password).NotEmpty().MinimumLength(6); //TODO: Password strength
             RuleFor(x => x.FirstName).NotEmpty();
             RuleFor(x => x.LastName).NotEmpty();
         }

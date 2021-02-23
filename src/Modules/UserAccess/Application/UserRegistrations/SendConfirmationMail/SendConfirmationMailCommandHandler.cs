@@ -23,7 +23,7 @@ namespace FoodVault.Modules.UserAccess.Application.UserRegistrations.SendConfirm
         /// <inheritdoc />
         public async Task<ICommandResult> Handle(SendConfirmationMailCommand request, CancellationToken cancellationToken)
         {
-            //TODO send mail
+            //TODO: send mail
 
             var confirmationLink = _userAccessModuleUrlBuilder.BuildConfirmationLink(request.UserRegistrationId);
 

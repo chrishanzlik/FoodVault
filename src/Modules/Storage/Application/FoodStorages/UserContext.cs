@@ -2,7 +2,7 @@
 using FoodVault.Modules.Storage.Domain.Users;
 using System;
 
-namespace FoodVault.Modules.Storage.Application.FoodStorages.DomainServices
+namespace FoodVault.Modules.Storage.Application.FoodStorages
 {
     public class UserContext : IUserContext
     {

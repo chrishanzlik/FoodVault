@@ -4,6 +4,7 @@ using System;
 
 namespace FoodVault.Api.Configuration.ExecutionContext
 {
+    //TODO: 
     internal class ExecutionContextAccessor : IExecutionContextAccessor
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
@@ -13,10 +14,8 @@ namespace FoodVault.Api.Configuration.ExecutionContext
             _httpContextAccessor = httpContextAccessor;
         }
 
-        //TODO: 
         public Guid UserId => Guid.Empty;
 
-        //TODO: 
         public bool IsAvailable => true;
     }
 }

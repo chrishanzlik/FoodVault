@@ -4,6 +4,7 @@ using FoodVault.Framework.Application.Commands;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using FoodVault.Framework.Application.DataAccess;
 
 namespace FoodVault.Modules.Storage.Application.FoodStorages.StoreProduct
 {
@@ -13,30 +14,38 @@ namespace FoodVault.Modules.Storage.Application.FoodStorages.StoreProduct
     internal class StoreProductCommandHandler : ICommandHandler<StoreProductCommand>
     {
         private readonly IFoodStorageRepository _foodStorageRepository;
-        private readonly IProductExistsChecker _productExistsChecker;
+        private readonly IDbConnectionFactory _dbConnectionFactory;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="StoreProductCommandHandler" /> class.
         /// </summary>
         /// <param name="foodStorageRepository">Food storage repository.</param>
-        /// <param name="productExistsChecker">Domain service that checks if a product exists.</param>
+        /// <param name="dbConnectionFactory">DB connection factory.</param>
         public StoreProductCommandHandler(
             IFoodStorageRepository foodStorageRepository,
-            IProductExistsChecker productExistsChecker)
+            IDbConnectionFactory dbConnectionFactory)
         {
             _foodStorageRepository = foodStorageRepository;
-            _productExistsChecker = productExistsChecker;
+            _dbConnectionFactory = dbConnectionFactory;
         }
 
         /// <inheritdoc />
         public async Task<ICommandResult> Handle(StoreProductCommand request, CancellationToken cancellationToken)
         {
-            FoodStorageId storageId = new FoodStorageId(request.StorageId);
-            ProductId productId = new ProductId(request.ProductId);
-            DateTime? date = request.ExpirationDate.HasValue ? request.ExpirationDate.Value.Date : (DateTime?)null;
+            if(!await ProductHelper.CheckProductExistenceAsync(request.ProductId, _dbConnectionFactory))
+            {
+                return CommandResult.Error(new[] { $"A product with the id '{request.ProductId}' does not exist." });
+            }
 
-            var storage = await _foodStorageRepository.GetByIdAsync(storageId);
-            storage?.StoreProduct(productId, request.Quantity, date, _productExistsChecker);
+            var storage = await _foodStorageRepository.GetByIdAsync(new FoodStorageId(request.StorageId));
+            if (storage == null)
+            {
+                return CommandResult.BadParameters(new[] { $"A stroage with the id '{request.StorageId}' does not exist." });
+            }
+
+            DateTime? expirationDate = request.ExpirationDate.HasValue ? request.ExpirationDate.Value.Date : (DateTime?)null;
+
+            storage.StoreProduct(new ProductId(request.ProductId), request.Quantity, expirationDate);
 
             return CommandResult.Ok();
         }

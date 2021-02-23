@@ -1,6 +1,8 @@
 ﻿using FoodVault.Framework.Application.Commands;
+using FoodVault.Framework.Application.DataAccess;
 using FoodVault.Modules.Storage.Domain.FoodStorages;
 using FoodVault.Modules.Storage.Domain.Users;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -13,32 +15,42 @@ namespace FoodVault.Modules.Storage.Application.FoodStorages.ShareStorage
     {
         private readonly IUserContext _userContext;
         private readonly IFoodStorageRepository _foodStorageRepository;
-        private readonly IStorageUserSharesFinder _userSharesFinder;
+        private readonly IDbConnectionFactory _dbConnectionFactory;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ShareStorageCommandHandler" /> class.
         /// </summary>
         /// <param name="userContext">Acces to the current user session.</param>
         /// <param name="foodStorageRepository">Food storage repository.</param>
-        /// <param name="userSharesFinder">Get all shared user ids for a specific storage.</param>
+        /// <param name="dbConnectionFactory">Db connection factory.</param>
         public ShareStorageCommandHandler(
             IUserContext userContext,
             IFoodStorageRepository foodStorageRepository,
-            IStorageUserSharesFinder userSharesFinder)
+            IDbConnectionFactory dbConnectionFactory)
         {
             _userContext = userContext;
             _foodStorageRepository = foodStorageRepository;
-            _userSharesFinder = userSharesFinder;
+            _dbConnectionFactory = dbConnectionFactory;
         }
 
         /// <inheritdoc />
         public async Task<ICommandResult> Handle(ShareStorageCommand request, CancellationToken cancellationToken)
         {
-            FoodStorageId foodStorageId = new FoodStorageId(request.FoodStorageId);
-            UserId userId = new UserId(request.UserId);
+            var storage = await _foodStorageRepository.GetByIdAsync(new FoodStorageId(request.FoodStorageId));
+            if (storage == null)
+            {
+                return CommandResult.BadParameters(new[] { $"The storage with the id '{request.FoodStorageId}' does not exist." });
+            }
 
-            var storage = await _foodStorageRepository.GetByIdAsync(foodStorageId);
-            storage?.Share(userId, request.WriteAccess, _userSharesFinder, _userContext);
+            var sharedUsers = (await StorageSharesProvider.GetSharesForStorageAsync(
+                request.FoodStorageId,
+                _dbConnectionFactory)).Select(x => new UserId(x.UserId));
+
+            storage.ShareToUser(
+                new UserId(request.UserId),
+                request.WriteAccess,
+                sharedUsers,
+                _userContext);
 
             return CommandResult.Ok();
         }

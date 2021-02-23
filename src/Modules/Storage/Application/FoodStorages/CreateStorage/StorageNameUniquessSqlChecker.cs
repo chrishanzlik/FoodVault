@@ -3,7 +3,7 @@ using FoodVault.Framework.Application.DataAccess;
 using FoodVault.Modules.Storage.Domain.FoodStorages;
 using System;
 
-namespace FoodVault.Modules.Storage.Application.FoodStorages.DomainServices
+namespace FoodVault.Modules.Storage.Application.FoodStorages.CreateStorage
 {
     /// <summary>
     /// Checks if a food storage name is forgiven.
@@ -24,10 +24,10 @@ namespace FoodVault.Modules.Storage.Application.FoodStorages.DomainServices
         /// <inheritdoc />
         public bool IsNameUniqueForUser(string storageName, Guid userId)
         {
-            //TODO: Scope to user
-
             const string sql =
-                "SELECT COUNT(1) FROM [storage].[FoodStorages] WHERE [FoodStorages].[Name] = @storageName AND [FoodStorages].[OwnerId] = @userId";
+                "SELECT COUNT(1) " +
+                "FROM [storage].[FoodStorages] " +
+                "WHERE [FoodStorages].[Name] = @storageName AND [FoodStorages].[OwnerId] = @userId";
 
             var connection = _dbConnectionFactory.GetOpen();
 

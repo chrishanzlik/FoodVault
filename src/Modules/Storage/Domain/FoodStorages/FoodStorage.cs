@@ -120,11 +120,9 @@ namespace FoodVault.Modules.Storage.Domain.FoodStorages
         /// <param name="productId">Products identifier.</param>
         /// <param name="quantity">Quantity of items to add.</param>
         /// <param name="expirationDate">Products expiration date.</param>
-        /// <param name="productExistsChecker">Domain service that checks if a product exists.</param>
-        public void StoreProduct(ProductId productId, int quantity, DateTime? expirationDate, IProductExistsChecker productExistsChecker)
+        public void StoreProduct(ProductId productId, int quantity, DateTime? expirationDate)
         {
             this.CheckDomainRule(new ProductOperationHasValidQuantityRule(quantity));
-            this.CheckDomainRule(new ProductExistsRule(productId, productExistsChecker));
 
             var storedProduct = StoredProducts.SingleOrDefault(x => x.ProductId == productId && x.ExpirationDate == expirationDate);
 
@@ -171,11 +169,11 @@ namespace FoodVault.Modules.Storage.Domain.FoodStorages
         /// <param name="hasWritePermission">If the user can add or remove storage items.</param>
         /// <param name="userSharesFinder">Domain services that checks if the storage is already shared to the given user id.</param>
         /// <param name="userContext">Informations about the executing user.</param>
-        public void Share(UserId userId, bool hasWritePermission, IStorageUserSharesFinder userSharesFinder, IUserContext userContext)
+        public void ShareToUser(UserId userId, bool hasWritePermission, IEnumerable<UserId> sharedStorageUsers, IUserContext userContext)
         {
             this.CheckDomainRule(new StorageCannotBeSharedToTheOwnerRule(_ownerId, userId));
             this.CheckDomainRule(new OnlyStorageOwnerCanAddOrRemoveSharesRule(_ownerId, userContext));
-            this.CheckDomainRule(new StorageIsNotAlreadySharedToUserRule(Id, userId, userSharesFinder));
+            this.CheckDomainRule(new StorageIsNotAlreadySharedToUserRule(userId, sharedStorageUsers));
 
             _storageShares.Add(StorageShare.CreateForUser(Id, userId, hasWritePermission));
 

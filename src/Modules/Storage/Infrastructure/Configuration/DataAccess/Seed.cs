@@ -68,7 +68,6 @@ namespace FoodVault.Modules.Storage.Infrastructure.Configuration.DataAccess
             var rnd = new Random();
             var storages = context.FoodStorages.ToList();
             var products = context.Products.ToList();
-            var checker = new FakeProductExistsChecker();
 
             foreach(var storage in storages)
             {
@@ -82,16 +81,11 @@ namespace FoodVault.Modules.Storage.Infrastructure.Configuration.DataAccess
 
                 foreach(var prod in productsToAdd)
                 {
-                    storage.StoreProduct(prod.Id, rnd.Next(1, 13), null, checker);
+                    storage.StoreProduct(prod.Id, rnd.Next(1, 13), null);
                 }
             }
 
             context.SaveChanges();
-        }
-
-        private class FakeProductExistsChecker : IProductExistsChecker
-        {
-            public bool ProductExists(ProductId id) => true;
         }
 
         private class FakeStorageNameUniquessChecker : IStorageNameUniquessChecker
