@@ -2,7 +2,6 @@
 using FoodVault.Framework.Application;
 using FoodVault.Framework.Application.Commands;
 using FoodVault.Framework.Application.Emails;
-using FoodVault.Framework.Application.FileUploads;
 using FoodVault.Framework.Application.Queries;
 using FoodVault.Framework.Infrastructure.EventBus;
 using FoodVault.Modules.UserAccess.Application.Contracts;
@@ -10,8 +9,6 @@ using FoodVault.Modules.UserAccess.Infrastructure.Configuration;
 using FoodVault.Modules.UserAccess.Infrastructure.Configuration.Processing;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using System;
-using System.IO;
 using System.Threading.Tasks;
 
 namespace FoodVault.Modules.UserAccess.Infrastructure
@@ -36,23 +33,6 @@ namespace FoodVault.Modules.UserAccess.Infrastructure
             var mediator = scope.Resolve<IMediator>();
 
             return await mediator.Send(query);
-        }
-
-        /// <inheritdoc />
-        public async Task<Guid> StoreFileTemporaryAsync(
-            Stream fileStream,
-            string fileName,
-            string contentType,
-            TimeSpan expirationTime)
-        {
-            using var scope = UserAccessCompositionRoot.BeginLifetimeScope();
-            var fileStorage = scope.Resolve<IFileStorage>();
-
-            return await fileStorage.StoreFileTemporaryAsync(
-                fileStream,
-                fileName,
-                contentType,
-                expirationTime);
         }
 
         #endregion

@@ -63,15 +63,7 @@ namespace FoodVault.Modules.UserAccess.Infrastructure.Configuration.Processing.O
                     var t = _domainNotificationRegistry.GetType(msg.EventType);
                     var ev = JsonConvert.DeserializeObject(msg.Payload, t) as IDomainEventNotification;
 
-                    try
-                    {
                     await _mediator.Publish(ev, cancellationToken);
-
-                    }
-                    catch(Exception ex)
-                    {
-
-                    }
                     await con.ExecuteAsync(processSql, new { date = DateTime.UtcNow, id =  msg.Id });
                 }
             }

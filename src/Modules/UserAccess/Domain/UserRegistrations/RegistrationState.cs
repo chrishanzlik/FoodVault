@@ -12,7 +12,6 @@ namespace FoodVault.Modules.UserAccess.Domain.UserRegistrations
         /// </summary>
         private RegistrationState()
         {
-
         }
 
         private RegistrationState(string state)
@@ -39,5 +38,8 @@ namespace FoodVault.Modules.UserAccess.Domain.UserRegistrations
         /// Gets the value of the <see cref="RegistrationState"/>.
         /// </summary>
         public string Value { get; }
+
+        /// <inheritdoc />
+        public override string ToString() => Value.ToString();
     }
 }

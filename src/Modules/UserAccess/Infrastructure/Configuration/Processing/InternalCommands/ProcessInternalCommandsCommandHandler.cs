@@ -28,66 +28,56 @@ namespace FoodVault.Modules.UserAccess.Infrastructure.Configuration.Processing.I
         /// <inheritdoc />
         public async Task<ICommandResult> Handle(ProcessInternalCommandsCommand request, CancellationToken cancellationToken)
         {
-            try
-            {
-                var connection = _dbConnectionFactory.GetOpen();
+            var connection = _dbConnectionFactory.GetOpen();
 
-                const string fetchSql =
-                    "SELECT " +
-                    "[Command].[Id], " +
-                    "[Command].[CommandType], " +
-                    "[Command].[Payload] " +
-                    "FROM [users].[InternalCommands] AS [Command] " +
-                    "WHERE [Command].[ProcessedDate] IS NULL " +
-                    "ORDER BY [Command].[EnqueueDate]";
+            const string fetchSql =
+                "SELECT " +
+                "[Command].[Id], " +
+                "[Command].[CommandType], " +
+                "[Command].[Payload] " +
+                "FROM [users].[InternalCommands] AS [Command] " +
+                "WHERE [Command].[ProcessedDate] IS NULL " +
+                "ORDER BY [Command].[EnqueueDate]";
 
-                const string errorSql =
-                    "UPDATE [users].[InternalCommands] " +
-                    "SET [ProcessedDate] = @processed, [Error] = @error " +
-                    "WHERE [Id] = @id";
+            const string errorSql =
+                "UPDATE [users].[InternalCommands] " +
+                "SET [ProcessedDate] = @processed, [Error] = @error " +
+                "WHERE [Id] = @id";
 
-                var pendingCommands = (await connection.QueryAsync<InternalCommandDto>(fetchSql)).AsList();
-                var policy = Policy
-                    .Handle<Exception>()
-                    .WaitAndRetryAsync(new[]
-                    {
+            var pendingCommands = (await connection.QueryAsync<InternalCommandDto>(fetchSql)).AsList();
+            var policy = Policy
+                .Handle<Exception>()
+                .WaitAndRetryAsync(new[]
+                {
                     TimeSpan.FromSeconds(1),
                     TimeSpan.FromSeconds(2),
                     TimeSpan.FromSeconds(3)
-                    });
+                });
 
-                foreach (var internalCommand in pendingCommands)
+            foreach (var internalCommand in pendingCommands)
+            {
+                var policyResult = await policy.ExecuteAndCaptureAsync(() => ExecuteCommandAsync(internalCommand));
+
+                if (policyResult.Outcome == OutcomeType.Failure)
                 {
-                    var policyResult = await policy.ExecuteAndCaptureAsync(() => ExecuteCommandAsync(internalCommand));
-
-                    if (policyResult.Outcome == OutcomeType.Failure)
+                    await connection.ExecuteScalarAsync(errorSql, new
                     {
-                        await connection.ExecuteScalarAsync(errorSql, new
-                        {
-                            processed = DateTime.UtcNow,
-                            error = policyResult.FinalException.ToString(),
-                            id = internalCommand.Id
-                        });
-                    }
-
-                    else if (!policyResult.Result.Success)
-                    {
-                        await connection.ExecuteScalarAsync(errorSql, new
-                        {
-                            processed = DateTime.UtcNow,
-                            error = string.Join(';', policyResult.Result.Errors),
-                            id = internalCommand.Id
-                        });
-                    }
+                        processed = DateTime.UtcNow,
+                        error = policyResult.FinalException.ToString(),
+                        id = internalCommand.Id
+                    });
                 }
 
+                else if (!policyResult.Result.Success)
+                {
+                    await connection.ExecuteScalarAsync(errorSql, new
+                    {
+                        processed = DateTime.UtcNow,
+                        error = string.Join(';', policyResult.Result.Errors),
+                        id = internalCommand.Id
+                    });
+                }
             }
-            catch(Exception e )
-            {
-
-            }
-
-            
 
             return CommandResult.Ok();
         }
