@@ -1,7 +1,9 @@
-﻿using FoodVault.Modules.UserAccess.Application.Authentication.Authenticate;
+﻿using FoodVault.Framework.Application.Commands.Results;
+using FoodVault.Modules.UserAccess.Application.Authentication.Authenticate;
 using FoodVault.Modules.UserAccess.Application.Contracts;
 using IdentityServer4.Models;
 using IdentityServer4.Validation;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace FoodVault.Api.IdentityServer
@@ -17,22 +19,33 @@ namespace FoodVault.Api.IdentityServer
 
         public async Task ValidateAsync(ResourceOwnerPasswordValidationContext context)
         {
-            //var authenticationResult = await _userAccessModule.ExecuteCommandAsync(
-            //    new AuthenticateCommand(context.UserName, context.Password));
+            var commandResult = await _userAccessModule.ExecuteCommandAsync(
+                new AuthenticateCommand(context.UserName, context.Password));
 
-            //if (!true)
-            //{
-            //    context.Result = new GrantValidationResult(
-            //        TokenRequestErrors.InvalidGrant,
-            //        authenticationResult.AuthenticationError);
+            var authenticationResult = commandResult as AuthenticatedCommandResult<UserDto>;
 
-            //    return;
-            //}
+            if (authenticationResult == null || !commandResult.Success)
+            {
+                context.Result = new GrantValidationResult(
+                    TokenRequestErrors.InvalidRequest,
+                    commandResult.Errors.Single());
 
-            //context.Result = new GrantValidationResult(
-            //    authenticationResult.User.Id.ToString(),
-            //    "forms",
-            //    authenticationResult.User.Claims);
+                return;
+            }
+
+            if (authenticationResult != null || !commandResult.Success)
+            {
+                context.Result = new GrantValidationResult(
+                    TokenRequestErrors.InvalidGrant,
+                    commandResult.Errors.Single());
+
+                return;
+            }
+
+            context.Result = new GrantValidationResult(
+                authenticationResult.User.Id.ToString(),
+                "forms",
+                authenticationResult.User.Claims);
         }
     }
 }

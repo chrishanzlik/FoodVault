@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FoodVault.Framework.Application.Commands.Results;
+using System;
 using System.Collections.Generic;
 
 namespace FoodVault.Framework.Application.Commands
@@ -6,37 +7,26 @@ namespace FoodVault.Framework.Application.Commands
     /// <summary>
     /// Represents the state of a executed command.
     /// </summary>
-    public class CommandResult : ICommandResult
+    public static class CommandResult
     {
-        private CommandResult(bool success, Guid? entityId, IEnumerable<string> errors, CommandResultState state)
+        /// <summary>
+        /// Create a new error result.
+        /// </summary>
+        /// <param name="error">Error.</param>
+        /// <returns>Commands execution result.</returns>
+        public static ICommandResult Error(string error)
         {
-            Success = success;
-            Errors = errors;
-            EntityId = entityId;
-            State = state;
+            return new ErrorCommandResult(new string[] { error });
         }
-
-        /// <inheritdoc />
-        public bool Success { get; }
-
-        /// <inheritdoc />
-        public IEnumerable<string> Errors { get; }
-
-        /// <inheritdoc />
-        public Guid? EntityId { get; }
-
-        /// <inheritdoc />
-        public CommandResultState State { get; }
-
 
         /// <summary>
         /// Create a new error result.
         /// </summary>
         /// <param name="errors">List of errors.</param>
         /// <returns>Commands execution result.</returns>
-        public static CommandResult Error(IEnumerable<string> errors)
+        public static ICommandResult Error(IEnumerable<string> errors)
         {
-            return new CommandResult(false, null, errors, CommandResultState.Error);
+            return new ErrorCommandResult(errors);
         }
 
         /// <summary>
@@ -44,18 +34,18 @@ namespace FoodVault.Framework.Application.Commands
         /// </summary>
         /// <param name="entityId">Entities id.</param>
         /// <returns>Commands execution result.</returns>
-        public static CommandResult EntityCreated(Guid entityId)
+        public static ICommandResult EntityCreated(Guid entityId)
         {
-            return new CommandResult(true, entityId, null, CommandResultState.Created);
+            return new EntityCreatedCommandResult(entityId);
         }
 
         /// <summary>
         /// Create a new success result.
         /// </summary>
         /// <returns>Commands execution result.</returns>
-        public static CommandResult Ok()
+        public static ICommandResult Ok()
         {
-            return new CommandResult(true, null, null, CommandResultState.Processed);
+            return new OkCommandResult();
         }
 
         /// <summary>
@@ -63,9 +53,19 @@ namespace FoodVault.Framework.Application.Commands
         /// </summary>
         /// <param name="errors">List of errors.</param>
         /// <returns>Commands execution result.</returns>
-        public static CommandResult BadParameters(IEnumerable<string> errors)
+        public static ICommandResult BadParameters(IEnumerable<string> errors)
         {
-            return new CommandResult(false, null, errors, CommandResultState.BadParameters);
+            return new InvalidParametersCommandResult(errors);
+        }
+
+        public static ICommandResult Authenticated<TUser>(TUser user)
+        {
+            return new AuthenticatedCommandResult<TUser>(user);
+        }
+
+        public static ICommandResult AuthenticationFailed<TUser>(string error)
+        {
+            return new AuthenticatedCommandResult<TUser>(error);
         }
     }
 }
