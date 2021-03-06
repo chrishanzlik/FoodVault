@@ -33,7 +33,7 @@ namespace FoodVault.Api.IdentityServer
                 return;
             }
 
-            if (authenticationResult != null || !commandResult.Success)
+            if (authenticationResult != null && !commandResult.Success)
             {
                 context.Result = new GrantValidationResult(
                     TokenRequestErrors.InvalidGrant,

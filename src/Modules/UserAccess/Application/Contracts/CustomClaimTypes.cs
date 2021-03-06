@@ -4,6 +4,7 @@
     {
         public const string Roles = "roles";
         public const string Email = "email";
-        public const string Name = "name";
+        public const string FirstName = "firstname";
+        public const string LastName = "lastname";
     }
 }

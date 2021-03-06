@@ -14,7 +14,7 @@ namespace FoodVault.Api.IdentityServer
         public Task GetProfileDataAsync(ProfileDataRequestContext context)
         {
             context.IssuedClaims.AddRange(context.Subject.Claims.Where(x => x.Type == CustomClaimTypes.Roles).ToList());
-            context.IssuedClaims.Add(context.Subject.Claims.Single(x => x.Type == CustomClaimTypes.Name));
+            context.IssuedClaims.Add(context.Subject.Claims.Single(x => x.Type == CustomClaimTypes.FirstName));
             context.IssuedClaims.Add(context.Subject.Claims.Single(x => x.Type == CustomClaimTypes.Email));
 
             return Task.CompletedTask;
