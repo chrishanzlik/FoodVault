@@ -26,7 +26,10 @@ using System.Collections.Generic;
 
 namespace FoodVault.Api
 {
-    public class Startup
+    /// <summary>
+    /// API startup.
+    /// </summary>
+    internal class Startup
     {
         public Startup(IConfiguration configuration)
         {

@@ -4,6 +4,9 @@ using FoodVault.Modules.UserAccess.Infrastructure;
 
 namespace FoodVault.Api.Modules.UserAccess
 {
+    /// <summary>
+    /// Autofac registrations for the <see cref="UserAccessModule"/>.
+    /// </summary>
     internal class UserAccessAutofacModule : Module
     {
         protected override void Load(ContainerBuilder builder)

@@ -8,15 +8,23 @@ using System.Threading.Tasks;
 
 namespace FoodVault.Api.IdentityServer
 {
-    public class ResourceOwnerPasswordValidator : IResourceOwnerPasswordValidator
+    /// <summary>
+    /// Validates passwords within the 'ResourceOwnerPassword' context.
+    /// </summary>
+    internal class ResourceOwnerPasswordValidator : IResourceOwnerPasswordValidator
     {
         private readonly IUserAccessModule _userAccessModule;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ResourceOwnerPasswordValidator" /> class.
+        /// </summary>
+        /// <param name="userAccessModule">User access module.</param>
         public ResourceOwnerPasswordValidator(IUserAccessModule userAccessModule)
         {
             _userAccessModule = userAccessModule;
         }
 
+        /// <inheritdoc />
         public async Task ValidateAsync(ResourceOwnerPasswordValidationContext context)
         {
             var commandResult = await _userAccessModule.ExecuteCommandAsync(
@@ -28,15 +36,6 @@ namespace FoodVault.Api.IdentityServer
             {
                 context.Result = new GrantValidationResult(
                     TokenRequestErrors.InvalidRequest,
-                    commandResult.Errors.Single());
-
-                return;
-            }
-
-            if (authenticationResult != null && !commandResult.Success)
-            {
-                context.Result = new GrantValidationResult(
-                    TokenRequestErrors.InvalidGrant,
                     commandResult.Errors.Single());
 
                 return;

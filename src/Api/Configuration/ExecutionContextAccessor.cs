@@ -4,18 +4,28 @@ using System;
 
 namespace FoodVault.Api.Configuration.ExecutionContext
 {
-    //TODO: 
+    /// <summary>
+    /// Grants access to the current execution context.
+    /// </summary>
     internal class ExecutionContextAccessor : IExecutionContextAccessor
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ExecutionContextAccessor" /> class.
+        /// </summary>
+        /// <param name="httpContextAccessor">Http context accessor.</param>
         public ExecutionContextAccessor(IHttpContextAccessor httpContextAccessor)
         {
             _httpContextAccessor = httpContextAccessor;
         }
 
+        //TODO: Implement ExecutionContextAccessor
+
+        /// inheritdoc />
         public Guid UserId => Guid.Empty;
 
-        public bool IsAvailable => true;
+        /// inheritdoc />
+        public bool IsAvailable => _httpContextAccessor?.HttpContext != null;
     }
 }

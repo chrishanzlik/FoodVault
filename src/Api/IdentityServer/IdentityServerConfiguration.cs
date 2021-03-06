@@ -5,8 +5,15 @@ using System.Collections.Generic;
 
 namespace FoodVault.Api.IdentityServer
 {
-    public class IdentityServerConfiguration
+    /// <summary>
+    /// Identity server configuration
+    /// </summary>
+    internal class IdentityServerConfiguration
     {
+        /// <summary>
+        /// Gets all available APIs.
+        /// </summary>
+        /// <returns>An enumerable of ApiResources.</returns>
         public static IEnumerable<ApiResource> GetApis()
         {
             return new List<ApiResource>
@@ -15,6 +22,10 @@ namespace FoodVault.Api.IdentityServer
             };
         }
 
+        /// <summary>
+        /// Gets all available identity resources.
+        /// </summary>
+        /// <returns>An enumarble of IdentityResources.</returns>
         public static IEnumerable<IdentityResource> GetIdentityResources()
         {
             return new IdentityResource[]
@@ -28,6 +39,10 @@ namespace FoodVault.Api.IdentityServer
             };
         }
 
+        /// <summary>
+        /// Gets all available clients.
+        /// </summary>
+        /// <returns>An enumerable of clients.</returns>
         public static IEnumerable<Client> GetClients()
         {
             return new List<Client>

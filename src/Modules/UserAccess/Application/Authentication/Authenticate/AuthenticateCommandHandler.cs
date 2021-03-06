@@ -2,10 +2,8 @@
 using FoodVault.Framework.Application.Commands;
 using FoodVault.Framework.Application.DataAccess;
 using FoodVault.Modules.UserAccess.Application.Contracts;
-using System;
 using System.Collections.Generic;
 using System.Security.Claims;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 

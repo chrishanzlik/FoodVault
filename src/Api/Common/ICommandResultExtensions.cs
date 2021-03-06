@@ -9,7 +9,7 @@ namespace FoodVault.Api.Common
     /// <summary>
     /// Extensions for <see cref="ICommandResult"/>.
     /// </summary>
-    public static class ICommandResultExtensions
+    internal static class ICommandResultExtensions
     {
         /// <summary>
         /// Converts a <see cref="ICommandResult"/> into a <see cref="IActionResult"/>.
