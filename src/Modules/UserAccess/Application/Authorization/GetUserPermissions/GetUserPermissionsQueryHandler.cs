@@ -33,4 +33,4 @@ namespace FoodVault.Modules.UserAccess.Application.Authorization.GetUserPermissi
         }
     }
 }
-}
+
