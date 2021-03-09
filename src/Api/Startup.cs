@@ -5,6 +5,7 @@ using FoodVault.Api.Configuration.ExecutionContext;
 using FoodVault.Api.IdentityServer;
 using FoodVault.Api.Modules.Storages;
 using FoodVault.Api.Modules.UserAccess;
+using FoodVault.Framework.Application;
 using FoodVault.Framework.Application.Emails;
 using FoodVault.Framework.Application.FileUploads;
 using FoodVault.Framework.Infrastructure.Emails;
@@ -12,6 +13,7 @@ using FoodVault.Modules.Storage.Infrastructure;
 using FoodVault.Modules.UserAccess.Infrastructure;
 using IdentityServer4.AccessTokenValidation;
 using IdentityServer4.Validation;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -23,6 +25,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.SwaggerUI;
 using System;
 using System.Collections.Generic;
 
@@ -47,6 +50,7 @@ namespace FoodVault.Api
             services.AddControllers();
 
             services.AddHttpContextAccessor();
+            services.AddSingleton<IExecutionContextAccessor, ExecutionContextAccessor>();
 
             services.AddApiVersioning(config =>
             {
@@ -69,15 +73,26 @@ namespace FoodVault.Api
             services.AddSwaggerGen(config =>
             {
                 config.SwaggerDoc("v1", new OpenApiInfo { Title = "foodvault API", Version = "v1" });
+
                 config.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
-                    Description =
-                        "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
-                    Name = "Authorization",
+                    Type = SecuritySchemeType.OAuth2,
+                    Flows = new OpenApiOAuthFlows
+                    {
+                        Password = new OpenApiOAuthFlow
+                        {
+                            AuthorizationUrl = new Uri("https://localhost:44305/connect/authorize"),
+                            TokenUrl = new Uri("https://localhost:44305/connect/token"),
+                            //Scopes = new Dictionary<string, string>
+                            //{
+                            //    {"foodvault.api", "foodvault.api"}
+                            //}
+                        }
+                    },
                     In = ParameterLocation.Header,
-                    Type = SecuritySchemeType.ApiKey
+                    Scheme = JwtBearerDefaults.AuthenticationScheme,
+                    
                 });
-
                 config.AddSecurityRequirement(new OpenApiSecurityRequirement
                 {
                     {
@@ -86,13 +101,10 @@ namespace FoodVault.Api
                             Reference = new OpenApiReference
                             {
                                 Type = ReferenceType.SecurityScheme,
-                                Id = "Bearer"
-                            },
-                            Scheme = "oauth2",
-                            Name = "Bearer",
-                            In = ParameterLocation.Header
+                                Id = JwtBearerDefaults.AuthenticationScheme
+                            }
                         },
-                        new List<string>()
+                        new string[] {}
                     }
                 });
             });
@@ -112,6 +124,10 @@ namespace FoodVault.Api
                 app.UseSwagger();
                 app.UseSwaggerUI(c => { 
                     c.SwaggerEndpoint("/swagger/v1/swagger.json", "foodvault API v1");
+                    c.OAuthConfigObject = new OAuthConfigObject() {
+                        ClientId = "ro.client",
+                        ClientSecret = "dummy",
+                    };
                 });
             }
 
@@ -159,9 +175,9 @@ namespace FoodVault.Api
         private void ConfigureModules(ILifetimeScope container)
         {
             var httpContextAccessor = container.Resolve<IHttpContextAccessor>();
+            var executionContextAccessor = container.Resolve<IExecutionContextAccessor>();
             var linkGenerator = container.Resolve<LinkGenerator>();
 
-            var executionContextAccessor = new ExecutionContextAccessor(httpContextAccessor);
             var fileUploadSettings = Configuration.GetSection(nameof(FileUploadSettings)).Get<FileUploadSettings>();
             var mailerSettings = Configuration.GetSection(nameof(MailerSettings)).Get<MailerSettings>();
             var mailer = new SmtpEmailSender(mailerSettings);
