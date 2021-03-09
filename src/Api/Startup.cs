@@ -1,5 +1,6 @@
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using FoodVault.Api.Configuration.Authorization;
 using FoodVault.Api.Configuration.ExecutionContext;
 using FoodVault.Api.IdentityServer;
 using FoodVault.Api.Modules.Storages;
@@ -11,6 +12,7 @@ using FoodVault.Modules.Storage.Infrastructure;
 using FoodVault.Modules.UserAccess.Infrastructure;
 using IdentityServer4.AccessTokenValidation;
 using IdentityServer4.Validation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -52,6 +54,17 @@ namespace FoodVault.Api
                 config.AssumeDefaultVersionWhenUnspecified = true;
                 config.ReportApiVersions = true;
             });
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy(HasPermissionAttribute.HasPermissionPolicyName, policyBuilder =>
+                {
+                    policyBuilder.Requirements.Add(new HasPermissionAuthorizationRequirement());
+                    policyBuilder.AddAuthenticationSchemes(IdentityServerAuthenticationDefaults.AuthenticationScheme);
+                });
+            });
+
+            services.AddScoped<IAuthorizationHandler, HasPermissionAuthorizationHandler>();
 
             services.AddSwaggerGen(config =>
             {
