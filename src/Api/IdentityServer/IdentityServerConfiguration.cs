@@ -1,4 +1,5 @@
 ﻿using FoodVault.Modules.UserAccess.Application.Contracts;
+using IdentityModel;
 using IdentityServer4;
 using IdentityServer4.Models;
 using System.Collections.Generic;
@@ -19,6 +20,17 @@ namespace FoodVault.Api.IdentityServer
             return new List<ApiResource>
             {
                 new ApiResource("foodvault.api", "FoodVault API")
+                {
+                    Scopes = new []{ "foodvault.api" }
+                }
+            };
+        }
+
+        public static IEnumerable<ApiScope> GetApiScopes()
+        {
+            return new List<ApiScope>
+            {
+                new ApiScope("foodvault.api")
             };
         }
 
@@ -55,7 +67,7 @@ namespace FoodVault.Api.IdentityServer
                     ClientSecrets = {
                         new Secret("dummy".Sha256())
                     },
-
+                    
                     AllowedScopes = {
                         "foodvault.api",
                         IdentityServerConstants.StandardScopes.OpenId,

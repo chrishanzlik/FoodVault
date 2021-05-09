@@ -109,6 +109,7 @@ namespace FoodVault.Api
                 .AddInMemoryIdentityResources(IdentityServerConfiguration.GetIdentityResources())
                 .AddInMemoryApiResources(IdentityServerConfiguration.GetApis())
                 .AddInMemoryClients(IdentityServerConfiguration.GetClients())
+                .AddInMemoryApiScopes(IdentityServerConfiguration.GetApiScopes())
                 .AddInMemoryPersistedGrants()
                 .AddProfileService<ProfileService>()
                 .AddDeveloperSigningCredential();
@@ -116,7 +117,7 @@ namespace FoodVault.Api
             services.AddTransient<IResourceOwnerPasswordValidator, ResourceOwnerPasswordValidator>();
 
             services.AddAuthentication(IdentityServerAuthenticationDefaults.AuthenticationScheme)
-                .AddIdentityServerAuthentication(IdentityServerAuthenticationDefaults.AuthenticationScheme, x =>
+                .AddIdentityServerAuthentication(IdentityServerAuthenticationDefaults.AuthenticationScheme, (IdentityServerAuthenticationOptions x) =>
                 {
                     x.Authority = "https://localhost:44305";
                     x.ApiName = "foodvault.api";

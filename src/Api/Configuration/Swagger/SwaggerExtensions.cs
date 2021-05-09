@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerUI;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 
@@ -31,10 +32,10 @@ namespace FoodVault.Api.Configuration.Swagger
                         {
                             AuthorizationUrl = new Uri("https://localhost:44305/connect/authorize"),
                             TokenUrl = new Uri("https://localhost:44305/connect/token"),
-                            //Scopes = new Dictionary<string, string>
-                            //{
-                            //    {"foodvault.api", "foodvault.api"}
-                            //}
+                            Scopes = new Dictionary<string, string>
+                            {
+                                {"foodvault.api", "FoodVault API"}
+                            }
                         }
                     },
                     In = ParameterLocation.Header,
@@ -79,6 +80,7 @@ namespace FoodVault.Api.Configuration.Swagger
                 {
                     ClientId = "ro.client",
                     ClientSecret = "dummy",
+                    Scopes = new[] { "foodvault.api" }
                 };
             });
 
