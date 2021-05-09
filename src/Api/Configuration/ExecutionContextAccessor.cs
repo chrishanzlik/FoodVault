@@ -22,10 +22,10 @@ namespace FoodVault.Api.Configuration.ExecutionContext
 
         //TODO: Implement ExecutionContextAccessor
 
-        /// inheritdoc />
+        /// <inheritdoc />
         public Guid UserId => Guid.Empty;
 
-        /// inheritdoc />
+        /// <inheritdoc />
         public bool IsAvailable => _httpContextAccessor?.HttpContext != null;
     }
 }

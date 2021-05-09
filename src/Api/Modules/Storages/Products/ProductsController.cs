@@ -15,17 +15,29 @@ using FoodVault.Modules.Storage.Application.Contracts;
 
 namespace FoodVault.Api.Modules.Storages.Products
 {
+    /// <summary>
+    /// Interacting with products.
+    /// </summary>
     [ApiController]
     [Route("api/[controller]")]
     public class ProductsController : Controller
     {
         private readonly IStorageModule _storageModule;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ProductsController" /> class.
+        /// </summary>
+        /// <param name="storageModule">Storage module.</param>
         public ProductsController(IStorageModule storageModule)
         {
             _storageModule = storageModule;
         }
 
+        /// <summary>
+        /// Creates a product.
+        /// </summary>
+        /// <param name="request">Create product data.</param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> CreateProductAsync(CreateProductRequest request)
         {
@@ -36,6 +48,12 @@ namespace FoodVault.Api.Modules.Storages.Products
             return result.ToActionResult();
         }
 
+        /// <summary>
+        /// Uploads and connect an image with a product.
+        /// </summary>
+        /// <param name="productId">Identifer of the product.</param>
+        /// <param name="upload">Image upload.</param>
+        /// <returns></returns>
         [HttpPost]
         [Route("{productId}/image")]
         public async Task<IActionResult> UploadProductImageAsync([FromRoute] Guid productId, IFormFile upload)
@@ -60,6 +78,11 @@ namespace FoodVault.Api.Modules.Storages.Products
             return result.ToActionResult();
         }
 
+        /// <summary>
+        /// Deletes an product image.
+        /// </summary>
+        /// <param name="productId">Identifier of the product.</param>
+        /// <returns></returns>
         [HttpDelete]
         [Route("{productId}/image")]
         public async Task<IActionResult> DeleteProductImageAsync([FromRoute] Guid productId)
@@ -71,6 +94,11 @@ namespace FoodVault.Api.Modules.Storages.Products
             return result.ToActionResult();
         }
 
+        /// <summary>
+        /// Gets an product image when available.
+        /// </summary>
+        /// <param name="productId">Identifier of the product.</param>
+        /// <returns></returns>
         [HttpGet]
         [Route("{productId}/image")]
         public async Task<IActionResult> GetProductImageAsync([FromRoute] Guid productId)
@@ -86,7 +114,7 @@ namespace FoodVault.Api.Modules.Storages.Products
             return File(result, result.ContentType, result.FileName);
         }
 
-        private bool ValidateFileUpload(IFormFile upload, out IEnumerable<string> errors)
+        private static bool ValidateFileUpload(IFormFile upload, out IEnumerable<string> errors)
         {
             //TODO: Validate with attributes.
 

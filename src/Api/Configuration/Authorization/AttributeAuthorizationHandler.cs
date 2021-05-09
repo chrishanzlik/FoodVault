@@ -5,6 +5,11 @@ using System.Threading.Tasks;
 
 namespace FoodVault.Api.Configuration.Authorization
 {
+    /// <summary>
+    /// Abstract attribute authorization handler.
+    /// </summary>
+    /// <typeparam name="TRequirement">Type of the authorization requirement.</typeparam>
+    /// <typeparam name="TAttribute">Type of the attribute.</typeparam>
     public abstract class AttributeAuthorizationHandler<TRequirement, TAttribute> : AuthorizationHandler<TRequirement>
         where TRequirement : IAuthorizationRequirement
         where TAttribute : Attribute
@@ -17,6 +22,7 @@ namespace FoodVault.Api.Configuration.Authorization
             return HandleRequirementAsync(context, requirement, attribute);
         }
 
+        /// <inheritdoc />
         protected abstract Task HandleRequirementAsync(
             AuthorizationHandlerContext context,
             TRequirement requirement,

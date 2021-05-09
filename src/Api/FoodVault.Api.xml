@@ -1,0 +1,350 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>FoodVault.Api</name>
+    </assembly>
+    <members>
+        <member name="T:FoodVault.Api.Common.ICommandResultExtensions">
+            <summary>
+            Extensions for <see cref="T:FoodVault.Framework.Application.Commands.ICommandResult"/>.
+            </summary>
+        </member>
+        <member name="M:FoodVault.Api.Common.ICommandResultExtensions.ToActionResult(FoodVault.Framework.Application.Commands.ICommandResult)">
+            <summary>
+            Converts a <see cref="T:FoodVault.Framework.Application.Commands.ICommandResult"/> into a <see cref="T:Microsoft.AspNetCore.Mvc.IActionResult"/>.
+            </summary>
+            <param name="self">Result to convert.</param>
+            <returns>IActionResult</returns>
+        </member>
+        <member name="M:FoodVault.Api.Configuration.Authorization.AttributeAuthorizationHandler`2.HandleRequirementAsync(Microsoft.AspNetCore.Authorization.AuthorizationHandlerContext,`0)">
+            <inheritdoc />
+        </member>
+        <member name="T:FoodVault.Api.Configuration.ExecutionContext.ExecutionContextAccessor">
+            <summary>
+            Grants access to the current execution context.
+            </summary>
+        </member>
+        <member name="M:FoodVault.Api.Configuration.ExecutionContext.ExecutionContextAccessor.#ctor(Microsoft.AspNetCore.Http.IHttpContextAccessor)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FoodVault.Api.Configuration.ExecutionContext.ExecutionContextAccessor" /> class.
+            </summary>
+            <param name="httpContextAccessor">Http context accessor.</param>
+        </member>
+        <member name="P:FoodVault.Api.Configuration.ExecutionContext.ExecutionContextAccessor.UserId">
+            inheritdoc />
+        </member>
+        <member name="P:FoodVault.Api.Configuration.ExecutionContext.ExecutionContextAccessor.IsAvailable">
+            inheritdoc />
+        </member>
+        <member name="T:FoodVault.Api.IdentityServer.IdentityServerConfiguration">
+            <summary>
+            Identity server configuration
+            </summary>
+        </member>
+        <member name="M:FoodVault.Api.IdentityServer.IdentityServerConfiguration.GetApis">
+            <summary>
+            Gets all available APIs.
+            </summary>
+            <returns>An enumerable of ApiResources.</returns>
+        </member>
+        <member name="M:FoodVault.Api.IdentityServer.IdentityServerConfiguration.GetIdentityResources">
+            <summary>
+            Gets all available identity resources.
+            </summary>
+            <returns>An enumarble of IdentityResources.</returns>
+        </member>
+        <member name="M:FoodVault.Api.IdentityServer.IdentityServerConfiguration.GetClients">
+            <summary>
+            Gets all available clients.
+            </summary>
+            <returns>An enumerable of clients.</returns>
+        </member>
+        <member name="T:FoodVault.Api.IdentityServer.ProfileService">
+            <summary>
+            Identity server profile service
+            </summary>
+        </member>
+        <member name="M:FoodVault.Api.IdentityServer.ProfileService.GetProfileDataAsync(IdentityServer4.Models.ProfileDataRequestContext)">
+            <inheritdoc />
+        </member>
+        <member name="M:FoodVault.Api.IdentityServer.ProfileService.IsActiveAsync(IdentityServer4.Models.IsActiveContext)">
+            <inheritdoc />
+        </member>
+        <member name="T:FoodVault.Api.IdentityServer.ResourceOwnerPasswordValidator">
+            <summary>
+            Validates passwords within the 'ResourceOwnerPassword' context.
+            </summary>
+        </member>
+        <member name="M:FoodVault.Api.IdentityServer.ResourceOwnerPasswordValidator.#ctor(FoodVault.Modules.UserAccess.Application.Contracts.IUserAccessModule)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FoodVault.Api.IdentityServer.ResourceOwnerPasswordValidator" /> class.
+            </summary>
+            <param name="userAccessModule">User access module.</param>
+        </member>
+        <member name="M:FoodVault.Api.IdentityServer.ResourceOwnerPasswordValidator.ValidateAsync(IdentityServer4.Validation.ResourceOwnerPasswordValidationContext)">
+            <inheritdoc />
+        </member>
+        <member name="T:FoodVault.Api.Modules.Storages.FoodStorages.ChangeStorageRequest">
+            <summary>
+            Request data for changing storages profile data.
+            </summary>
+        </member>
+        <member name="T:FoodVault.Api.Modules.Storages.FoodStorages.CreateStorageRequest">
+            <summary>
+            Request data for the <see cref="!:CreateStorageCommand"/>.
+            </summary>
+        </member>
+        <member name="T:FoodVault.Api.Modules.Storages.FoodStorages.FoodStoragesController">
+            <summary>
+            Interacting with storages.
+            </summary>
+        </member>
+        <member name="M:FoodVault.Api.Modules.Storages.FoodStorages.FoodStoragesController.#ctor(FoodVault.Modules.Storage.Application.Contracts.IStorageModule)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FoodVault.Api.Modules.Storages.FoodStorages.FoodStoragesController" /> class.
+            </summary>
+            <param name="storageModule">Storage module.</param>
+        </member>
+        <member name="M:FoodVault.Api.Modules.Storages.FoodStorages.FoodStoragesController.GetStorageOverviewAsync(System.String)">
+            <summary>
+            Gets an overview of all available storages.
+            </summary>
+            <param name="name">Filter by name</param>
+            <returns></returns>
+        </member>
+        <member name="M:FoodVault.Api.Modules.Storages.FoodStorages.FoodStoragesController.CreateStorageAsync(FoodVault.Api.Modules.Storages.FoodStorages.CreateStorageRequest)">
+            <summary>
+            Creates a new storage.
+            </summary>
+            <param name="request">Request data.</param>
+            <returns></returns>
+        </member>
+        <member name="M:FoodVault.Api.Modules.Storages.FoodStorages.FoodStoragesController.DeleteStorageAsync(System.Guid)">
+            <summary>
+            Deletes a storage.
+            </summary>
+            <param name="foodStorageId">Identifier of the storage.</param>
+            <returns></returns>
+        </member>
+        <member name="M:FoodVault.Api.Modules.Storages.FoodStorages.FoodStoragesController.ChangeStorageProfileAsync(System.Guid,FoodVault.Api.Modules.Storages.FoodStorages.ChangeStorageRequest)">
+            <summary>
+            Set storage name and description
+            </summary>
+            <param name="foodStorageId"></param>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FoodVault.Api.Modules.Storages.FoodStorages.FoodStoragesController.GetStoredProductsAsync(System.Guid)">
+            <summary>
+            Gets all items from a storage.
+            </summary>
+            <param name="foodStorageId">Identifier of the storage.</param>
+            <returns></returns>
+        </member>
+        <member name="M:FoodVault.Api.Modules.Storages.FoodStorages.FoodStoragesController.AddProductsToStorageAsync(System.Guid,FoodVault.Api.Modules.Storages.FoodStorages.StoreProductRequest)">
+            <summary>
+            Adds a product to a storage.
+            </summary>
+            <param name="foodStorageId">Identifier of the storage.</param>
+            <param name="request">Identifier of the product.</param>
+            <returns></returns>
+        </member>
+        <member name="M:FoodVault.Api.Modules.Storages.FoodStorages.FoodStoragesController.RemoveProductsFromStorageAsync(System.Guid,System.Guid,System.Int32,System.Nullable{System.DateTime})">
+            <summary>
+            Removes a product from a storage.
+            </summary>
+            <param name="foodStorageId">Identifier of the storage.</param>
+            <param name="productId">Identifier of the product.</param>
+            <param name="quantity">How many products are taken away</param>
+            <param name="expiration">Expiration date of the product.</param>
+            <returns></returns>
+        </member>
+        <member name="M:FoodVault.Api.Modules.Storages.FoodStorages.FoodStoragesController.GetStorageSharesAsync(System.Guid)">
+            <summary>
+            Gets all available storage shares.
+            </summary>
+            <param name="foodStorageId">Identifier of the storage.</param>
+            <returns></returns>
+        </member>
+        <member name="M:FoodVault.Api.Modules.Storages.FoodStorages.FoodStoragesController.ShareStorageAsync(System.Guid,FoodVault.Api.Modules.Storages.FoodStorages.ShareStorageRequest)">
+            <summary>
+            Shares the storage with another user.
+            </summary>
+            <param name="foodStorageId">Identifer of the storage.</param>
+            <param name="request">Share storage data.</param>
+            <returns></returns>
+        </member>
+        <member name="M:FoodVault.Api.Modules.Storages.FoodStorages.FoodStoragesController.UnshareStorageAsync(System.Guid,System.Guid)">
+            <summary>
+            Unshares the storage for an user.
+            </summary>
+            <param name="foodStorageId">Identifier of the storage.</param>
+            <param name="userId">Identifier of the user.</param>
+            <returns></returns>
+        </member>
+        <member name="T:FoodVault.Api.Modules.Storages.FoodStorages.StoreProductRequest">
+            <summary>
+            Request to store a product into a given storage.
+            </summary>
+        </member>
+        <member name="P:FoodVault.Api.Modules.Storages.FoodStorages.StoreProductRequest.ProductId">
+            <summary>
+            Gets or sets the product id.
+            </summary>
+        </member>
+        <member name="P:FoodVault.Api.Modules.Storages.FoodStorages.StoreProductRequest.Quantity">
+            <summary>
+            Gets or sets the product quantity to add.
+            </summary>
+        </member>
+        <member name="P:FoodVault.Api.Modules.Storages.FoodStorages.StoreProductRequest.ExpirationDate">
+            <summary>
+            Gets or sets the expiration date of the product.
+            </summary>
+        </member>
+        <member name="T:FoodVault.Api.Modules.Storages.Products.CreateProductRequest">
+            <summary>
+            Request for creating a product.
+            </summary>
+        </member>
+        <member name="P:FoodVault.Api.Modules.Storages.Products.CreateProductRequest.ProductName">
+            <summary>
+            Gets or sets the products name.
+            </summary>
+        </member>
+        <member name="P:FoodVault.Api.Modules.Storages.Products.CreateProductRequest.Brand">
+            <summary>
+            Gets or sets the brand of the product.
+            </summary>
+        </member>
+        <member name="P:FoodVault.Api.Modules.Storages.Products.CreateProductRequest.Barcode">
+            <summary>
+            Gets or sets the products barcode.
+            </summary>
+        </member>
+        <member name="P:FoodVault.Api.Modules.Storages.Products.CreateProductRequest.ImageId">
+            <summary>
+            Gets or setes the image id.
+            </summary>
+        </member>
+        <member name="T:FoodVault.Api.Modules.Storages.Products.ProductsController">
+            <summary>
+            Interacting with products.
+            </summary>
+        </member>
+        <member name="M:FoodVault.Api.Modules.Storages.Products.ProductsController.#ctor(FoodVault.Modules.Storage.Application.Contracts.IStorageModule)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FoodVault.Api.Modules.Storages.Products.ProductsController" /> class.
+            </summary>
+            <param name="storageModule">Storage module.</param>
+        </member>
+        <member name="M:FoodVault.Api.Modules.Storages.Products.ProductsController.CreateProductAsync(FoodVault.Api.Modules.Storages.Products.CreateProductRequest)">
+            <summary>
+            Creates a product.
+            </summary>
+            <param name="request">Create product data.</param>
+            <returns></returns>
+        </member>
+        <member name="M:FoodVault.Api.Modules.Storages.Products.ProductsController.UploadProductImageAsync(System.Guid,Microsoft.AspNetCore.Http.IFormFile)">
+            <summary>
+            Uploads and connect an image with a product.
+            </summary>
+            <param name="productId">Identifer of the product.</param>
+            <param name="upload">Image upload.</param>
+            <returns></returns>
+        </member>
+        <member name="M:FoodVault.Api.Modules.Storages.Products.ProductsController.DeleteProductImageAsync(System.Guid)">
+            <summary>
+            Deletes an product image.
+            </summary>
+            <param name="productId">Identifier of the product.</param>
+            <returns></returns>
+        </member>
+        <member name="M:FoodVault.Api.Modules.Storages.Products.ProductsController.GetProductImageAsync(System.Guid)">
+            <summary>
+            Gets an product image when available.
+            </summary>
+            <param name="productId">Identifier of the product.</param>
+            <returns></returns>
+        </member>
+        <member name="T:FoodVault.Api.Modules.Storages.StorageAutofacModule">
+            <summary>
+            Autofac registrations for the <see cref="T:FoodVault.Modules.Storage.Infrastructure.StorageModule"/>.
+            </summary>
+        </member>
+        <member name="M:FoodVault.Api.Modules.Storages.StorageAutofacModule.Load(Autofac.ContainerBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:FoodVault.Api.Modules.Storages.StorageModuleUrlBuilder">
+            <summary>
+            Builds URLs for the storage module.
+            </summary>
+        </member>
+        <member name="M:FoodVault.Api.Modules.Storages.StorageModuleUrlBuilder.#ctor(Microsoft.AspNetCore.Http.IHttpContextAccessor,Microsoft.AspNetCore.Routing.LinkGenerator)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FoodVault.Api.Modules.Storages.StorageModuleUrlBuilder" /> class.
+            </summary>
+            <param name="httpContextAccessor">Http context accessor.</param>
+            <param name="linkGenerator">Link generator.</param>
+        </member>
+        <member name="M:FoodVault.Api.Modules.Storages.StorageModuleUrlBuilder.BuildProductImageUrl(System.Guid)">
+            <inheritdoc />
+        </member>
+        <member name="M:FoodVault.Api.Modules.Storages.StorageModuleUrlBuilder.NormalizeControllerName(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:FoodVault.Api.Modules.Storages.StorageModuleUrlBuilder.NormalizeActionName(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="T:FoodVault.Api.Modules.UserAccess.UserAccessAutofacModule">
+            <summary>
+            Autofac registrations for the <see cref="T:FoodVault.Modules.UserAccess.Infrastructure.UserAccessModule"/>.
+            </summary>
+        </member>
+        <member name="T:FoodVault.Api.Modules.UserAccess.UserAccessModuleUrlBuilder">
+            <summary>
+            Builds URLs for the user access module.
+            </summary>
+        </member>
+        <member name="M:FoodVault.Api.Modules.UserAccess.UserAccessModuleUrlBuilder.#ctor(Microsoft.AspNetCore.Http.IHttpContextAccessor,Microsoft.AspNetCore.Routing.LinkGenerator)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FoodVault.Api.Modules.UserAccess.UserAccessModuleUrlBuilder" /> class.
+            </summary>
+            <param name="httpContextAccessor">Http context accessor.</param>
+            <param name="linkGenerator">Link generator.</param>
+        </member>
+        <member name="M:FoodVault.Api.Modules.UserAccess.UserAccessModuleUrlBuilder.BuildConfirmationLink(System.Guid)">
+            <inheritdoc />
+        </member>
+        <member name="T:FoodVault.Api.Modules.UserAccess.UserRegistrations.UserRegistrationsController">
+            <summary>
+            Interacting with user registrations.
+            </summary>
+        </member>
+        <member name="M:FoodVault.Api.Modules.UserAccess.UserRegistrations.UserRegistrationsController.#ctor(FoodVault.Modules.UserAccess.Application.Contracts.IUserAccessModule)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FoodVault.Api.Modules.UserAccess.UserRegistrations.UserRegistrationsController" /> class.
+            </summary>
+            <param name="userAccessModule">User access module.</param>
+        </member>
+        <member name="M:FoodVault.Api.Modules.UserAccess.UserRegistrations.UserRegistrationsController.RegisterUserAsync(FoodVault.Api.Modules.UserAccess.UserRegistrations.RegisterUserRequest)">
+            <summary>
+            Registers a new user.
+            </summary>
+            <param name="request">Register user data.</param>
+            <returns></returns>
+        </member>
+        <member name="M:FoodVault.Api.Modules.UserAccess.UserRegistrations.UserRegistrationsController.ConfirmUserRegistrationAsync(System.Guid)">
+            <summary>
+            Confirms a user registration. (Unlocks user)
+            </summary>
+            <param name="registrationId">Identifier of the user registration.</param>
+            <returns></returns>
+        </member>
+        <member name="T:FoodVault.Api.Startup">
+            <summary>
+            API startup.
+            </summary>
+        </member>
+    </members>
+</doc>

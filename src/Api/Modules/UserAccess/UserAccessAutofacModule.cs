@@ -9,6 +9,7 @@ namespace FoodVault.Api.Modules.UserAccess
     /// </summary>
     internal class UserAccessAutofacModule : Module
     {
+        /// <inheritdoc />
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterType<UserAccessModule>()

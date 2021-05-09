@@ -4,14 +4,18 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerUI;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.IO;
+using System.Reflection;
 
 namespace FoodVault.Api.Configuration.Swagger
 {
     internal static class SwaggerExtensions
     {
+        /// <summary>
+        /// Adds a preconfigured swagger instance to the service collection.
+        /// </summary>
+        /// <param name="self"></param>
+        /// <returns></returns>
         internal static IServiceCollection AddSwagger(this IServiceCollection self)
         {
             self.AddSwaggerGen(config =>
@@ -37,6 +41,7 @@ namespace FoodVault.Api.Configuration.Swagger
                     Scheme = JwtBearerDefaults.AuthenticationScheme,
 
                 });
+
                 config.AddSecurityRequirement(new OpenApiSecurityRequirement
                 {
                     {
@@ -51,11 +56,20 @@ namespace FoodVault.Api.Configuration.Swagger
                         new string[] {}
                     }
                 });
+
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                config.IncludeXmlComments(xmlPath);
             });
 
             return self;
         }
 
+        /// <summary>
+        /// Configures swagger within the request pipeline.
+        /// </summary>
+        /// <param name="self"></param>
+        /// <returns></returns>
         internal static IApplicationBuilder ConfigureSwagger(this IApplicationBuilder self)
         {
             self.UseSwagger();

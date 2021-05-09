@@ -10,17 +10,29 @@ using System.Threading.Tasks;
 
 namespace FoodVault.Api.Modules.UserAccess.UserRegistrations
 {
+    /// <summary>
+    /// Interacting with user registrations.
+    /// </summary>
     [ApiController]
     [Route("api/[controller]")]
     public class UserRegistrationsController
     {
         private readonly IUserAccessModule _userAccessModule;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UserRegistrationsController" /> class.
+        /// </summary>
+        /// <param name="userAccessModule">User access module.</param>
         public UserRegistrationsController(IUserAccessModule userAccessModule)
         {
             _userAccessModule = userAccessModule;
         }
 
+        /// <summary>
+        /// Registers a new user.
+        /// </summary>
+        /// <param name="request">Register user data.</param>
+        /// <returns></returns>
         [HttpPost]
         [AllowAnonymous]
         public async Task<IActionResult> RegisterUserAsync([FromBody] RegisterUserRequest request)
@@ -36,6 +48,11 @@ namespace FoodVault.Api.Modules.UserAccess.UserRegistrations
             return result.ToActionResult();
         }
 
+        /// <summary>
+        /// Confirms a user registration. (Unlocks user)
+        /// </summary>
+        /// <param name="registrationId">Identifier of the user registration.</param>
+        /// <returns></returns>
         [HttpPatch("{registrationId}/confirm")]
         [AllowAnonymous]
         public async Task<IActionResult> ConfirmUserRegistrationAsync([FromRoute] Guid registrationId)

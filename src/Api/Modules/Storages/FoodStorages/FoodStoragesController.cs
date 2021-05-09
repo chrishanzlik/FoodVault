@@ -17,17 +17,29 @@ using FoodVault.Modules.Storage.Application.FoodStorages.GetStorageShares;
 
 namespace FoodVault.Api.Modules.Storages.FoodStorages
 {
+    /// <summary>
+    /// Interacting with storages.
+    /// </summary>
     [ApiController]
     [Route("api/[controller]")]
     public class FoodStoragesController : Controller
     {
         private readonly IStorageModule _storageModule;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FoodStoragesController" /> class.
+        /// </summary>
+        /// <param name="storageModule">Storage module.</param>
         public FoodStoragesController(IStorageModule storageModule)
         {
             _storageModule = storageModule;
         }
         
+        /// <summary>
+        /// Gets an overview of all available storages.
+        /// </summary>
+        /// <param name="name">Filter by name</param>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> GetStorageOverviewAsync([FromQuery] string name = null)
         {
@@ -38,6 +50,11 @@ namespace FoodVault.Api.Modules.Storages.FoodStorages
             return Ok(result);
         }
 
+        /// <summary>
+        /// Creates a new storage.
+        /// </summary>
+        /// <param name="request">Request data.</param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> CreateStorageAsync(CreateStorageRequest request)
         {
@@ -48,6 +65,11 @@ namespace FoodVault.Api.Modules.Storages.FoodStorages
             return result.ToActionResult();
         }
 
+        /// <summary>
+        /// Deletes a storage.
+        /// </summary>
+        /// <param name="foodStorageId">Identifier of the storage.</param>
+        /// <returns></returns>
         [HttpDelete("{foodStorageId}")]
         public async Task<IActionResult> DeleteStorageAsync([FromRoute] Guid foodStorageId)
         {
@@ -58,6 +80,12 @@ namespace FoodVault.Api.Modules.Storages.FoodStorages
             return result.ToActionResult();
         }
 
+        /// <summary>
+        /// Set storage name and description
+        /// </summary>
+        /// <param name="foodStorageId"></param>
+        /// <param name="request"></param>
+        /// <returns></returns>
         [HttpPatch("{foodStorageId}")]
         public async Task<IActionResult> ChangeStorageProfileAsync([FromRoute] Guid foodStorageId, [FromBody] ChangeStorageRequest request)
         {
@@ -70,6 +98,11 @@ namespace FoodVault.Api.Modules.Storages.FoodStorages
 
         #region StorageProducts
 
+        /// <summary>
+        /// Gets all items from a storage.
+        /// </summary>
+        /// <param name="foodStorageId">Identifier of the storage.</param>
+        /// <returns></returns>
         [HttpGet("{foodStorageId}/products")]
         public async Task<IActionResult> GetStoredProductsAsync([FromRoute] Guid foodStorageId)
         {
@@ -80,6 +113,12 @@ namespace FoodVault.Api.Modules.Storages.FoodStorages
             return Ok(result);
         }
 
+        /// <summary>
+        /// Adds a product to a storage.
+        /// </summary>
+        /// <param name="foodStorageId">Identifier of the storage.</param>
+        /// <param name="request">Identifier of the product.</param>
+        /// <returns></returns>
         [HttpPost("{foodStorageId}/products")]
         public async Task<IActionResult> AddProductsToStorageAsync(
             [FromRoute] Guid foodStorageId,
@@ -98,6 +137,14 @@ namespace FoodVault.Api.Modules.Storages.FoodStorages
             return result.ToActionResult();
         }
 
+        /// <summary>
+        /// Removes a product from a storage.
+        /// </summary>
+        /// <param name="foodStorageId">Identifier of the storage.</param>
+        /// <param name="productId">Identifier of the product.</param>
+        /// <param name="quantity">How many products are taken away</param>
+        /// <param name="expiration">Expiration date of the product.</param>
+        /// <returns></returns>
         [HttpDelete("{foodStorageId}/products/{productId}")]
         public async Task<IActionResult> RemoveProductsFromStorageAsync(
             [FromRoute] Guid foodStorageId,
@@ -116,6 +163,11 @@ namespace FoodVault.Api.Modules.Storages.FoodStorages
 
         #region Shares
 
+        /// <summary>
+        /// Gets all available storage shares.
+        /// </summary>
+        /// <param name="foodStorageId">Identifier of the storage.</param>
+        /// <returns></returns>
         [HttpGet("{foodStorageId}/Shares")]
         public async Task<IActionResult> GetStorageSharesAsync([FromRoute] Guid foodStorageId)
         {
@@ -126,6 +178,12 @@ namespace FoodVault.Api.Modules.Storages.FoodStorages
             return Ok(result);
         }
 
+        /// <summary>
+        /// Shares the storage with another user.
+        /// </summary>
+        /// <param name="foodStorageId">Identifer of the storage.</param>
+        /// <param name="request">Share storage data.</param>
+        /// <returns></returns>
         [HttpPost("{foodStorageId}/Shares")]
         public async Task<IActionResult> ShareStorageAsync([FromRoute] Guid foodStorageId, [FromBody] ShareStorageRequest request)
         {
@@ -136,6 +194,12 @@ namespace FoodVault.Api.Modules.Storages.FoodStorages
             return result.ToActionResult();
         }
 
+        /// <summary>
+        /// Unshares the storage for an user.
+        /// </summary>
+        /// <param name="foodStorageId">Identifier of the storage.</param>
+        /// <param name="userId">Identifier of the user.</param>
+        /// <returns></returns>
         [HttpDelete("{foodStorageId}/Shares/{userId}")]
         public async Task<IActionResult> UnshareStorageAsync([FromRoute] Guid foodStorageId, [FromRoute] Guid userId)
         {
