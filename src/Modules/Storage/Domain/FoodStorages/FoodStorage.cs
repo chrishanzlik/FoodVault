@@ -17,9 +17,11 @@ namespace FoodVault.Modules.Storage.Domain.FoodStorages
         private readonly List<StoredProduct> _storedProducts = new List<StoredProduct>();
         private readonly List<StorageShare> _storageShares = new List<StorageShare>();
 
+#pragma warning disable IDE0052 // Used by Entity Framework Core
         private bool _isDeleted;
+#pragma warning restore IDE0052 // Used by Entity Framework Core
 
-        private UserId _ownerId;
+        private readonly UserId _ownerId;
 
         /// <summary>
         /// Required by Entity Framework.
