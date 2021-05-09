@@ -25,6 +25,6 @@ namespace FoodVault.Modules.Storage.Domain.FoodStorages.Rules
         public string Message => $"The product has not enaugh quantity ({_quantityToRemove}) to remove {_quantityToRemove} items.";
 
         /// <inheritdoc />
-        public bool Validate() => _actualQuantity >= _quantityToRemove;
+        public bool Pass() => _actualQuantity >= _quantityToRemove;
     }
 }

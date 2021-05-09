@@ -42,7 +42,7 @@ namespace FoodVault.Modules.Storage.Infrastructure.Configuration.Processing
 
             if (errors.Any())
             {
-                return Task.FromResult<ICommandResult>(CommandResult.BadParameters(errors));
+                return Task.FromResult(CommandResult.BadParameters(errors));
             }
 
             return _decorated.Handle(command, cancellationToken);

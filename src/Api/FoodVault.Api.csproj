@@ -5,22 +5,31 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="tempkey.jwk" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Autofac" Version="6.1.0" />
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="7.1.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.2" NoWarn="NU1605" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="5.0.2" NoWarn="NU1605" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="4.2.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.2">
+    <PackageReference Include="IdentityServer4" Version="4.1.1" />
+    <PackageReference Include="IdentityServer4.AccessTokenValidation" Version="3.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.3" NoWarn="NU1605" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="5.0.3" NoWarn="NU1605" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="5.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.3">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.0.7" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Modules\Storage\Application\FoodVault.Modules.Storage.Application.csproj" />
     <ProjectReference Include="..\Modules\Storage\Domain\FoodVault.Modules.Storage.Domain.csproj" />
     <ProjectReference Include="..\Modules\Storage\Infrastructure\FoodVault.Modules.Storage.Infrastructure.csproj" />
+    <ProjectReference Include="..\Modules\UserAccess\Application\FoodVault.Modules.UserAccess.Application.csproj" />
+    <ProjectReference Include="..\Modules\UserAccess\Domain\FoodVault.Modules.UserAccess.Domain.csproj" />
+    <ProjectReference Include="..\Modules\UserAccess\Infrastructure\FoodVault.Modules.UserAccess.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

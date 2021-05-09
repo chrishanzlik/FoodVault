@@ -82,7 +82,7 @@ namespace FoodVault.Framework.Domain
         /// <param name="rule">Rule to check.</param>
         protected static void CheckRule(IDomainRule rule)
         {
-            if (!rule.Validate())
+            if (!rule.Pass())
             {
                 throw new DomainRuleValidationException(rule);
             }

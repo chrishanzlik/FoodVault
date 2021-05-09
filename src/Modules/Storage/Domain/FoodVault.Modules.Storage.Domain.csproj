@@ -5,10 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="5.0.2" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Folder Include="Products\Rules\" />
   </ItemGroup>
 

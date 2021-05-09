@@ -1,9 +1,8 @@
-﻿using FoodVault.Framework.Infrastructure;
-using MediatR;
+﻿using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace FoodVault.Modules.Storage.Infrastructure.Work.Decorators
+namespace FoodVault.Framework.Infrastructure.Work.Decorators
 {
     /// <summary>
     /// Notification handler decorator for dispatching domain events.

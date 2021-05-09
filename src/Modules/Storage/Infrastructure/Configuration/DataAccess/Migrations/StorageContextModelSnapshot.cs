@@ -102,6 +102,9 @@ namespace FoodVault.Modules.Storage.Infrastructure.Configuration.DataAccess.Migr
                     b.Property<DateTime?>("EnqueueDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Error")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Payload")
                         .HasColumnType("nvarchar(max)");
 
@@ -127,6 +130,10 @@ namespace FoodVault.Modules.Storage.Infrastructure.Configuration.DataAccess.Migr
                     b.Property<bool>("_isDeleted")
                         .HasColumnType("bit")
                         .HasColumnName("IsDeleted");
+
+                    b.Property<Guid?>("_ownerId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("OwnerId");
 
                     b.HasKey("Id");
 
@@ -157,6 +164,35 @@ namespace FoodVault.Modules.Storage.Infrastructure.Configuration.DataAccess.Migr
 
             modelBuilder.Entity("FoodVault.Modules.Storage.Domain.FoodStorages.FoodStorage", b =>
                 {
+                    b.OwnsMany("FoodVault.Modules.Storage.Domain.FoodStorages.StorageShare", "StorageShares", b1 =>
+                        {
+                            b1.Property<Guid>("Id")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<Guid>("FoodStorageId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<DateTime>("SharedAt")
+                                .HasColumnType("datetime2");
+
+                            b1.Property<Guid?>("UserId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<bool>("_canWrite")
+                                .HasColumnType("bit")
+                                .HasColumnName("CanWrite");
+
+                            b1.HasKey("Id");
+
+                            b1.HasIndex("FoodStorageId");
+
+                            b1.ToTable("StorageShares", "storage");
+
+                            b1.WithOwner()
+                                .HasForeignKey("FoodStorageId");
+                        });
+
                     b.OwnsMany("FoodVault.Modules.Storage.Domain.FoodStorages.StoredProduct", "StoredProducts", b1 =>
                         {
                             b1.Property<Guid>("Id")
@@ -184,6 +220,8 @@ namespace FoodVault.Modules.Storage.Infrastructure.Configuration.DataAccess.Migr
                             b1.WithOwner()
                                 .HasForeignKey("FoodStorageId");
                         });
+
+                    b.Navigation("StorageShares");
 
                     b.Navigation("StoredProducts");
                 });

@@ -25,9 +25,8 @@ namespace FoodVault.Modules.Storage.Infrastructure.Configuration.Quartz
         {
             logger.LogInformation("Quartz starting...");
 
-            //TODO: ?
             var schedulerConfiguration = new NameValueCollection();
-            schedulerConfiguration.Add("quartz.scheduler.instanceName", "Meetings");
+            schedulerConfiguration.Add("quartz.scheduler.instanceName", "Storage");
 
             ISchedulerFactory schedulerFactory = new StdSchedulerFactory(schedulerConfiguration);
             _scheduler = schedulerFactory.GetScheduler().GetAwaiter().GetResult();

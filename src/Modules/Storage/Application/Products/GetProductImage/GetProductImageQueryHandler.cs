@@ -51,7 +51,7 @@ namespace FoodVault.Modules.Storage.Application.Products.GetProductImage
                 return null;
             }
 
-            string sanitizedName = _fileNameSanitizer.Sanitize(queryResult.Name);
+            string sanitizedName = _fileNameSanitizer.Sanitize(queryResult.Name, string.Empty);
 
             return await _fileStorage.GetFileAsync(queryResult.ImageId, sanitizedName);
         }

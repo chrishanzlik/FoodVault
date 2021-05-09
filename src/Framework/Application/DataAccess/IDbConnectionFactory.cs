@@ -15,7 +15,7 @@ namespace FoodVault.Framework.Application.DataAccess
         IDbConnection GetOpen();
 
         /// <summary>
-        /// Retuns a new created open <see cref="IDbConnection"/> when invoked.
+        /// Retuns a new created and open <see cref="IDbConnection"/> when invoked.
         /// </summary>
         /// <returns><see cref="IDbConnection"/> object.</returns>
         IDbConnection CreateNew();

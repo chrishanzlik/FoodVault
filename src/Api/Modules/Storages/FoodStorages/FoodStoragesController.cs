@@ -1,7 +1,7 @@
 ﻿using FoodVault.Api.Common;
 using FoodVault.Modules.Storage.Application.FoodStorages.CreateStorage;
 using FoodVault.Modules.Storage.Application.FoodStorages.DeleteStorage;
-using FoodVault.Modules.Storage.Application.FoodStorages.GetStorageOverview;
+using FoodVault.Modules.Storage.Application.FoodStorages.GetStoragesForUser;
 using FoodVault.Modules.Storage.Application.FoodStorages.RemoveProduct;
 using FoodVault.Modules.Storage.Application.FoodStorages.StoreProduct;
 using FoodVault.Framework.Application.Commands;
@@ -9,6 +9,11 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
 using FoodVault.Modules.Storage.Application.Contracts;
+using FoodVault.Modules.Storage.Application.FoodStorages.GetStorageContent;
+using FoodVault.Modules.Storage.Application.FoodStorages.ChangeStorageProfile;
+using FoodVault.Modules.Storage.Application.FoodStorages.ShareStorage;
+using FoodVault.Modules.Storage.Application.FoodStorages.UnshareStorage;
+using FoodVault.Modules.Storage.Application.FoodStorages.GetStorageShares;
 
 namespace FoodVault.Api.Modules.Storages.FoodStorages
 {
@@ -24,13 +29,13 @@ namespace FoodVault.Api.Modules.Storages.FoodStorages
         }
         
         [HttpGet]
-        public async Task<IActionResult> GetStorageOverviewAsync()
+        public async Task<IActionResult> GetStorageOverviewAsync([FromQuery] string name = null)
         {
-            var query = new GetStorageOverviewQuery();
+            var query = new GetStoragesForUserQuery(nameFilter: name?.Trim());
 
             var result = await _storageModule.ExecuteQueryAsync(query);
 
-            return Json(result);
+            return Ok(result);
         }
 
         [HttpPost]
@@ -44,7 +49,7 @@ namespace FoodVault.Api.Modules.Storages.FoodStorages
         }
 
         [HttpDelete("{foodStorageId}")]
-        public async Task<IActionResult> DeleteStorageAsync(Guid foodStorageId)
+        public async Task<IActionResult> DeleteStorageAsync([FromRoute] Guid foodStorageId)
         {
             var command = new DeleteStorageCommand(foodStorageId);
 
@@ -53,7 +58,27 @@ namespace FoodVault.Api.Modules.Storages.FoodStorages
             return result.ToActionResult();
         }
 
+        [HttpPatch("{foodStorageId}")]
+        public async Task<IActionResult> ChangeStorageProfileAsync([FromRoute] Guid foodStorageId, [FromBody] ChangeStorageRequest request)
+        {
+            var command = new ChangeStorageProfileCommand(foodStorageId, request.StorageName, request.Description);
+
+            ICommandResult result = await _storageModule.ExecuteCommandAsync(command);
+
+            return result.ToActionResult();
+        }
+
         #region StorageProducts
+
+        [HttpGet("{foodStorageId}/products")]
+        public async Task<IActionResult> GetStoredProductsAsync([FromRoute] Guid foodStorageId)
+        {
+            var query = new GetStorageContentQuery(foodStorageId);
+
+            var result = await _storageModule.ExecuteQueryAsync(query);
+
+            return Ok(result);
+        }
 
         [HttpPost("{foodStorageId}/products")]
         public async Task<IActionResult> AddProductsToStorageAsync(
@@ -81,6 +106,40 @@ namespace FoodVault.Api.Modules.Storages.FoodStorages
             [FromQuery] DateTime? expiration = null)
         {
             var command = new RemoveProductCommand(foodStorageId, productId, quantity, expiration);
+
+            ICommandResult result = await _storageModule.ExecuteCommandAsync(command);
+
+            return result.ToActionResult();
+        }
+
+        #endregion
+
+        #region Shares
+
+        [HttpGet("{foodStorageId}/Shares")]
+        public async Task<IActionResult> GetStorageSharesAsync([FromRoute] Guid foodStorageId)
+        {
+            var query = new GetStorageSharesQuery(foodStorageId);
+
+            var result = await _storageModule.ExecuteQueryAsync(query);
+
+            return Ok(result);
+        }
+
+        [HttpPost("{foodStorageId}/Shares")]
+        public async Task<IActionResult> ShareStorageAsync([FromRoute] Guid foodStorageId, [FromBody] ShareStorageRequest request)
+        {
+            var command = new ShareStorageCommand(foodStorageId, request.UserId, request.WriteAccess);
+
+            ICommandResult result = await _storageModule.ExecuteCommandAsync(command);
+
+            return result.ToActionResult();
+        }
+
+        [HttpDelete("{foodStorageId}/Shares/{userId}")]
+        public async Task<IActionResult> UnshareStorageAsync([FromRoute] Guid foodStorageId, [FromRoute] Guid userId)
+        {
+            var command = new UnshareStorageCommand(foodStorageId, userId);
 
             ICommandResult result = await _storageModule.ExecuteCommandAsync(command);
 

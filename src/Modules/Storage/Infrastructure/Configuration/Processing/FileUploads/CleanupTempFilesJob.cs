@@ -1,5 +1,4 @@
-﻿using FoodVault.Modules.Storage.Infrastructure.Work;
-using Quartz;
+﻿using Quartz;
 using System.Threading.Tasks;
 
 namespace FoodVault.Modules.Storage.Infrastructure.Configuration.Processing.FileUploads

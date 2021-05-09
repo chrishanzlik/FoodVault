@@ -3,6 +3,7 @@ using FoodVault.Modules.Storage.Domain.Products.Events;
 using FoodVault.Framework.Application.Events;
 using FoodVault.Framework.Domain;
 using Newtonsoft.Json;
+using System;
 
 namespace FoodVault.Modules.Storage.Application.Products.RemoveProductImage
 {
@@ -15,7 +16,8 @@ namespace FoodVault.Modules.Storage.Application.Products.RemoveProductImage
         /// Initializes a new instance of the <see cref="ProductImageRemovedNotification" /> class.
         /// </summary>
         /// <param name="domainEvent">Occured domain event.</param>
-        public ProductImageRemovedNotification(ProductImageRemovedEvent domainEvent) : base(domainEvent)
+        /// <param name="id">Notifications id.</param>
+        public ProductImageRemovedNotification(ProductImageRemovedEvent domainEvent, Guid id) : base(domainEvent, id)
         {
             ProductId = domainEvent.ProductId;
             ImageId = domainEvent.ImageId;
@@ -26,8 +28,9 @@ namespace FoodVault.Modules.Storage.Application.Products.RemoveProductImage
         /// </summary>
         /// <param name="productId">Product id.</param>
         /// <param name="imageId">Image id.</param>
+        /// <param name="id">Notifications id.</param>
         [JsonConstructor]
-        public ProductImageRemovedNotification(ProductId productId, FileUploadId imageId) : base(null)
+        public ProductImageRemovedNotification(ProductId productId, FileUploadId imageId, Guid id) : base(null, id)
         {
             ProductId = productId;
             ImageId = imageId;

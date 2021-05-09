@@ -25,6 +25,6 @@ namespace FoodVault.Modules.Storage.Domain.FoodStorages.Rules
         public string Message => $"Cannot remove {_remove} items. There are only {_actualQuantity} items left.";
 
         /// <inheritdoc />
-        public bool Validate() => _actualQuantity >= _remove;
+        public bool Pass() => _actualQuantity >= _remove;
     }
 }

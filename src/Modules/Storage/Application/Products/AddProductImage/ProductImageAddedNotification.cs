@@ -3,6 +3,7 @@ using FoodVault.Modules.Storage.Domain.Products.Events;
 using FoodVault.Framework.Application.Events;
 using FoodVault.Framework.Domain;
 using Newtonsoft.Json;
+using System;
 
 namespace FoodVault.Modules.Storage.Application.Products.AddProductImage
 {
@@ -15,7 +16,8 @@ namespace FoodVault.Modules.Storage.Application.Products.AddProductImage
         /// Initializes a new instance of the <see cref="ProductImageAddedNotification" /> class.
         /// </summary>
         /// <param name="domainEvent">Occured domain event.</param>
-        public ProductImageAddedNotification(ProductImageAddedEvent domainEvent) : base(domainEvent)
+        /// <param name="id">Notifications id.</param>
+        public ProductImageAddedNotification(ProductImageAddedEvent domainEvent, Guid id) : base(domainEvent, id)
         {
             ProductId = domainEvent.ProductId;
             ImageId = domainEvent.ImageId;
@@ -26,8 +28,9 @@ namespace FoodVault.Modules.Storage.Application.Products.AddProductImage
         /// </summary>
         /// <param name="productId">Product id.</param>
         /// <param name="imageId">Image id.</param>
+        /// <param name="id">Notifications id.</param>
         [JsonConstructor]
-        public ProductImageAddedNotification(ProductId productId, FileUploadId imageId) : base(null)
+        public ProductImageAddedNotification(ProductId productId, FileUploadId imageId, Guid id) : base(null, id)
         {
             ProductId = productId;
             ImageId = imageId;

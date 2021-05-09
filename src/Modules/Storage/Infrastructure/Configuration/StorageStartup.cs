@@ -4,6 +4,7 @@ using FoodVault.Framework.Application;
 using FoodVault.Framework.Application.FileUploads;
 using FoodVault.Framework.Infrastructure.DataAccess;
 using FoodVault.Framework.Infrastructure.EventBus;
+using FoodVault.Modules.Storage.Application.Contracts;
 using FoodVault.Modules.Storage.Application.FoodStorages.CreateStorage;
 using FoodVault.Modules.Storage.Application.Products.AddProductImage;
 using FoodVault.Modules.Storage.Application.Products.RemoveProductImage;
@@ -28,10 +29,11 @@ namespace FoodVault.Modules.Storage.Infrastructure.Configuration
         private static IContainer _container;
         private static ILogger _logger;
 
-        public static void Initialize(
+        internal static void Initialize(
             string connectionString,
             IExecutionContextAccessor executionContextAccessor,
             IFileUploadSettings fileUploadSettings,
+            IStorageModuleUrlBuilder urlBuilder,
             ILogger logger,
             IEventBus eventsBus)
         {
@@ -41,6 +43,7 @@ namespace FoodVault.Modules.Storage.Infrastructure.Configuration
                 connectionString,
                 executionContextAccessor,
                 fileUploadSettings,
+                urlBuilder,
                 logger,
                 eventsBus);
 
@@ -50,7 +53,7 @@ namespace FoodVault.Modules.Storage.Infrastructure.Configuration
             EventBusStartup.Initialize(logger);
         }
 
-        public static void Stop()
+        internal static void Stop()
         {
             QuartzStartup.StopQuartz();
         }
@@ -59,13 +62,14 @@ namespace FoodVault.Modules.Storage.Infrastructure.Configuration
         {
             AddDapperTypeHandlers();
 
-            ConfigureCompositionRoot(connectionString, null, null, logger, null, true);
+            ConfigureCompositionRoot(connectionString, null, null, null, logger, null, true);
         }
 
         private static void ConfigureCompositionRoot(
             string connectionString,
             IExecutionContextAccessor executionContextAccessor,
             IFileUploadSettings fileUploadSettings,
+            IStorageModuleUrlBuilder urlBuilder,
             ILogger logger,
             IEventBus eventBus,
             bool isDesignTime = false)
@@ -95,6 +99,7 @@ namespace FoodVault.Modules.Storage.Infrastructure.Configuration
             {
                 containerBuilder.RegisterInstance(executionContextAccessor);
                 containerBuilder.RegisterInstance(fileUploadSettings);
+                containerBuilder.RegisterInstance(urlBuilder);
 
                 _container = containerBuilder.Build();
                 StorageCompositionRoot.SetContainer(_container);

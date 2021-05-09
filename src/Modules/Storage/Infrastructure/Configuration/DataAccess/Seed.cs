@@ -1,5 +1,6 @@
 ﻿using FoodVault.Modules.Storage.Domain.FoodStorages;
 using FoodVault.Modules.Storage.Domain.Products;
+using FoodVault.Modules.Storage.Domain.Users;
 using System;
 using System.Linq;
 
@@ -17,6 +18,12 @@ namespace FoodVault.Modules.Storage.Infrastructure.Configuration.DataAccess
         public static void Apply(StorageContext context)
         {
 #if DEBUG
+            // Stop reseed every startup...
+            if (context.FoodStorages.Any())
+            {
+                return;
+            }
+
             SeedStorages(context);
             SeedProducts(context);
             FillStorages(context);
@@ -29,7 +36,7 @@ namespace FoodVault.Modules.Storage.Infrastructure.Configuration.DataAccess
             {
                 var storageSeed = new[]
                 {
-                    new FoodStorage("Test-Storage", "Initial test storage.")
+                    FoodStorage.CreateForUser(new UserId(Guid.Empty), "Test-Storage", "Initial test storage.", new FakeStorageNameUniquessChecker())
                 };
                 context.FoodStorages.AddRange(storageSeed);
                 context.SaveChanges();
@@ -61,10 +68,11 @@ namespace FoodVault.Modules.Storage.Infrastructure.Configuration.DataAccess
             var rnd = new Random();
             var storages = context.FoodStorages.ToList();
             var products = context.Products.ToList();
-            var checker = new FakeProductExistsChecker();
 
             foreach(var storage in storages)
             {
+                if (storage.StoredProducts.Any()) continue;
+
                 var prodCount = rnd.Next(products.Count / 2, products.Count);
                 var productsToAdd = products
                     .OrderBy(x => rnd.Next())
@@ -73,16 +81,16 @@ namespace FoodVault.Modules.Storage.Infrastructure.Configuration.DataAccess
 
                 foreach(var prod in productsToAdd)
                 {
-                    storage.StoreProduct(prod.Id, rnd.Next(1, 13), null, checker);
+                    storage.StoreProduct(prod.Id, rnd.Next(1, 13), null);
                 }
             }
 
             context.SaveChanges();
         }
 
-        private class FakeProductExistsChecker : IProductExistsChecker
+        private class FakeStorageNameUniquessChecker : IStorageNameUniquessChecker
         {
-            public bool ProductExists(ProductId id) => true;
+            public bool IsNameUniqueForUser(string storageName, Guid userId) => true;
         }
     }
 }

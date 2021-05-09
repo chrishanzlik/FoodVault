@@ -1,4 +1,6 @@
 ﻿using FoodVault.Framework.Application.Commands;
+using FoodVault.Framework.Application.Commands.Results;
+using FoodVault.Modules.UserAccess.Application.Authentication.Authenticate;
 using Microsoft.AspNetCore.Mvc;
 using System;
 
@@ -7,7 +9,7 @@ namespace FoodVault.Api.Common
     /// <summary>
     /// Extensions for <see cref="ICommandResult"/>.
     /// </summary>
-    public static class ICommandResultExtensions
+    internal static class ICommandResultExtensions
     {
         /// <summary>
         /// Converts a <see cref="ICommandResult"/> into a <see cref="IActionResult"/>.
@@ -16,18 +18,18 @@ namespace FoodVault.Api.Common
         /// <returns>IActionResult</returns>
         public static IActionResult ToActionResult(this ICommandResult self)
         {
-            switch (self.State)
+            switch (self)
             {
-                case CommandResultState.Processed:
+                case OkCommandResult:
                     return new OkResult();
-                case CommandResultState.Created:
-                    return new OkObjectResult(new { Id = self.EntityId });
-                case CommandResultState.Error:
+                case EntityCreatedCommandResult entityCreatedCommandResult:
+                    return new OkObjectResult(new { Id = entityCreatedCommandResult.EntityId });
+                case ErrorCommandResult:
                     return new ObjectResult(self.Errors) { StatusCode = 500 };
-                case CommandResultState.BadParameters:
+                case InvalidParametersCommandResult:
                     return new BadRequestObjectResult(self.Errors);
                 default:
-                    throw new InvalidOperationException($"Cannot convert CommandResult state '{self.State}' into ActionResult.");
+                    throw new InvalidOperationException($"Not supported CommandResult.");
             }
         }
     }

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using FoodVault.Framework.Domain;
 using FoodVault.Modules.Storage.Domain.Products;
+using FoodVault.Modules.Storage.Domain.Users;
 
 namespace FoodVault.Modules.Storage.Domain.FoodStorages
 {
@@ -14,8 +15,11 @@ namespace FoodVault.Modules.Storage.Domain.FoodStorages
     public class FoodStorage : Entity, IAggregateRoot
     {
         private readonly List<StoredProduct> _storedProducts = new List<StoredProduct>();
+        private readonly List<StorageShare> _storageShares = new List<StorageShare>();
 
         private bool _isDeleted;
+
+        private UserId _ownerId;
 
         /// <summary>
         /// Required by Entity Framework.
@@ -29,12 +33,16 @@ namespace FoodVault.Modules.Storage.Domain.FoodStorages
         /// </summary>
         /// <param name="storageName">Storage name.</param>
         /// <param name="description">Storage description.</param>
-        public FoodStorage(string storageName, string description)
+        /// <param name="nameUniquessChecker">Checks that the choosen name is unique.</param>
+        internal FoodStorage(UserId userId, string storageName, string description, IStorageNameUniquessChecker nameUniquessChecker)
         {
+            this.CheckDomainRule(new StorageNameMustBeUniqueRule(storageName, userId, nameUniquessChecker));
+
             Id = new FoodStorageId(Guid.NewGuid());
             Name = storageName;
             Description = description;
 
+            _ownerId = userId;
             _isDeleted = false;
 
             this.AddDomainEvent(new FoodStorageCreatedEvent(Id));
@@ -60,6 +68,22 @@ namespace FoodVault.Modules.Storage.Domain.FoodStorages
         /// </summary>
         public IReadOnlyCollection<StoredProduct> StoredProducts => _storedProducts.AsReadOnly();
 
+        /// <summary>
+        /// Gets a list of all active storage shares.
+        /// </summary>
+        public IReadOnlyCollection<StorageShare> StorageShares => _storageShares.AsReadOnly();
+
+        /// <summary>
+        /// Creates a new <see cref="FoodStorage"/>.
+        /// </summary>
+        /// <param name="storageName">Name of the food storage.</param>
+        /// <param name="description">Optional description of the food storage.</param>
+        /// <param name="nameUniquessChecker">Domain service that checks that the choosen name is unique.</param>
+        /// <returns>Created FoodStorage.</returns>
+        public static FoodStorage CreateForUser(UserId userId, string storageName, string description, IStorageNameUniquessChecker nameUniquessChecker)
+        {
+            return new FoodStorage(userId, storageName, description, nameUniquessChecker);
+        }
 
         /// <summary>
         /// Removes a product from the storage.
@@ -96,11 +120,9 @@ namespace FoodVault.Modules.Storage.Domain.FoodStorages
         /// <param name="productId">Products identifier.</param>
         /// <param name="quantity">Quantity of items to add.</param>
         /// <param name="expirationDate">Products expiration date.</param>
-        /// <param name="productExistsChecker">Domain service that checks if a product exists.</param>
-        public void StoreProduct(ProductId productId, int quantity, DateTime? expirationDate, IProductExistsChecker productExistsChecker)
+        public void StoreProduct(ProductId productId, int quantity, DateTime? expirationDate)
         {
             this.CheckDomainRule(new ProductOperationHasValidQuantityRule(quantity));
-            this.CheckDomainRule(new ProductExistsRule(productId, productExistsChecker));
 
             var storedProduct = StoredProducts.SingleOrDefault(x => x.ProductId == productId && x.ExpirationDate == expirationDate);
 
@@ -119,12 +141,15 @@ namespace FoodVault.Modules.Storage.Domain.FoodStorages
         /// <summary>
         /// Renames the storage and sets the description.
         /// </summary>
-        public void Rename(string name, string description)
+        public void Rename(string storageName, string storageDescription, IStorageNameUniquessChecker nameUniquessChecker)
         {
-            this.CheckDomainRule(new StorageNameMustBeMinFourCharactersLongRule(name));
-
-            this.Name = name;
-            this.Description = description;
+            if (!storageName.Equals(this.Name, StringComparison.OrdinalIgnoreCase))
+            {
+                this.CheckDomainRule(new StorageNameMustBeUniqueRule(storageName, _ownerId, nameUniquessChecker));
+            }
+            
+            this.Name = storageName;
+            this.Description = storageDescription;
         }
 
         /// <summary>
@@ -135,6 +160,42 @@ namespace FoodVault.Modules.Storage.Domain.FoodStorages
             this._isDeleted = true;
 
             this.AddDomainEvent(new FoodStorageDeletedEvent(this.Id));
+        }
+
+        /// <summary>
+        /// Shares the storage with another user.
+        /// </summary>
+        /// <param name="userId">User id to share with.</param>
+        /// <param name="hasWritePermission">If the user can add or remove storage items.</param>
+        /// <param name="userSharesFinder">Domain services that checks if the storage is already shared to the given user id.</param>
+        /// <param name="userContext">Informations about the executing user.</param>
+        public void ShareToUser(UserId userId, bool hasWritePermission, IEnumerable<UserId> sharedStorageUsers, IUserContext userContext)
+        {
+            this.CheckDomainRule(new StorageCannotBeSharedToTheOwnerRule(_ownerId, userId));
+            this.CheckDomainRule(new OnlyStorageOwnerCanAddOrRemoveSharesRule(_ownerId, userContext));
+            this.CheckDomainRule(new StorageIsNotAlreadySharedToUserRule(userId, sharedStorageUsers));
+
+            _storageShares.Add(StorageShare.CreateForUser(Id, userId, hasWritePermission));
+
+            this.AddDomainEvent(new StorageShareCreatedEvent(userId, Id, hasWritePermission));
+        }
+
+        /// <summary>
+        /// Remove a storage share for a user.
+        /// </summary>
+        /// <param name="userId">Users id.</param>
+        /// <param name="userContext">Informations about the executing user.</param>
+        public void Unshare(UserId userId, IUserContext userContext)
+        {
+            this.CheckDomainRule(new OnlyStorageOwnerCanAddOrRemoveSharesRule(_ownerId, userContext));
+
+            var toRemove = this.StorageShares.FirstOrDefault(x => x.UserId == userId);
+            if (toRemove != null)
+            {
+                _storageShares.Remove(toRemove);
+
+                this.AddDomainEvent(new StorageShareRemovedEvent(userId, Id));
+            }
         }
     }
 }
