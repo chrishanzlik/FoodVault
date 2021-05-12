@@ -21,16 +21,27 @@ namespace FoodVault.Api.IdentityServer
             {
                 new ApiResource("foodvault.api", "FoodVault API")
                 {
-                    Scopes = new []{ "foodvault.api" }
+                    Scopes = {
+                        "foodvault.api.read",
+                        "foodvault.api.write"
+                    },
+                    UserClaims = {
+                        CustomClaimTypes.Roles
+                    }
                 }
             };
         }
 
+        /// <summary>
+        /// Gets all available ApiScopes.
+        /// </summary>
+        /// <returns>An enumerable of ApiScopes.</returns>
         public static IEnumerable<ApiScope> GetApiScopes()
         {
             return new List<ApiScope>
             {
-                new ApiScope("foodvault.api")
+                new ApiScope("foodvault.api.read"),
+                new ApiScope("foodvault.api.write")
             };
         }
 
@@ -63,13 +74,12 @@ namespace FoodVault.Api.IdentityServer
                 {
                     ClientId = "ro.client",
                     AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
-
                     ClientSecrets = {
                         new Secret("dummy".Sha256())
                     },
-                    
                     AllowedScopes = {
-                        "foodvault.api",
+                        "foodvault.api.read",
+                        "foodvault.api.write",
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile
                     }

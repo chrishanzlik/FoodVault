@@ -16,6 +16,7 @@ namespace FoodVault.Api.IdentityServer
         {
             context.IssuedClaims.AddRange(context.Subject.Claims.Where(x => x.Type == CustomClaimTypes.Roles).ToList());
             context.IssuedClaims.Add(context.Subject.Claims.Single(x => x.Type == CustomClaimTypes.FirstName));
+            context.IssuedClaims.Add(context.Subject.Claims.Single(x => x.Type == CustomClaimTypes.LastName));
             context.IssuedClaims.Add(context.Subject.Claims.Single(x => x.Type == CustomClaimTypes.Email));
 
             return Task.CompletedTask;

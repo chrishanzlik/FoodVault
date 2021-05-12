@@ -1,6 +1,8 @@
 ﻿using FoodVault.Framework.Application;
 using Microsoft.AspNetCore.Http;
 using System;
+using System.Linq;
+using System.Security.Claims;
 
 namespace FoodVault.Api.Configuration.ExecutionContext
 {
@@ -20,10 +22,28 @@ namespace FoodVault.Api.Configuration.ExecutionContext
             _httpContextAccessor = httpContextAccessor;
         }
 
-        //TODO: Implement ExecutionContextAccessor
-
         /// <inheritdoc />
-        public Guid UserId => Guid.Empty;
+        public Guid UserId
+        {
+            get
+            {
+                string subValue = _httpContextAccessor
+                    .HttpContext?
+                    .User?
+                    .Claims?
+                    .SingleOrDefault(x => x.Type.Equals("sub", StringComparison.OrdinalIgnoreCase))?
+                    .Value;
+
+                if (Guid.TryParse(subValue, out Guid id))
+                {
+                    return id;
+                }
+
+                return Guid.Empty;
+
+                //throw new ApplicationException("No user context found.");
+            }
+        }
 
         /// <inheritdoc />
         public bool IsAvailable => _httpContextAccessor?.HttpContext != null;

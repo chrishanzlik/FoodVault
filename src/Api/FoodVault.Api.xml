@@ -71,6 +71,12 @@
             </summary>
             <returns>An enumerable of ApiResources.</returns>
         </member>
+        <member name="M:FoodVault.Api.IdentityServer.IdentityServerConfiguration.GetApiScopes">
+            <summary>
+            Gets all available ApiScopes.
+            </summary>
+            <returns>An enumerable of ApiScopes.</returns>
+        </member>
         <member name="M:FoodVault.Api.IdentityServer.IdentityServerConfiguration.GetIdentityResources">
             <summary>
             Gets all available identity resources.

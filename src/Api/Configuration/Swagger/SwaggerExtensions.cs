@@ -34,7 +34,8 @@ namespace FoodVault.Api.Configuration.Swagger
                             TokenUrl = new Uri("https://localhost:44305/connect/token"),
                             Scopes = new Dictionary<string, string>
                             {
-                                {"foodvault.api", "FoodVault API"}
+                                {"foodvault.api.read", "FoodVault API Read permission"},
+                                {"foodvault.api.write", "FoodVault API Write permission"}
                             }
                         }
                     },
@@ -80,7 +81,7 @@ namespace FoodVault.Api.Configuration.Swagger
                 {
                     ClientId = "ro.client",
                     ClientSecret = "dummy",
-                    Scopes = new[] { "foodvault.api" }
+                    Scopes = new[] { "foodvault.api.read", "foodvault.api.write" }
                 };
             });
 

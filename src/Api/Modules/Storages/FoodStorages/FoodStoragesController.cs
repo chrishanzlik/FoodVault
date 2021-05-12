@@ -14,6 +14,7 @@ using FoodVault.Modules.Storage.Application.FoodStorages.ChangeStorageProfile;
 using FoodVault.Modules.Storage.Application.FoodStorages.ShareStorage;
 using FoodVault.Modules.Storage.Application.FoodStorages.UnshareStorage;
 using FoodVault.Modules.Storage.Application.FoodStorages.GetStorageShares;
+using Microsoft.AspNetCore.Authorization;
 
 namespace FoodVault.Api.Modules.Storages.FoodStorages
 {
