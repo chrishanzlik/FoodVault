@@ -1,4 +1,5 @@
-﻿using FoodVault.Framework.Application.Commands;
+﻿using FoodVault.Framework.Application;
+using FoodVault.Framework.Application.Commands;
 using FoodVault.Framework.Application.DataAccess;
 using FoodVault.Modules.Storage.Domain.FoodStorages;
 using FoodVault.Modules.Storage.Domain.Users;
@@ -35,7 +36,7 @@ namespace FoodVault.Modules.Storage.Application.FoodStorages.ShareStorage
             var storage = await _foodStorageRepository.GetByIdAsync(new FoodStorageId(request.FoodStorageId));
             if (storage == null)
             {
-                return CommandResult.BadParameters(new[] { $"The storage with the id '{request.FoodStorageId}' does not exist." });
+                throw new InvalidCommandException($"The storage with the id '{request.FoodStorageId}' does not exist.");
             }
 
             storage.ShareToUser(new UserId(request.UserId), request.WriteAccess, _userContext);

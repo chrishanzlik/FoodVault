@@ -8,7 +8,7 @@ namespace FoodVault.Framework.Application.Commands
     public abstract class Command : ICommand
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="UnitOfWork" /> class.
+        /// Initializes a new instance of the <see cref="Command" /> class.
         /// </summary>
         public Command()
         {

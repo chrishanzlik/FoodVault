@@ -36,7 +36,7 @@ namespace FoodVault.Api.IdentityServer
             {
                 context.Result = new GrantValidationResult(
                     TokenRequestErrors.InvalidRequest,
-                    commandResult.Errors.Single());
+                    authenticationResult.Error);
 
                 return;
             }

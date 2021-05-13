@@ -3,15 +3,18 @@ using Autofac.Extensions.DependencyInjection;
 using FoodVault.Api.Configuration.Authorization;
 using FoodVault.Api.Configuration.ExecutionContext;
 using FoodVault.Api.Configuration.Swagger;
+using FoodVault.Api.Configuration.Validation;
 using FoodVault.Api.IdentityServer;
 using FoodVault.Api.Modules.Storages;
 using FoodVault.Api.Modules.UserAccess;
 using FoodVault.Framework.Application;
 using FoodVault.Framework.Application.Emails;
 using FoodVault.Framework.Application.FileUploads;
+using FoodVault.Framework.Domain;
 using FoodVault.Framework.Infrastructure.Emails;
 using FoodVault.Modules.Storage.Infrastructure;
 using FoodVault.Modules.UserAccess.Infrastructure;
+using Hellang.Middleware.ProblemDetails;
 using IdentityServer4.AccessTokenValidation;
 using IdentityServer4.Validation;
 using Microsoft.AspNetCore.Authorization;
@@ -48,6 +51,12 @@ namespace FoodVault.Api
             services.AddHttpContextAccessor();
             services.AddSingleton<IExecutionContextAccessor, ExecutionContextAccessor>();
 
+            services.AddProblemDetails(x =>
+            {
+                x.Map<InvalidCommandException>(ex => new InvalidCommandProblemDetails(ex));
+                x.Map<DomainRuleValidationException>(ex => new DomainRuleValidationExceptionProblemDetails(ex));
+            });
+
             services.AddApiVersioning(config =>
             {
                 config.DefaultApiVersion = new ApiVersion(1, 0);
@@ -79,7 +88,8 @@ namespace FoodVault.Api
 
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
+                app.UseProblemDetails();
+                //app.UseDeveloperExceptionPage();
                 app.ConfigureSwagger();
             }
 

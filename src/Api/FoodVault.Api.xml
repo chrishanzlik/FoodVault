@@ -60,6 +60,21 @@
             <param name="self"></param>
             <returns></returns>
         </member>
+        <member name="T:FoodVault.Api.Configuration.Validation.DomainRuleValidationExceptionProblemDetails">
+            <summary>
+            Describes a specific <see cref="T:FoodVault.Framework.Domain.DomainRuleValidationException"/>
+            </summary>
+        </member>
+        <member name="T:FoodVault.Api.Configuration.Validation.InvalidCommandProblemDetails">
+            <summary>
+            Describes a specific <see cref="T:FoodVault.Framework.Application.InvalidCommandException"/>.
+            </summary>
+        </member>
+        <member name="P:FoodVault.Api.Configuration.Validation.InvalidCommandProblemDetails.Errors">
+            <summary>
+            Gets all validation errors.
+            </summary>
+        </member>
         <member name="T:FoodVault.Api.IdentityServer.IdentityServerConfiguration">
             <summary>
             Identity server configuration

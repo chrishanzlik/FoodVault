@@ -5,6 +5,5 @@ namespace FoodVault.Framework.Application.Commands
     public interface ICommandResult
     {
         public bool Success { get; }
-        public IEnumerable<string> Errors { get; }
     }
 }

@@ -24,10 +24,6 @@ namespace FoodVault.Api.Common
                     return new OkResult();
                 case EntityCreatedCommandResult entityCreatedCommandResult:
                     return new OkObjectResult(new { Id = entityCreatedCommandResult.EntityId });
-                case ErrorCommandResult:
-                    return new ObjectResult(self.Errors) { StatusCode = 500 };
-                case InvalidParametersCommandResult:
-                    return new BadRequestObjectResult(self.Errors);
                 default:
                     throw new InvalidOperationException($"Not supported CommandResult.");
             }

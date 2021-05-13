@@ -7,11 +7,8 @@ namespace FoodVault.Framework.Application.Commands.Results
         internal OkCommandResult()
         {
             Success = true;
-            Errors = new List<string>();
         }
 
         public bool Success { get; }
-
-        public IEnumerable<string> Errors { get; }
     }
 }
