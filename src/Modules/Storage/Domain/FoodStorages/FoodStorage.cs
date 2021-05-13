@@ -17,9 +17,7 @@ namespace FoodVault.Modules.Storage.Domain.FoodStorages
         private readonly List<StoredProduct> _storedProducts = new List<StoredProduct>();
         private readonly List<StorageShare> _storageShares = new List<StorageShare>();
 
-#pragma warning disable IDE0052 // Used by Entity Framework Core
         private bool _isDeleted;
-#pragma warning restore IDE0052 // Used by Entity Framework Core
 
         private readonly UserId _ownerId;
 
@@ -117,7 +115,7 @@ namespace FoodVault.Modules.Storage.Domain.FoodStorages
                 storedProduct.DecreaseQuantity(quantity);
             }
 
-            this.AddDomainEvent(new ProductRemovedEvent(this.Id, productId, quantity));
+            this.AddDomainEvent(new ProductRemovedEvent(this.Id, productId, userContext.UserId, quantity));
         }
 
         /// <summary>
@@ -143,7 +141,7 @@ namespace FoodVault.Modules.Storage.Domain.FoodStorages
                 this._storedProducts.Add(new StoredProduct(productId, quantity, expirationDate));
             }
 
-            this.AddDomainEvent(new ProductStoredEvent(this.Id, productId, quantity));
+            this.AddDomainEvent(new ProductStoredEvent(this.Id, productId, userContext.UserId, quantity));
         }
 
         /// <summary>
@@ -176,7 +174,7 @@ namespace FoodVault.Modules.Storage.Domain.FoodStorages
 
             this._isDeleted = true;
 
-            this.AddDomainEvent(new FoodStorageDeletedEvent(this.Id));
+            this.AddDomainEvent(new FoodStorageDeletedEvent(this.Id, userContext.UserId));
         }
 
         /// <summary>
