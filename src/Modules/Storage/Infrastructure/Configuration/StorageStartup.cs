@@ -8,6 +8,7 @@ using FoodVault.Modules.Storage.Application.Contracts;
 using FoodVault.Modules.Storage.Application.FoodStorages.CreateStorage;
 using FoodVault.Modules.Storage.Application.Products.AddProductImage;
 using FoodVault.Modules.Storage.Application.Products.RemoveProductImage;
+using FoodVault.Modules.Storage.Infrastructure.Configuration.Application;
 using FoodVault.Modules.Storage.Infrastructure.Configuration.DataAccess;
 using FoodVault.Modules.Storage.Infrastructure.Configuration.EventBus;
 using FoodVault.Modules.Storage.Infrastructure.Configuration.FileUploads;
@@ -83,6 +84,7 @@ namespace FoodVault.Modules.Storage.Infrastructure.Configuration
             containerBuilder.RegisterModule(new LoggingModule(logger));
             containerBuilder.RegisterModule(new QuartzModule());
             containerBuilder.RegisterModule(new DomainModule());
+            containerBuilder.RegisterModule(new ApplicationModule());
             containerBuilder.RegisterModule(new ProcessingModule());
             containerBuilder.RegisterModule(new MediatorModule());
             containerBuilder.RegisterModule(new OutboxModule(domainNotificationRegistrations));

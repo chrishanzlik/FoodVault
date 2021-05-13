@@ -15,22 +15,18 @@ namespace FoodVault.Modules.Storage.Application.FoodStorages.ShareStorage
     {
         private readonly IUserContext _userContext;
         private readonly IFoodStorageRepository _foodStorageRepository;
-        private readonly IDbConnectionFactory _dbConnectionFactory;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ShareStorageCommandHandler" /> class.
         /// </summary>
         /// <param name="userContext">Acces to the current user session.</param>
         /// <param name="foodStorageRepository">Food storage repository.</param>
-        /// <param name="dbConnectionFactory">Db connection factory.</param>
         public ShareStorageCommandHandler(
             IUserContext userContext,
-            IFoodStorageRepository foodStorageRepository,
-            IDbConnectionFactory dbConnectionFactory)
+            IFoodStorageRepository foodStorageRepository)
         {
             _userContext = userContext;
             _foodStorageRepository = foodStorageRepository;
-            _dbConnectionFactory = dbConnectionFactory;
         }
 
         /// <inheritdoc />
@@ -42,15 +38,7 @@ namespace FoodVault.Modules.Storage.Application.FoodStorages.ShareStorage
                 return CommandResult.BadParameters(new[] { $"The storage with the id '{request.FoodStorageId}' does not exist." });
             }
 
-            var sharedUsers = (await StorageSharesProvider.GetSharesForStorageAsync(
-                request.FoodStorageId,
-                _dbConnectionFactory)).Select(x => new UserId(x.UserId));
-
-            storage.ShareToUser(
-                new UserId(request.UserId),
-                request.WriteAccess,
-                sharedUsers,
-                _userContext);
+            storage.ShareToUser(new UserId(request.UserId), request.WriteAccess, _userContext);
 
             return CommandResult.Ok();
         }
