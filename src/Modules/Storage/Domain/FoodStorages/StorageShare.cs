@@ -28,6 +28,11 @@ namespace FoodVault.Modules.Storage.Domain.FoodStorages
         }
 
         /// <summary>
+        /// Gets a value indicating whether the user has write access.
+        /// </summary>
+        internal bool IsWritePermissionEnabled => _canWrite;
+
+        /// <summary>
         /// Gets the identifier of the user.
         /// </summary>
         public UserId UserId { get; }

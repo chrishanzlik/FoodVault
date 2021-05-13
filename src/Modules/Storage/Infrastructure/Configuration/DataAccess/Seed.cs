@@ -65,6 +65,7 @@ namespace FoodVault.Modules.Storage.Infrastructure.Configuration.DataAccess
 
         private static void FillStorages(StorageContext context)
         {
+            var fakeUserContext = new FakeUserContext();
             var rnd = new Random();
             var storages = context.FoodStorages.ToList();
             var products = context.Products.ToList();
@@ -81,7 +82,7 @@ namespace FoodVault.Modules.Storage.Infrastructure.Configuration.DataAccess
 
                 foreach(var prod in productsToAdd)
                 {
-                    storage.StoreProduct(prod.Id, rnd.Next(1, 13), null);
+                    storage.StoreProduct(prod.Id, rnd.Next(1, 13), fakeUserContext, null);
                 }
             }
 
@@ -91,6 +92,11 @@ namespace FoodVault.Modules.Storage.Infrastructure.Configuration.DataAccess
         private class FakeStorageNameUniquessChecker : IStorageNameUniquessChecker
         {
             public bool IsNameUniqueForUser(string storageName, Guid userId) => true;
+        }
+
+        private class FakeUserContext : IUserContext
+        {
+            public UserId UserId => new UserId(Guid.Empty);
         }
     }
 }

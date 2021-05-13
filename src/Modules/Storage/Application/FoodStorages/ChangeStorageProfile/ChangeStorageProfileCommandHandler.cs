@@ -1,5 +1,6 @@
 ﻿using FoodVault.Framework.Application.Commands;
 using FoodVault.Modules.Storage.Domain.FoodStorages;
+using FoodVault.Modules.Storage.Domain.Users;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -12,18 +13,22 @@ namespace FoodVault.Modules.Storage.Application.FoodStorages.ChangeStorageProfil
     {
         private readonly IFoodStorageRepository _foodStorageRepository;
         private readonly IStorageNameUniquessChecker _storageNameUniquessChecker;
+        private readonly IUserContext _userContext;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ChangeStorageProfileCommandHandler" /> class.
         /// </summary>
         /// <param name="foodStorageRepository">Food storage repository.</param>
         /// <param name="storageNameUniquessChecker">Domain services that checks that a given storage name is unique.</param>
+        /// <param name="userContext">User context.</param>
         public ChangeStorageProfileCommandHandler(
             IFoodStorageRepository foodStorageRepository,
-            IStorageNameUniquessChecker storageNameUniquessChecker)
+            IStorageNameUniquessChecker storageNameUniquessChecker,
+            IUserContext userContext)
         {
             _foodStorageRepository = foodStorageRepository;
             _storageNameUniquessChecker = storageNameUniquessChecker;
+            _userContext = userContext;
         }
 
         /// <inheritdoc />
@@ -33,7 +38,7 @@ namespace FoodVault.Modules.Storage.Application.FoodStorages.ChangeStorageProfil
 
             var storage = await _foodStorageRepository.GetByIdAsync(id);
 
-            storage?.Rename(request.StorageName, request.StorageDescription, _storageNameUniquessChecker);
+            storage?.Rename(request.StorageName, request.StorageDescription, _userContext, _storageNameUniquessChecker);
 
             return CommandResult.Ok();
         }
