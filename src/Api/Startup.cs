@@ -35,12 +35,14 @@ namespace FoodVault.Api
     /// </summary>
     internal class Startup
     {
-        public Startup(IConfiguration configuration)
+        private IConfiguration Configuration { get; }
+        private IWebHostEnvironment Environment { get; }
+
+        public Startup(IConfiguration configuration, IWebHostEnvironment environment)
         {
             Configuration = configuration;
+            Environment = environment;
         }
-
-        public IConfiguration Configuration { get; }
 
         public void ConfigureServices(IServiceCollection services)
         {
@@ -53,6 +55,7 @@ namespace FoodVault.Api
 
             services.AddProblemDetails(x =>
             {
+                x.IncludeExceptionDetails = (ctx, ex) => Environment.IsDevelopment();
                 x.Map<InvalidCommandException>(ex => new InvalidCommandProblemDetails(ex));
                 x.Map<DomainRuleValidationException>(ex => new DomainRuleValidationExceptionProblemDetails(ex));
             });
@@ -84,12 +87,12 @@ namespace FoodVault.Api
 
             ConfigureModules(autofacContainer);
 
+            app.UseProblemDetails();
+
             app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
 
             if (env.IsDevelopment())
             {
-                app.UseProblemDetails();
-                //app.UseDeveloperExceptionPage();
                 app.ConfigureSwagger();
             }
 
