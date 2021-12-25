@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using FoodVault.Framework.Application;
 using FoodVault.Framework.Application.Commands;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +19,7 @@ namespace FoodVault.Modules.UserAccess.Infrastructure.Configuration.Processing
         private readonly IList<IValidator<TCommand>> _validators;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TransactionCommandHandlerDecorator" /> class.
+        /// Initializes a new instance of the <see cref="ValidationCommandHandlerDecorator" /> class.
         /// </summary>
         /// <param name="decorated">Decorated command handler.</param>
         /// <param name="validators">Applicable validators for the given command type.</param>
@@ -42,7 +43,7 @@ namespace FoodVault.Modules.UserAccess.Infrastructure.Configuration.Processing
 
             if (errors.Any())
             {
-                return Task.FromResult<ICommandResult>(CommandResult.BadParameters(errors));
+                throw new InvalidCommandException(errors);
             }
 
             return _decorated.Handle(command, cancellationToken);

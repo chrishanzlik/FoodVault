@@ -3,15 +3,18 @@ using Autofac.Extensions.DependencyInjection;
 using FoodVault.Api.Configuration.Authorization;
 using FoodVault.Api.Configuration.ExecutionContext;
 using FoodVault.Api.Configuration.Swagger;
+using FoodVault.Api.Configuration.Validation;
 using FoodVault.Api.IdentityServer;
 using FoodVault.Api.Modules.Storages;
 using FoodVault.Api.Modules.UserAccess;
 using FoodVault.Framework.Application;
 using FoodVault.Framework.Application.Emails;
 using FoodVault.Framework.Application.FileUploads;
+using FoodVault.Framework.Domain;
 using FoodVault.Framework.Infrastructure.Emails;
 using FoodVault.Modules.Storage.Infrastructure;
 using FoodVault.Modules.UserAccess.Infrastructure;
+using Hellang.Middleware.ProblemDetails;
 using IdentityServer4.AccessTokenValidation;
 using IdentityServer4.Validation;
 using Microsoft.AspNetCore.Authorization;
@@ -32,12 +35,14 @@ namespace FoodVault.Api
     /// </summary>
     internal class Startup
     {
-        public Startup(IConfiguration configuration)
+        private IConfiguration Configuration { get; }
+        private IWebHostEnvironment Environment { get; }
+
+        public Startup(IConfiguration configuration, IWebHostEnvironment environment)
         {
             Configuration = configuration;
+            Environment = environment;
         }
-
-        public IConfiguration Configuration { get; }
 
         public void ConfigureServices(IServiceCollection services)
         {
@@ -47,6 +52,13 @@ namespace FoodVault.Api
 
             services.AddHttpContextAccessor();
             services.AddSingleton<IExecutionContextAccessor, ExecutionContextAccessor>();
+
+            services.AddProblemDetails(x =>
+            {
+                x.IncludeExceptionDetails = (ctx, ex) => Environment.IsDevelopment();
+                x.Map<InvalidCommandException>(ex => new InvalidCommandProblemDetails(ex));
+                x.Map<DomainRuleValidationException>(ex => new DomainRuleValidationExceptionProblemDetails(ex));
+            });
 
             services.AddApiVersioning(config =>
             {
@@ -75,11 +87,12 @@ namespace FoodVault.Api
 
             ConfigureModules(autofacContainer);
 
+            app.UseProblemDetails();
+
             app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
 
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
                 app.ConfigureSwagger();
             }
 

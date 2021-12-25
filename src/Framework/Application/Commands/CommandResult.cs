@@ -10,26 +10,6 @@ namespace FoodVault.Framework.Application.Commands
     public static class CommandResult
     {
         /// <summary>
-        /// Create a new error result.
-        /// </summary>
-        /// <param name="error">Error.</param>
-        /// <returns>Commands execution result.</returns>
-        public static ICommandResult Error(string error)
-        {
-            return new ErrorCommandResult(new string[] { error });
-        }
-
-        /// <summary>
-        /// Create a new error result.
-        /// </summary>
-        /// <param name="errors">List of errors.</param>
-        /// <returns>Commands execution result.</returns>
-        public static ICommandResult Error(IEnumerable<string> errors)
-        {
-            return new ErrorCommandResult(errors);
-        }
-
-        /// <summary>
         /// Create a new entity created result.
         /// </summary>
         /// <param name="entityId">Entities id.</param>
@@ -49,20 +29,22 @@ namespace FoodVault.Framework.Application.Commands
         }
 
         /// <summary>
-        /// Create a new bad parameters result.
+        /// Create a new authenticated result.
         /// </summary>
-        /// <param name="errors">List of errors.</param>
-        /// <returns>Commands execution result.</returns>
-        public static ICommandResult BadParameters(IEnumerable<string> errors)
-        {
-            return new InvalidParametersCommandResult(errors);
-        }
-
+        /// <typeparam name="TUser">User type.</typeparam>
+        /// <param name="user">User.</param>
+        /// <returns>Command execution result</returns>
         public static ICommandResult Authenticated<TUser>(TUser user)
         {
             return new AuthenticatedCommandResult<TUser>(user);
         }
 
+        /// <summary>
+        /// Create a new authenticated result.
+        /// </summary>
+        /// <typeparam name="TUser">User type.</typeparam>
+        /// <param name="error">Error.</param>
+        /// <returns>Command execution result</returns>
         public static ICommandResult AuthenticationFailed<TUser>(string error)
         {
             return new AuthenticatedCommandResult<TUser>(error);

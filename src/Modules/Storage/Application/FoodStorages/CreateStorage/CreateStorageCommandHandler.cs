@@ -37,7 +37,7 @@ namespace FoodVault.Modules.Storage.Application.FoodStorages.CreateStorage
         {
             if(!_executionContextAccessor.IsAvailable)
             {
-                return CommandResult.Error(new string[] { "No user logged in." });
+                throw new InvalidCommandException("No user logged in.");
             }
 
             UserId userId = new UserId(_executionContextAccessor.UserId);

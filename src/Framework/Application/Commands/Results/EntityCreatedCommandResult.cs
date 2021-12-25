@@ -9,13 +9,10 @@ namespace FoodVault.Framework.Application.Commands.Results
         {
             EntityId = entityId;
             Success = Success;
-            Errors = new List<string>();
         }
 
         public Guid EntityId { get; }
 
         public bool Success { get; }
-
-        public IEnumerable<string> Errors { get; }
     }
 }

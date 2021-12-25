@@ -67,16 +67,6 @@ namespace FoodVault.Modules.Storage.Infrastructure.Configuration.Processing.Inte
                         id = internalCommand.Id
                     });
                 }
-
-                else if (!policyResult.Result.Success)
-                {
-                    await connection.ExecuteScalarAsync(errorSql, new
-                    {
-                        processed = DateTime.UtcNow,
-                        error = string.Join(';', policyResult.Result.Errors),
-                        id = internalCommand.Id
-                    });
-                }
             }
 
             return CommandResult.Ok();
