@@ -12,7 +12,8 @@ namespace FoodVault.Modules.Storage.Application.FoodStorages.CreateStorage
         /// </summary>
         public CreateStorageCommandValidator()
         {
-            RuleFor(x => x.StorageName).NotEmpty().MinimumLength(4);
+            RuleFor(x => x.StorageName).NotNull();
+            RuleFor(x => x.StorageName).NotEmpty().MinimumLength(4).When(x => x != null);
         }
     }
 }

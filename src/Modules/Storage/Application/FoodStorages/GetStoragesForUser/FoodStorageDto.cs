@@ -13,6 +13,11 @@ namespace FoodVault.Modules.Storage.Application.FoodStorages.GetStoragesForUser
         public Guid Id { get; set; }
 
         /// <summary>
+        /// Gets the owner id of the storage.
+        /// </summary>
+        public Guid OwnerId { get; set; }
+
+        /// <summary>
         /// Gets the name of the storage.
         /// </summary>
         public string Name { get; set; }

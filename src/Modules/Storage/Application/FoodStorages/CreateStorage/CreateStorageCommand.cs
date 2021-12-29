@@ -14,8 +14,8 @@ namespace FoodVault.Modules.Storage.Application.FoodStorages.CreateStorage
         /// <param name="description">Storage description.</param>
         public CreateStorageCommand(string storageName, string description)
         {
-            StorageName = storageName;
-            Description = description;
+            StorageName = storageName?.Trim();
+            Description = description?.Trim();
         }
 
         /// <summary>

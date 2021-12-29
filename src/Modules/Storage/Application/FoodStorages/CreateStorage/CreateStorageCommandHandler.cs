@@ -40,7 +40,7 @@ namespace FoodVault.Modules.Storage.Application.FoodStorages.CreateStorage
                 throw new InvalidCommandException("No user logged in.");
             }
 
-            UserId userId = new UserId(_executionContextAccessor.UserId);
+            UserId userId = new(_executionContextAccessor.UserId);
 
             var storage = FoodStorage.CreateForUser(userId, request.StorageName, request.Description, _storageNameUniquessChecker);
 
