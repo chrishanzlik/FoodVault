@@ -173,6 +173,7 @@ namespace FoodVault.Modules.Storage.Domain.FoodStorages
             this.CheckDomainRule(new RequiresToBeStorageOwnerRule(_ownerId, userContext));
 
             this._isDeleted = true;
+            this._storageShares.Clear();
 
             this.AddDomainEvent(new FoodStorageDeletedEvent(this.Id, userContext.UserId));
         }

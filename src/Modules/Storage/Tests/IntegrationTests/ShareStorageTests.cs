@@ -2,6 +2,7 @@
 using FoodVault.Modules.Storage.Application.FoodStorages.CreateStorage;
 using FoodVault.Modules.Storage.Application.FoodStorages.GetStoragesForUser;
 using FoodVault.Modules.Storage.Application.FoodStorages.ShareStorage;
+using FoodVault.Modules.Storage.Application.FoodStorages.UnshareStorage;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,6 +41,29 @@ namespace FoodVault.Modules.Storage.Tests.IntegrationTests
             var expected = result.Single();
             Assert.Equal(storageName, expected.Name);
             Assert.Equal(ownerUserId, expected.OwnerId);
+        }
+
+        [Fact]
+        public async Task UnshareStorage_WhenStorageIsShared_RemovesUserAccess()
+        {
+            var ownerUserId = Guid.NewGuid();
+            var shareTargetUserId = Guid.NewGuid();
+            var storageName = Guid.NewGuid().ToString();
+
+            ExecutionContext.UserId = ownerUserId;
+            var createdResult = await Module.ExecuteCommandAsync(new CreateStorageCommand(storageName, null)) as EntityCreatedCommandResult;
+            await Module.ExecuteCommandAsync(new ShareStorageCommand(createdResult.EntityId, shareTargetUserId, true));
+
+            ExecutionContext.UserId = shareTargetUserId;
+            var storages = await Module.ExecuteQueryAsync(new GetStoragesForUserQuery());
+            Assert.NotEmpty(storages);
+
+            ExecutionContext.UserId = ownerUserId;
+            await Module.ExecuteCommandAsync(new UnshareStorageCommand(createdResult.EntityId, shareTargetUserId));
+
+            ExecutionContext.UserId = shareTargetUserId;
+            var storages2 = await Module.ExecuteQueryAsync(new GetStoragesForUserQuery());
+            Assert.Empty(storages2);
         }
     }
 }
