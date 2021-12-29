@@ -10,6 +10,10 @@ namespace FoodVault.Api.Configuration.Validation
     /// </summary>
     public class InvalidCommandProblemDetails : ProblemDetails
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="InvalidCommandProblemDetails" /> class.
+        /// </summary>
+        /// <param name="exception">Occured error.</param>
         public InvalidCommandProblemDetails(InvalidCommandException exception)
         {
             Title = "Command validation error";

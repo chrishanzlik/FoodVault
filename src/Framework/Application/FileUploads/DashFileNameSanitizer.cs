@@ -9,10 +9,10 @@ namespace FoodVault.Framework.Application.FileUploads
     /// </summary>
     public class DashFileNameSanitizer : IFileNameSanitizer
     {
-        private static readonly string _invalidCharacters = new string(Path.GetInvalidFileNameChars());
+        private static readonly string _invalidCharacters = new(Path.GetInvalidFileNameChars());
         private static readonly string _disallowedCharacters = ". !$&§%(){}=#+'~;";
 
-        private static readonly Regex _charReplaceRegex = new Regex(
+        private static readonly Regex _charReplaceRegex = new(
             string.Format(@"([{0}{1}]*\.+$)|([{0}{1}]+)", _invalidCharacters, _disallowedCharacters),
             RegexOptions.Compiled);
 

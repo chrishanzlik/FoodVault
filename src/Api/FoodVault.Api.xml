@@ -70,6 +70,12 @@
             Describes a specific <see cref="T:FoodVault.Framework.Application.InvalidCommandException"/>.
             </summary>
         </member>
+        <member name="M:FoodVault.Api.Configuration.Validation.InvalidCommandProblemDetails.#ctor(FoodVault.Framework.Application.InvalidCommandException)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FoodVault.Api.Configuration.Validation.InvalidCommandProblemDetails" /> class.
+            </summary>
+            <param name="exception">Occured error.</param>
+        </member>
         <member name="P:FoodVault.Api.Configuration.Validation.InvalidCommandProblemDetails.Errors">
             <summary>
             Gets all validation errors.
@@ -448,6 +454,24 @@
             </summary>
             <param name="registrationId">Identifier of the user registration.</param>
             <returns></returns>
+        </member>
+        <member name="T:FoodVault.Api.Program">
+            <summary>
+            Programs entry point.
+            </summary>
+        </member>
+        <member name="M:FoodVault.Api.Program.Main(System.String[])">
+            <summary>
+            Initializes the API.
+            </summary>
+            <param name="args"></param>
+        </member>
+        <member name="M:FoodVault.Api.Program.CreateHostBuilder(System.String[])">
+            <summary>
+            Creates the API host instance.
+            </summary>
+            <param name="args"></param>
+            <returns>Web host</returns>
         </member>
         <member name="T:FoodVault.Api.Startup">
             <summary>
