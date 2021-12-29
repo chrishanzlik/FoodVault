@@ -106,7 +106,7 @@ namespace FoodVault.Modules.Storage.Infrastructure.Configuration
                 _container = containerBuilder.Build();
                 StorageCompositionRoot.SetContainer(_container);
 
-                //MigrateAndSeedDatabase();
+                MigrateAndSeedDatabase();
             }
         }
 
@@ -118,7 +118,7 @@ namespace FoodVault.Modules.Storage.Infrastructure.Configuration
 
                 context.Database.Migrate();
 
-                Seed.Apply(context);
+                //Seed.Apply(context);
             }
             catch (Exception ex)
             {
