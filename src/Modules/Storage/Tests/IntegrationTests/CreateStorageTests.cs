@@ -1,4 +1,5 @@
 ﻿using FoodVault.Framework.Application;
+using FoodVault.Framework.Application.Commands.Results;
 using FoodVault.Modules.Storage.Application.FoodStorages.CreateStorage;
 using FoodVault.Modules.Storage.Application.FoodStorages.GetStoragesForUser;
 using System;
@@ -10,8 +11,7 @@ using Xunit;
 
 namespace FoodVault.Modules.Storage.Tests.IntegrationTests
 {
-    [Collection("Storage_IntegrationTests")]
-    public class CreateStorageTests : TestBase
+    public class CreateStorageTests : StorageIntegrationTestBase
     {
         [Fact]
         public async Task CreateStorage_WhenDataIsValid_WillBeCreated()

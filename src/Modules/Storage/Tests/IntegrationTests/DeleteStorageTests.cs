@@ -13,8 +13,7 @@ using Xunit;
 
 namespace FoodVault.Modules.Storage.Tests.IntegrationTests
 {
-    [Collection("Storage_IntegrationTests")]
-    public class DeleteStorageTests : TestBase
+    public class DeleteStorageTests : StorageIntegrationTestBase
     {
         [Fact]
         public async Task DeleteStorage_WhenStorageExists_DeletesStorage()

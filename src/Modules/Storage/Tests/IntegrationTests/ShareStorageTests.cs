@@ -12,8 +12,7 @@ using Xunit;
 
 namespace FoodVault.Modules.Storage.Tests.IntegrationTests
 {
-    [Collection("Storage_IntegrationTests")]
-    public class ShareStorageTests : TestBase
+    public class ShareStorageTests : StorageIntegrationTestBase
     {
         [Fact]
         public async Task ShareStorage_WhenUserIdIsValid_WillGrantReadAccess()

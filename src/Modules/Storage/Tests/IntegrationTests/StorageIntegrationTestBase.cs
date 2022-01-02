@@ -14,7 +14,8 @@ using Xunit;
 
 namespace FoodVault.Modules.Storage.Tests.IntegrationTests
 {
-    public abstract class TestBase : IAsyncLifetime
+    [Collection("StorageIntegrationTests")]
+    public abstract class StorageIntegrationTestBase : IAsyncLifetime
     {
         protected string ConnectionString { get; private set; }
         protected IStorageModule Module { get; private set; }
@@ -23,7 +24,7 @@ namespace FoodVault.Modules.Storage.Tests.IntegrationTests
         protected IStorageModuleUrlBuilder UrlBuilder { get; private set; }
         protected ILogger Logger { get; private set; }
 
-        public TestBase()
+        public StorageIntegrationTestBase()
         {
 
         }
